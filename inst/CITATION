@@ -1,0 +1,21 @@
+citHeader("To cite the 'Anthropometry' package in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry="Manual",
+         title = "Anthropometry: An R Package for Analysis of Anthropometric Data",
+         author = personList(as.person("Guillermo Vinue"),
+                             as.person("Irene Epifanio"),
+                             as.person("Amelia Simo"), 
+                             as.person("M. Victoria Ibanez"),
+                             as.person("Juan Domingo"),  
+                             as.person("Guillermo Ayala")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste(
+	 "Vinue, G., Epifanio, I., Simo, A., Ibanez, M. V., Domingo, J. and Ayala, G.(",
+         year, ").  Anthropometry: An R Package for Analysis of Anthropometric Data. ",
+	 vers, ".", sep=""))
