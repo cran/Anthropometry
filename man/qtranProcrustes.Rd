@@ -60,7 +60,7 @@ A list with the following elements:: \emph{c,ic1,ic2,nc,an1,an2,ncp,d,itran,indx
 This function belongs to \code{\link{HartiganShapes}} and it is not solely used. That is why there is no section of \emph{examples} in this help page.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Submitted for publication.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
 
 Hartigan, J. A., and Wong, M. A., (1979). A K-Means Clustering Algorithm, \emph{Applied Statistics}, 100--108.
 

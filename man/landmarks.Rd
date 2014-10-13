@@ -22,7 +22,7 @@ The landmarks considered were placed in three different ways:
 \format{A data frame with 600 observations and 198 variables (66 landmarks times 3 dimensions).}
 \source{Anthropometric survey of the Spanish female population.}
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Submitted for publication.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
 
 Alemany, S., Gonzalez, J. C., Nacher, B., Soriano, C., Arnaiz, C., and Heras, H., (2010). Anthropometric survey of the Spanish female population aimed at the apparel industry. \emph{Proceedings of the 2010 Intl. Conference on 3D Body scanning Technologies}, 307--315.
 }

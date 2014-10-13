@@ -17,7 +17,7 @@ Data frame. It should contain the chest, neck to ground, waist, hip and bust mea
 Trimmed women (if \code{\link{trimowa}}) or outlier women (if \code{\link{hipamAnthropom}}).
 }
 \item{nsizes}{
-Number of subsets (classes), into the database is segmented. In our approach, the whole anthropometric Spanish survey is segmented into twelve bust segments, according to the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals.
+Number of subsets (classes), into the database is segmented. In our approach, the whole anthropometric Spanish survey is segmented into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals.
 }
 \item{bustVariable}{
 Bust variable.

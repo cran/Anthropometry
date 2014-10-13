@@ -1,4 +1,4 @@
-TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){ 
+TDDclust <- function(x,K,lambda,Th,A,T0,alpha,Trimm,data1){ 
 
   B <- 5 ; 
   Km <- 2 ; 
@@ -46,12 +46,24 @@ TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){
         cat("\n")  
         cat("Steps (3),(4),(5),(6) (for A <= 5 | kl>=(A-5)) NNDDVQE: \n") 
         NN <- NNDDVQE(x,Y,0,lambda,NN,Km,Th,Trimm,kl,NNold_old)
+        
+        if(sum(table(NN$NN[1,])) == dim(x)[1]){
+         cat("The optimal partition is provided by PAM")
+         return(list(NN=NN$NN,Y=Y,Cost=NN$Cost,indivTrimmed="None",klBest=0))
+        }
+        
       }
       
       if(A>5 & kl!=0){ 
         cat("\n")  
         cat("Steps (3),(4),(5),(6) (for A > 5 & kl!=0) NNDDVQEstart: \n")
         NN <- NNDDVQEstart(x,Y,T0,lambda,NN,Km,Th,Trimm,kl,NNold_old) 
+        
+        if(sum(table(NN$NN[1,])) == dim(x)[1]){
+          cat("The optimal partition is provided by PAM")
+          return(list(NN=NN$NN,Y=Y,Cost=NN$Cost,indivTrimmed="None",klBest=0))
+        }
+        
         T0 <-NN$T0 * alpha 
         Th <- Th * alpha 
       }
@@ -65,6 +77,7 @@ TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){
       cat("\n") 
       
       NN1_aux[[kl]] <- NN
+      NNN <- NN
       
       if(length(NN$Nuvec) < dim(data1)[1]){
         indiv_trimmed[[kl]] <- NN$trimmed
@@ -105,9 +118,7 @@ TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){
           NN$DDi <- DDi_aux[[nu_max]]
           NN$DD <- DD_aux[[nu_max]]
           NN$Nuvec <- aux1[[nu_max]]
-          
         }  
-        
       }          
             
       move <- c(move,NN$ct) 
@@ -138,37 +149,29 @@ TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){
       
     }
     
-    ma <- max(unlist(improv_kl),na.rm=TRUE) 
-    indiv_trimmed1 <- indiv_trimmed[[ma+1]] 
-    NN1_aux1 <- NN1_aux[[ma+1]]
+     ma <- max(unlist(improv_kl),na.rm=TRUE) 
+     indiv_trimmed1 <- indiv_trimmed[[ma+1]] 
+     NN1_aux1 <- NN1_aux[[ma+1]] 
+     
+     x <- x[-NN1_aux1$trimmed,]
+     Nvec <- rep(1,dim(x)[1])
     
-    x <- x[-NN1_aux1$trimmed,]
-    Nvec <- rep(1,dim(x)[1]) 
-    
-    ntt <- matrix(0,K,1) 
-    
-    if(lplot==1 | kl==(A-1)){ 
-      for(mt in (1:K)){ 
-        ntt[mt] <- length(NN1_aux1$Nuvec[NN1_aux1$Nuvec==mt]) 
-      } 
-      plot(1:K,ntt,ylim=c(0,max(ntt)+1)) 
-      lines(1:K,ntt-ntt+2)       
-    }
-    
-    if(NN1_aux1$ct==0 & T0==0){
+     ntt <- matrix(0,K,1) 
+         
+     if(NN1_aux1$ct==0 & T0==0){
       qa <- qa + 1 
       if(qa > 5){ 
         kl <- A + 1 
       } 
-    }
+     }
     
-    if(NN1_aux1$ct==0 & T0>0 & kl>=5){ 
+     if(NN1_aux1$ct==0 & T0>0 & kl>=5){ 
       T0 <- 0 
-    } 
+     } 
     
-    if(NN1_aux1$stopnow==1 & T0<.001){
+     if(NN1_aux1$stopnow==1 & T0<.001){
       kl <- A + 1 
-    }  
+     }  
     
     for(kk in (1:K)){ 
       Xmatr <- x[NN1_aux1$Nuvec==kk,] 
@@ -184,5 +187,5 @@ TDDclust <- function(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1){
     NN <- NNa$NN 
   }
   
-  return(list(NN=NN,Y=Y,DD=DD,Cost=Cost,move=move,indivTrimmed=indiv_trimmed1,klBest=ma))
+  return(list(NN=NN,Y=Y,DD=DD,Cost=Cost,indivTrimmed=indiv_trimmed1,klBest=ma))
 } 

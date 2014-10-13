@@ -20,7 +20,7 @@ Number of archetypes to compute, from 1 to \code{k}.
 For each \code{k}, run \code{\link{archetypes}} \code{nrep} times.
 }
 \item{verbose}{
-If TRUE, the progress during exection is shown.
+If TRUE, the progress during execution is shown.
 }
 }
 \value{

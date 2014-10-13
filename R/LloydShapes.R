@@ -1,4 +1,5 @@
 LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
+#,computCost  
 
  time_iter <- list()       #List to save the real time in which each iteration ends.
  comp_time <- c()          #List to save the computational time of each iteration.   
@@ -25,7 +26,7 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
  
   obj <- list() #List to save the objective function (without dividing between n) of each Nstep.
 
-  meanshapes <- 0 ; asig <- 0
+  meanshapes <- 0 ; meanshapes_aux <- 0 ; asig <- 0
   mean_sh <- list()
   n <- dim(dg)[3]
  
@@ -44,14 +45,32 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
    print(initials[[iter]]) 
   }
   meanshapes <- dg[, , initials[[iter]]] 		 
+  meanshapes_aux <- dg[, , initials[[iter]]] 
 
-   for(step in 1 : Nsteps){
-    for(h in 1 : K){
+  #if(computCost){
+    #time_ini_dist <- Sys.time() 
+    #dist_aux = riemdist(dg[,,1], y = meanshapes[,,1])
+    #time_end_dist <- Sys.time()
+    #cat("Computational cost of the Procrustes distance:") 
+    #print(time_end_dist - time_ini_dist)
+   #}
+  
+  for(step in 1 : Nsteps){
+    for(h in 1 : K){ 
      dist[,h] = apply(dg[,,1:n], 3, riemdist, y = meanshapes[,,h])
     }
         
     asig = max.col(-dist)
 
+    #if(computCost){
+      #time_ini_mean <- Sys.time() 
+      #meanshapes_aux[,,1] = procGPA(dg[, , asig == 1], distances = T, pcaoutput = T)$mshape
+      #time_end_mean <- Sys.time()
+      #cat("Computational cost of the Procrustes mean:") 
+      #print(time_end_mean - time_ini_mean)
+     #}
+    
+    
      for(h in 1 : K){
       if(table(asig == h)[2] == 1){ 
        meanshapes[,,h] = dg[, , asig == h]
@@ -172,7 +191,9 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
  }#The niter loop ends here.
 
  if(simul){
-  return(list(compTime=comp_time,AllRate=vect_all_rate,initials=initials))
+  dimnames(copt) <- NULL 
+  return(list(asig=asig_opt,copt=copt,vopt=vopt,compTime=comp_time,
+              AllRate=vect_all_rate,initials=initials))
  }else{
    return(list(asig=asig_opt,copt=copt,vopt=vopt,initials=initials))
   }

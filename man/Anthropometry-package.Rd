@@ -2,17 +2,17 @@
 \alias{Anthropometry-package}
 \docType{package}
 \title{
-Statistical methods for anthropometric data oriented towards the ergonomic design of products
+Statistical Methods for Anthropometric Data
 }
 \description{
-This package brings together some statistical methodologies especially developed to analyze anthropometric data. These methods are aimed at providing effective solutions to some commons problems related to Ergonomics and Anthropometry. They are based on clustering, the statistical concept of data depth, the statistical shape analysis and the archetypal analysis.
+Anthropometry brings together some statistical methodologies especially developed to analyze anthropometric data. These methods are aimed at providing effective solutions to some commons problems related to Ergonomics and Anthropometry. They are based on clustering, the statistical concept of data depth, statistical shape analysis and archetypal analysis.
 }
 \details{
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.0\cr
-Date: 2014-03-07\cr
+Version: 1.1\cr
+Date: 2014-10-13\cr
 License: GPL-2\cr
 LazyLoad: yes\cr
 LazyData: yes\cr

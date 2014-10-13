@@ -14,7 +14,7 @@ stepArchetypoids(i,nearest,data,ArchObj)
 Number of archetypoids.
 }
 \item{nearest}{
-Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. This argument is a logical value: if TRUE (FALSE), the \emph{nearest} (\emph{which}) vector is calculated. Both vectors contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2014), archetypes are computed after running the archetype algorithm twenty times). The \emph{nearest} vector is calculated by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The \emph{which} vector is calculated by identifying consecutively the individual with the maximum value of alpha for each archetype, until getting the number of archetypes defined. It is used in Eugster (2012). 
+Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. This argument is a logical value: if TRUE (FALSE), the \emph{nearest} (\emph{which}) vector is calculated. Both vectors contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2014), archetypes are computed after running the archetype algorithm twenty times). The \emph{nearest} vector is calculated by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The \emph{which} vector is calculated by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). 
 }
 \item{data}{
 Data matrix. Each row corresponds to an observation and each column corresponds to an anthropometric variable. All variables are numeric.
@@ -30,7 +30,9 @@ A list with the following elements:
 
 \emph{rss}: Residual sum of squares corresponding to the final vector of k archetypoids.
 
-\emph{inits}: Vector of initial archetypoids (\emph{nearest} or \emph{which}).
+\emph{archet_ini}: Vector of initial archetypoids (\emph{nearest} or \emph{which}).
+
+\emph{alphas}: Alpha coefficients for the optimal vector of archetypoids.
 }
 \references{
 Vinue, G., Epifanio, I., and Alemany, S., (2014). Archetypoids: a new approach to define representative archetypal data. \emph{Submitted for publication}.

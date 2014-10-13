@@ -131,7 +131,15 @@ swap2 <- function(vect_arch_end, vect_arch_ini, rss, huge=200, k, x_gvv, n){
     }
   }
   
-  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini))
+  #Actual alpha coefficients for the optimal vector of archetypoids:
+  zs <- x_gvv[,vect_arch_end_aux] 
+  zs <- as.matrix(zs)
+  alphas_def <- matrix(0, nrow = k, ncol = n)
+  for (j in 1 : n){
+    alphas_def[, j] = coef(nnls(zs, x_gvv[,j]))
+  }
+  
+  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
   
 }
 
@@ -176,6 +184,15 @@ swap2_k1 <- function(vect_arch_end, vect_arch_ini, rss, huge=200, k, x_gvv, n){
       vect_arch_end_aux <- vect_arch_end2 
     }
   }
-  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini))
+  
+  #Actual alpha coefficients for the optimal vector of archetypoids:
+  zs <- x_gvv[,vect_arch_end_aux] 
+  zs <- as.matrix(zs)
+  alphas_def <- matrix(0, nrow = k, ncol = n)
+  for (j in 1 : n){
+    alphas_def[, j] = coef(nnls(zs, x_gvv[,j]))
+  }
+  
+  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
 }
 

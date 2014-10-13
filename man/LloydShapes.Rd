@@ -30,7 +30,7 @@ Number of random initializations. Default value is 10.
 Relative stopping criteria. Default value is 0.0001.
 }
 \item{simul}{
-A logical value. If TRUE, this function is used for a simulation study.
+Logical value. If TRUE, this function is used for a simulation study.
 }
 \item{print}{
 Logical value. If TRUE, some messages associated with the running process are displayed.
@@ -52,6 +52,12 @@ A list with the following elements:
 
 If a simulation study is carried out, the following elements are returned:
 
+\emph{asig}: Optimal clustering.
+
+\emph{copt}: Optimal centers.
+
+\emph{vopt}: Optimal objective function.
+
 \emph{compTime}: Computational time.
 
 \emph{AllRate}: Allocation rate.
@@ -59,7 +65,7 @@ If a simulation study is carried out, the following elements are returned:
 \emph{initials}: Random initial values used in each iteration. These values are then used by \code{\link{HartiganShapes}}.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Submitted for publication.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
 
 Lloyd, S. P., (1982). Least Squares Quantization in PCM, \emph{IEEE Transactions on Information Theory} \bold{28}, 129--137.
 

@@ -21,7 +21,7 @@ The data with the landmarks of the corresponding figure.
 A plot of the cube or the parallelepiped with the landmark labels.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Submitted for publication.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
 }
 \author{
 Guillermo Vinue

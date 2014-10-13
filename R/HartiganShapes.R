@@ -1,4 +1,5 @@
 HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,initials,print){
+#,computCost  
 
  time_iter <- list() 
  comp_time <- c()
@@ -48,7 +49,17 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
   print(initials_hart[[iter]]) 
  }
  meanshapes <- dg[,,initials_hart[[iter]]] 
-
+ meanshapes_aux <- dg[, , initials[[iter]]] 
+ 
+ #if(computCost){
+   #time_ini_dist <- Sys.time() 
+   #dist_aux = riemdist(dg[,,1], y = meanshapes[,,1])
+   #time_end_dist <- Sys.time()
+   #cat("Computational cost of the Procrustes distance:") 
+   #print(time_end_dist - time_ini_dist)
+  #}
+ 
+ 
   for(i in 1 : n){
    ic1[i] = 1
    ic2[i] = 2
@@ -83,6 +94,15 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    } 
   }
   
+ #if(computCost){
+   #time_ini_mean <- Sys.time() 
+   #meanshapes_aux[,,1] = procGPA(dg[, , ic1 == 1], distances = T, pcaoutput = T)$mshape
+   #time_end_mean <- Sys.time()
+   #cat("Computational cost of the Procrustes mean:") 
+   #print(time_end_mean - time_ini_mean)
+  #}
+ 
+ 
   #STEP 2: Update the cluster centres to be the averages of points contained within them.
   #Check to see if there is any empty cluster at this stage:
   for(l in 1 : K){
@@ -96,7 +116,8 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
   for(l in 1 : K){
    aa = nc[l] 
    meanshapes[,,l] = procGPA(dg[, , ic1 == l], distances = T, pcaoutput = T)$mshape
-
+   
+   
    #Initialize AN1, AN2, ITRAN and NCP.
    #AN1(L) = NC(L) / (NC(L) - 1)
    #AN2(L) = NC(L) / (NC(L) + 1)
@@ -272,7 +293,9 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
  }#The niter loop ends here.
 
  if(simul){
-  return(list(compTime=comp_time,AllRate=vect_all_rate))
+  dimnames(copt) <- NULL
+  return(list(ic1=ic1_opt,copt=copt,vopt=vopt,compTime=comp_time,
+              AllRate=vect_all_rate))
  }else{
    return(list(ic1=ic1_opt,copt=copt,vopt=vopt))
   }

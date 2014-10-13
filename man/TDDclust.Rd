@@ -7,7 +7,7 @@ Trimmed clustering based on L1 data depth
 This is the trimmed version of the clustering algorithm based on the L1 depth proposed by Rebecka Jornsten (2004).  She segments all the observations in clusters, and assigns to each point z in the data space, the L1 depth value regarding its cluster. A trimmed procedure is incorporated to remove the more extreme individuals of each cluster (those one with the lowest depth values), in line with \code{\link{trimowa}}.
 }
 \usage{
-TDDclust(x,K,lambda,Th,A,T0,alpha,lplot,Trimm,data1)
+TDDclust(x,K,lambda,Th,A,T0,alpha,Trimm,data1)
 }
 \arguments{
 \item{x}{
@@ -31,14 +31,11 @@ Simulated annealing parameter. It is the current temperature in the simulated an
 \item{alpha}{
 Simulated annealing parameter. It is the decay rate, default 0.9. 
 }
-\item{lplot}{
-Tracking convergence, default 0.
-}
 \item{Trimm}{
-Proportion of no accommodated sample.
+Proportion of non-accommodated sample.
 }
 \item{data1}{
-The same data frame as \emph{x}, used to incorporate the trimmed observations to the rest of them for the next iteration. 
+The same data frame as \emph{x}, used to incorporate the trimmed observations into the rest of them for the next iteration. 
 }
 }
 \value{
@@ -48,7 +45,7 @@ A list with the following elements:
 
 \emph{Y}: The multivariate median cluster representatives 
 
-\emph{DD}: Depth values of the observations.
+\emph{DD}: Depth values of the observations (only if there are trimmed observations).
 
 \emph{Cost}: Final value of the optimal partition.
 
@@ -67,23 +64,20 @@ This function has been defined from the original functions developed by Rebecka 
 }
 \examples{
 \dontrun{
-dataDef <- dataDemo[1:50,c(2,3,5)] #In the interests of simplicity of the computation involved.
-data1 <- dataDemo[1:50,c(2,3,5)]
+dataDef <- dataDemo[1 : 25, c(2, 3, 5)] #In the interests of simplicity of the computation involved.
+data1 <- dataDemo[1 : 25, c(2, 3, 5)]
 
-K=3     ; lambda=0.5    ; Th=0; 
-A=5     ; T0=0          ; alpha=.9   
-lplot=0 ; percTrimm=0.1     
+K <- 3 ; percTrimm <- 0.01 ; lambda <- 0.5 ; A <- 5
+Th <- 0 ; T0 <- 0 ; alpha <- 0.9
 
-Dout <- TDDclust(x=dataDef,K=K,lambda=lambda,Th=Th,A=A,T0=T0,alpha=alpha,
-                 lplot=lplot,Trimm=percTrimm,data1=data1) 
+set.seed(2014)
+Dout <- TDDclust(x = dataDef, K = K, lambda = lambda, Th = Th, A = A,
+                 T0 = T0, alpha = alpha, Trimm = percTrimm, data1 = data1)
 
-table(Dout$NN[1,]) 
-
+table(Dout$NN[1,])
 Dout$Cost
 Dout$klBest
-
 Dout$indivTrimmed
-dataDef[Dout$indivTrimmed,]
 }
 }
 \keyword{array}

@@ -4,7 +4,7 @@
 Medoids representation
 }
 \description{
-This function represents the scatter plots of bust circumference against other selected variable (chest, hip, neck to ground or waist) jointly with the medoids obtained for each bust class provided by either \code{\link{trimowa}} or \code{\link{hipamAnthropom}}. In addition, the prototypes defined by the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals can be also displayed.
+This function represents the scatter plots of bust circumference against other selected variable (chest, hip, neck to ground or waist) jointly with the medoids obtained for each bust class provided by either \code{\link{trimowa}} or \code{\link{hipamAnthropom}}. In addition, the prototypes defined by the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals can be also displayed.
 }
 \usage{
 plotMedoids(x,medoids,nsizes,bustVariable,variable,color,xlim,ylim,title,EN)
@@ -17,7 +17,7 @@ Data frame. It should contain the chest, neck to ground, waist, hip and bust mea
 Medoids i.e., typical persons within the sample, obtained with \code{\link{trimowa}} or \code{\link{hipamAnthropom}}.
 }
 \item{nsizes}{
-Number of subsets (classes), into the database is segmented. In our approach, the whole anthropometric Spanish survey is segmented into twelve bust segments, according to the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals.
+Number of subsets (classes), into the database is segmented. In our approach, the whole anthropometric Spanish survey is segmented into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals.
 }
 \item{bustVariable}{
 Bust variable.
@@ -55,7 +55,7 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representat
 European Committee for Standardization. Size designation of clothes. Part 3: Measurements and intervals. (2005).
 }
 \note{
-As mentioned, this function is especially defined for the sizes established by the European standard to sizing system. Part 3: Measurements and intervals. In order to use this function with other standard, this function must be adapted. 
+As mentioned, this function is especially defined for the sizes established by the European standard on sizing systems. Part 3: Measurements and intervals. In order to use this function with other standard, this function must be adapted. 
 }
 \author{
 Guillermo Vinue

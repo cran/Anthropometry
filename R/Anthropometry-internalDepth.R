@@ -1,3 +1,5 @@
+assign("last.warning", NULL, envir = baseenv())
+
 is.empty <- function(x, mode=NULL){
   if (is.null(mode)) mode <- class(x)
   identical(vector(mode,1),c(x,vector(class(x),1)))
@@ -415,7 +417,15 @@ NNDDVQE <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
   } 
     
   aux <- sort(NNold$Kmata)
-  phi <- aux[abs(round(Trimm*(dim(X)[1])))]
+  
+  tri <- Trimm*(dim(X)[1])
+  if(tri < 1){
+   tri1 <- ceiling(tri)  
+  }else{
+    tri1 <- round(tri)
+  }
+  
+  phi <- aux[abs(tri1)]
   trimm <- which(NNold$Kmata <= phi)
   cat("Trimmed women: ")
   print(trimm)
@@ -509,6 +519,11 @@ NNDDVQE <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
       Del <- mean(Kmataa) - NNold$Cost
     }
     
+    if(Del == "NaN"){
+     cat("This partition cannot be evaluated \n")  
+     break
+    }
+    
     if((kl-1) == 0){
       cat("Value of the previous partition C(I_1^{K}):")
       print(mean(Kmata))
@@ -597,8 +612,17 @@ NNDDVQE <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
     return(list(Iuse=Iuse,ct=ct,NN=NN,DDi=DDia,DD=DDa,pcc=pcc,Kmata=Kmata,Kmat0=Kmat0,Nuvec=Nuvec,Kmatb=Kmatb,
                 prs=prs,stopnow=stopnow,Cost=NNold$Cost,trimmed=trimm,improv=improv))
   }else if(max(change) == 0 | is.null(change)){
+    NNold_old <- NNold_old
+    if((kl-1) == 0){
+      NNold_old$Cost <- mean(Kmata)
+    }else{
+      NNold_old$Cost <- NNold$Cost
+     } 
+    NNold_old$ct <- ct
+    NNold_old$trimmed <- trimm
+    NNold_old$improv <- improv
     return(NNold_old)
-  } 
+   } 
 } 
 
 
@@ -619,7 +643,15 @@ NNDDVQEstart <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
   
   
   aux <- sort(NNold$Kmata)
-  phi <- aux[abs(round(Trimm*(dim(X)[1])))]
+  
+  tri <- Trimm*(dim(X)[1])
+  if(tri < 1){
+    tri1 <- ceiling(tri)  
+  }else{
+    tri1 <- round(tri)
+  }
+  
+  phi <- aux[abs(tri1)]
   trimm <- which(NNold$Kmata <= phi)
   cat("Trimmed women: ")
   print(trimm)
@@ -712,6 +744,11 @@ NNDDVQEstart <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
       Del <- mean(Kmataa) - mean(Kmata)
     }else{
       Del <- mean(Kmataa) - NNold$Cost
+    }
+    
+    if(Del == "NaN"){
+      cat("This partition cannot be evaluated \n")  
+      break
     }
     
     if((kl-1) == 0){
@@ -822,6 +859,16 @@ NNDDVQEstart <- function(X,MM,prT,lambda,NNold,Km,Th,Trimm,kl,NNold_old){
     return(list(Iuse=Iuse,ct=ct,NN=NN,DDi=DDia,DD=DDa,pcc=pcc,Kmata=Kmata,Kmat0=Kmat0,Nuvec=Nuvec,Kmatb=Kmatb,
                 prs=prs,stopnow=stopnow,Cost=NNold$Cost,trimmed=trimm,improv=improv,T0=T0))
   }else if(max(change) == 0 | is.null(change)){
+    NNold_old <- NNold_old
+    if((kl-1) == 0){
+      NNold_old$Cost <- mean(Kmata)
+    }else{
+      NNold_old$Cost <- NNold$Cost
+    } 
+    NNold_old$ct <- ct
+    NNold_old$trimmed <- trimm
+    NNold_old$improv <- improv
+    NNold_old$T0 <- T0
     return(NNold_old)
   }
 }

@@ -1,0 +1,13 @@
+Package: Anthropometry
+----------------------
+
+Version: 1.1 [2014-10-13]
+* The archetypoids and stepArchetypoids functions return the alpha coefficients for the optimal set of archetypoids.
+* The LloydShapes and HartiganShapes functions return the optimal clustering, optimal centers and optimal objective function also when a simulation study is carried out.
+* The TDDclust function notifies if the optimal partition is obtained with PAM. 
+* The vignette has been improved by pointing out the consequences of choosing different argument values in Section 5, by adding a new Section 6 to guide users in their choice of the different methods presented and by thoroughly checking the English.
+* Submitted to CRAN.
+
+Version: 1.0 [2014-03-07]
+* First package version.
+* Submitted to CRAN.

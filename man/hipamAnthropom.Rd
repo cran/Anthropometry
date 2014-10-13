@@ -18,13 +18,13 @@ hipamAnthropom(x,asw.tol=0,maxsplit=5,local.const=NULL,orness=0.7,type,
 }
 \arguments{
 \item{x}{
-Data frame. In our approach, this is each one of the subframes originated after segmenting the whole anthropometric Spanish survey in twelve bust segments, according to the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
+Data frame. In our approach, this is each of the subframes originated after segmenting the whole anthropometric Spanish survey into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
 \item{asw.tol}{
 If this value is given, a tolerance or penalty can be introduced (asw.tol > 0 or asw.tol < 0, respectively) in the branch splitting procedure. Default value (0) is maintained. See page 154 of Wit et al. (2004) for more details.
 }
 \item{maxsplit}{
-The maximum number of clusters that any cluster can be divided when searching for the best clustering.
+The maximum number of clusters that any cluster can be divided into when searching for the best clustering.
 }
 \item{local.const}{
 If this value is given (meaningful values are those between -1 and 1), a proposed partition is accepted only if the associated asw is greater than this constant. Default option for this argument is maintained, that is to say, this value is ignored. See page 154 of Wit et al. (2004) for more details.
@@ -36,7 +36,7 @@ Quantity to measure the degree to which the aggregation is like a min or max ope
 Type of HIPAM algorithm to be used. The possible options are 'MO' (for $HIPAM_{MO}$) and 'IMO' (for $HIPAM_{IMO}$).
 }
 \item{ahVect}{
-Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be other according to the variables considered.
+Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
 }
 \item{...}{
 Other arguments that may be supplied to the internal functions of the HIPAM algorithms.

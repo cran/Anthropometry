@@ -22,16 +22,16 @@ Data matrix. Each row corresponds to an observation and each column corresponds 
 This is a penalization added to solve the convex least squares problems regarding the minimization problem to estimate archetypoids, see Eugster et al. (2009). Default value is 200.
 }
 \item{step}{
-Logical value. If TRUE, the archetypoid algorithm is executed repeatedly within \code{\link{stepArchetypoids}}. Therefore, this function requires the next argument \code{init} (but neither the \code{ArchObj} nor the \code{nearest} arguments) that specifies the initial vector of archetypoids, which has been already computed within \code{\link{stepArchetypoids}}. If FALSE, the archetypoid algorithm is executed once. In this case, the \code{ArchObj} and \code{nearest} arguments are required to compute the initial vector of archetypoids.
+Logical value. If TRUE, the archetypoid algorithm is executed repeatedly within \code{\link{stepArchetypoids}}. Therefore, this function requires the next argument \code{init} (but neither the \code{ArchObj} nor the \code{nearest} arguments) that specifies the initial vector of archetypoids, which has already been computed within \code{\link{stepArchetypoids}}. If FALSE, the archetypoid algorithm is executed once. In this case, the \code{ArchObj} and \code{nearest} arguments are required to compute the initial vector of archetypoids.
 }
 \item{init}{
-Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. It is computed within \code{\link{stepArchetypoids}}. See next \code{nearest} argument to know how this vector is calculated.
+Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. It is computed within \code{\link{stepArchetypoids}}. See \code{nearest} argument below for an explanation of how this vector is calculated.
 }
 \item{ArchObj}{
 The list returned by the \code{\link{stepArchetypesMod}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. Required when \code{step=FALSE}.
 }
 \item{nearest}{
-Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. Required when \code{step=FALSE}. This argument is a logical value: if TRUE (FALSE), the \emph{nearest} (\emph{which}) vector is calculated. Both vectors contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2014), archetypes are computed after running the archetype algorithm twenty times). The \emph{nearest} vector is calculated by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The \emph{which} vector is calculated by identifying consecutively the individual with the maximum value of alpha for each archetype, until getting the number of archetypes defined. It is used in Eugster (2012). 
+Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. Required when \code{step=FALSE}. This argument is a logical value: if TRUE (FALSE), the \emph{nearest} (\emph{which}) vector is calculated. Both vectors contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2014), archetypes are computed after running the archetype algorithm twenty times). The \emph{nearest} vector is calculated by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The \emph{which} vector is calculated by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). 
 }
 \item{sequ}{
 Logical value. It indicates whether a sequence of archetypoids (TRUE) or only a single number of them (FALSE) is computed. It is determined by the number of archetypes computed by means of \code{\link{stepArchetypesMod}}.
@@ -51,6 +51,8 @@ A list with the following elements:
 \emph{rss}: Residual sum of squares corresponding to the final vector of k archetypoids.
 
 \emph{archet_ini}: Vector of initial archetypoids (\emph{nearest} or \emph{which}).
+
+\emph{alphas}: Alpha coefficients for the optimal vector of archetypoids.
 }
 \references{
 Vinue, G., Epifanio, I., and Alemany, S., (2014). Archetypoids: a new approach to define representative archetypal data. \emph{Submitted for publication}.

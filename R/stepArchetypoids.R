@@ -38,5 +38,5 @@ stepArchetypoids <- function(i,nearest,data,ArchObj){
   
   res <- archetypoids(i,data,huge=200,step=TRUE,init=ini_arch)
   cat("Done!") 
-  return(list(res[[1]],res[[2]],ini_arch))
+  return(list(archet = res[[1]], rss = res[[2]], archet_ini = ini_arch, alphas = res[[4]]))
 }

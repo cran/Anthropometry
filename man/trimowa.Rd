@@ -4,14 +4,14 @@
 Trimmed PAM with OWA operators
 }
 \description{
-This is the methodology developed in Ibanez et al. (2012) to define an efficient apparel sizing system based on clustering techniques jointly with OWA operators. In our approach, we apply the trimmed k-medoids algorithm (\code{\link{trimmedoid}}) to the first twelve bust classes according to the sizes defined in the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals.
+This is the methodology developed in Ibanez et al. (2012) to define an efficient apparel sizing system based on clustering techniques jointly with OWA operators. In our approach, we apply the trimmed k-medoids algorithm (\code{\link{trimmedoid}}) to the first twelve bust classes according to the sizes defined in the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals.
 }
 \usage{
 trimowa(x,w,K,alpha,niter,Ksteps,ahVect=c(23,28,20,25,25))
 }
 \arguments{
 \item{x}{
-Data frame. In our approach, this is each one of the subframes originated after segmenting the whole anthropometric Spanish survey in twelve bust segments, according to the European standard to sizing system. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
+Data frame. In our approach, this is each of the subframes originated after segmenting the whole anthropometric Spanish survey into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
 \item{w}{
 The aggregation weights of the OWA operators. They are computed with the \code{\link{WeightsMixtureUB}}.
@@ -29,7 +29,7 @@ Number of random initializations.
 Steps per initialization.
 }
 \item{ahVect}{
-Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be other according to the variables considered.
+Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
 }
 }
 \value{
