@@ -1,14 +1,15 @@
-stepArchetypesMod <- function(data,k,nrep=3,verbose=TRUE){
+stepArchetypesMod <- function(data,numArch,numRep=3,verbose=TRUE){
   
   mycall <- match.call()
   as <- list()
-  for (i in 1:length(k)) {
+  for (i in 1:length(numArch)) {
     as[[i]] <- list()
     class(as[[i]]) <- "repArchetypes"
-    for (j in seq_len(nrep)) {
+    for (j in seq_len(numRep)) {
       if (verbose) 
-       cat("\n*** k=", k[i], ", rep=", j, ":\n", sep = "")
-       as[[i]][[j]] <- archetypes(data, k = k[i], family = archetypesFamily("original",scalefn = no.scalefn,
+       cat("\n*** numArch=", numArch[i], ", rep=", j, ":\n", sep = "")
+       as[[i]][[j]] <- archetypes(data, k = numArch[i], 
+                                  family = archetypesFamily("original",scalefn = no.scalefn,
                                                                             rescalefn = no.rescalefn))
     }
   }

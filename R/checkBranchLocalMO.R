@@ -1,16 +1,17 @@
-checkBranchLocalMO <- function(tree,x,i,maxsplit,asw.tol,local.const,orness,type,...){
- if (is.vector(x)){
+checkBranchLocalMO <- function(tree,data,i,maxsplit,asw.tol,local.const,orness,
+                               type, ah, verbose, ...){
+ if (is.vector(data)){
   proposal <- list(reject = TRUE,tree = -1)
  }else{
-   if(ncol(x) <= 2){
+   if(ncol(data) <= 2){
     proposal <- list(reject = TRUE,tree = -1)
    }else{
      if(sum(tree$clustering == i) <= 2){ #First stopping criteria.
       proposal <- list(tree=tree,reject=TRUE)
      }else{
        which.x <- (tree$clustering == i)
-       xi <- x[which.x,]
-       xi.ps <- getBestPamsamMO(xi,maxsplit,orness,type,...)
+       xi <- data[which.x,]
+       xi.ps <- getBestPamsamMO(xi,maxsplit,orness,type,ah,verbose,...)
         if(is.null(local.const)){
          n.sub.clust <- xi.ps$num.of.clusters
          asw.vec <- rep(NA, n.sub.clust)
@@ -19,7 +20,7 @@ checkBranchLocalMO <- function(tree,x,i,maxsplit,asw.tol,local.const,orness,type
             asw.vec[j] <- 0
            }else{
              xij <- xi[xi.ps$clustering == j,]
-             asw.vec[j] <- getBestPamsamMO(xij,maxsplit,orness,type,...)$asw
+             asw.vec[j] <- getBestPamsamMO(xij,maxsplit,orness,type,ah,verbose,...)$asw
             }
            }
             if(xi.ps$asw > mean(asw.vec) - asw.tol){ #Second stopping criteria.

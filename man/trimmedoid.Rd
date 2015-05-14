@@ -4,26 +4,29 @@
 Trimmed k-medoids algorithm
 }
 \description{
-This is the trimmed k-medoids algorithm. It is used within \code{\link{trimowa}}. It is analogous to k-medoids but a proportion alpha of observations is discarded by the own procedure (the trimmed observations are self-determined by the data). Furthermore, the trimmed k-medoids is analogous to trimmed k-means. An algorithm for computing trimmed k-means can be found in Garcia-Escudero et al. (2003). See Ibanez et al. (2012) for more details.
+This is the trimmed k-medoids algorithm. It is used within \code{\link{trimowa}}. It is analogous to k-medoids but a proportion alpha of observations is discarded by the own procedure (the trimmed observations are self-determined by the data). Furthermore, the trimmed k-medoids is analogous to trimmed k-means. An algorithm for computing trimmed k-means can be found in Garcia-Escudero et al. (2003). See Ibanez et al. (2012) for more details. Note that in the generic name of the k-medoids algorithm, k refers to the number of clusters to search for. To be more specific in the R code, k is referred to as \code{numClust}, see next section \emph{arguments}.
 }
 \usage{
-trimmedoid(D,K,alpha,niter,Ksteps)
+trimmedoid(D,numClust,alpha,niter,algSteps=7,verbose)
 }
 \arguments{
-  \item{D}{
+\item{D}{
 Dissimilarity matrix.
 }
-  \item{K}{
+\item{numClust}{
 Number of clusters.
 }
-  \item{alpha}{
+\item{alpha}{
 Proportion of trimmed sample.
 }
-  \item{niter}{
-Number of random initializations.
+\item{niter}{
+Number of random initializations (iterations).
 }
-  \item{Ksteps}{
-Steps per initialization.
+\item{algSteps}{
+Number of steps of the algorithm per initialization. Default value is 7.
+}
+\item{verbose}{
+A logical specifying whether to provide descriptive output about the running process.
 }
 }
 \value{
@@ -52,25 +55,27 @@ Garcia-Escudero, L. A., and Gordaliza, A., (1999). Robustness properties of k-me
 Irene Epifanio
 }
 \seealso{
-\code{\link{dataDemo}}, \code{\link{WeightsMixtureUB}}, \code{\link{GetDistMatrix}}, \code{\link{trimowa}}, \code{\link{trimmedLloydShapes}}
+\code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimowa}}, \code{\link{trimmedLloydShapes}}
 }
 \examples{
 \dontrun{
-#Loading the data:
-#Example for the first bust class:
-data = dataDemo[(dataDemo$bust >= 74) & (dataDemo$bust < 78), ]   
-num.variables <- dim(data)[2]
+#Data loading:
+dataTrimowa <- sampleSpanishSurvey
+bust <- dataTrimowa$bust
+#First bust class:
+data <- dataTrimowa[(bust >= 74) & (bust < 78), ]   
+numVar <- dim(dataTrimowa)[2]
 
 #Weights calculation:
 orness <- 0.7
-w <- WeightsMixtureUB(orness,num.variables)
+weightsTrimowa <- weightsMixtureUB(orness,numVar)
 
 #Constants required to specify the distance function:
-K <- 3
-bh <- (apply(as.matrix(log(data)), 2, range)[2,] 
-       - apply(as.matrix(log(data)), 2, range)[1,]) / ((K-1) * 8) 
+numClust <- 3
+bh <- (apply(as.matrix(log(data)),2,range)[2,] 
+       - apply(as.matrix(log(data)),2,range)[1,]) / ((numClust-1) * 8) 
 bl <- -3 * bh
-ah <- c(28,20,30,25,23)
+ah <- c(23,28,20,25,25)
 al <- 3 * ah
 
 #Data processing.
@@ -79,13 +84,11 @@ num.variables <- dim(data)[2]
 datam <- as.matrix(data)
 datat <- aperm(datam, c(2,1))                     
 dim(datat) <- c(1,num.persons*num.variables)   
-rm(datam)
 
 #Dissimilarity matrix:
-D <- GetDistMatrix(datat,num.persons,num.variables,w,bl,bh,al,ah,T)
-rm(datat)
+D <- getDistMatrix(datat,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,TRUE)
 
-trimmedoid(D,K,0.01,6,7)
+trimmedoid(D,numClust,0.01,6,7,TRUE)
 }
 }
 \keyword{math}

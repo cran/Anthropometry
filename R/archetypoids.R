@@ -1,12 +1,12 @@
-archetypoids <- function(i,data,huge=200,step,init,ArchObj,nearest,sequ,aux){
+archetypoids <- function(numArchoid,data,huge=200,step,init,ArchObj,nearest="cand_ns",sequ,aux){
   
  if(!step){ 
   N = dim(data)[1]
   
   if(sequ){
-    ai <- archetypes::bestModel(ArchObj[[i]])
+    ai <- archetypes::bestModel(ArchObj[[numArchoid]])
   }else{
-    ai <- archetypes::bestModel(ArchObj[[i-aux]])  
+    ai <- archetypes::bestModel(ArchObj[[numArchoid-aux]])  
   }
   
   if(is.null(archetypes::parameters(ai))){
@@ -18,10 +18,10 @@ archetypoids <- function(i,data,huge=200,step,init,ArchObj,nearest,sequ,aux){
     diag(mdras) = 1e+11
    }
    
-   if(nearest){
-     ini_arch <- sapply(1:i,indivNearest,i,mdras) 
+   if(nearest == "cand_ns"){
+     ini_arch <- sapply(seq(length = numArchoid), nearestToArchetypes, numArchoid, mdras) 
     
-    if( all(ini_arch > i) == FALSE){
+    if( all(ini_arch > numArchoid) == FALSE){
      k=1
      neig <- knn(data, archetypes::parameters(ai), 1:N, k=k)
      indices1 <- attr(neig, "nn.index")
@@ -37,9 +37,17 @@ archetypoids <- function(i,data,huge=200,step,init,ArchObj,nearest,sequ,aux){
      }
     }
     
-   }else{
+   }else if(nearest == "cand_alpha"){
      ini_arch <- apply(coef(ai, "alphas"), 2, which.max) 
+    }else if(nearest == "cand_beta"){
+      ini_arch <- c()
+      for (j in 1:numArchoid){
+        ini_arch[j] <- which.max(ai$betas[j,])
+      }
+    }else{
+      stop("The nearest vector must be cand_ns, cand_alpha or cand_beta")
     }
+      
  }else{
    ini_arch <- init
   } 
@@ -50,7 +58,7 @@ archetypoids <- function(i,data,huge=200,step,init,ArchObj,nearest,sequ,aux){
    zs <- x_gvv[,ini_arch] 
    zs <- as.matrix(zs)
   
-   alphas <- matrix(0, nrow = i, ncol = n)
+   alphas <- matrix(0, nrow = numArchoid, ncol = n)
    for (j in 1 : n){
     alphas[, j] = coef(nnls(zs, x_gvv[,j]))
    }
@@ -58,7 +66,7 @@ archetypoids <- function(i,data,huge=200,step,init,ArchObj,nearest,sequ,aux){
    resid <- zs %*% alphas - x_gvv
    rss_ini <- max(svd(resid)$d) / n
   
-  res_def <- swap(ini_arch, rss_ini, huge, i, x_gvv, n)
+  res_def <- swap(ini_arch, rss_ini, huge, numArchoid, x_gvv, n)
   
   return(res_def)
 }

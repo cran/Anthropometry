@@ -11,13 +11,13 @@ In this version of HIPAM, called $HIPAM_{IMO}$, there are three different stoppi
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
 \usage{
-checkBranchLocalIMO(tree,x,i,maxsplit,asw.tol,local.const,orness,type,...)
+checkBranchLocalIMO(tree,data,i,maxsplit,asw.tol,local.const,orness,type,ah,verbose,...)
 }
 \arguments{
 \item{tree}{
 The clustering tree being defined.
 }
-\item{x}{
+\item{data}{
 Data to be clustered.
 }
 \item{i}{
@@ -33,10 +33,16 @@ If this value is given, a tolerance or penalty can be introduced (asw.tol > 0 or
 If this value is given (meaningful values are those between -1 and 1), a proposed partition is accepted only if the associated asw is greater than this constant. Default option for this argument is maintained, that is to say, this value is ignored. See page 154 of Wit et al. (2004) for more details.
 }
 \item{orness}{
-Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{WeightsMixtureUB}} and \code{\link{GetDistMatrix}}.
+Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
 Option 'IMO' for using $HIPAM_{IMO}$.
+}
+\item{ah}{
+Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
+}
+\item{verbose}{
+Boolean variable (TRUE or FALSE) to indicate whether to report information on progress.
 }
 \item{...}{
 Other arguments that may be supplied.

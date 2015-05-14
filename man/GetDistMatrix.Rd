@@ -1,34 +1,34 @@
-\name{GetDistMatrix}
-\alias{GetDistMatrix}
+\name{getDistMatrix}
+\alias{getDistMatrix}
 \title{
 Dissimilarity matrix between individuals and prototypes
 }
 \description{
 In the definition of a sizing system, a distance function allows us to represent mathematically the idea of garment fit and it is a key element to quantify the misfit between an individual and the prototype.
 
-This function computes the dissimilarity defined in McCulloch et al. (1998), which is used in \code{\link{trimowa}} and \code{\link{hipamAnthropom}}. For more details, see also Ibanez et al. (2012).
+This function computes the dissimilarity defined in McCulloch et al. (1998), which is used in \code{\link{trimowa}} and \code{\link{hipamAnthropom}}. For more details, see also Ibanez et al. (2012) and Vinue et al. (2013).
 }
 \usage{
-GetDistMatrix(x,np,nv,w,bl,bh,al,ah,progress)
+getDistMatrix(data,np,nv,w,bl,bh,al,ah,verbose)
 }
 \arguments{
-  \item{x}{
+\item{data}{
 Data vector.
 }
-  \item{np}{
+\item{np}{
 Number of observations in the database.
 }
-  \item{nv}{
+\item{nv}{
 Number of variables in the database.
 }
-  \item{w}{
-Weights for the OWA operator computed by means of \code{\link{WeightsMixtureUB}}.
+\item{w}{
+Weights for the OWA operator computed by means of \code{\link{weightsMixtureUB}}.
 }
-  \item{bl,bh,al,ah}{
+\item{bl,bh,al,ah}{
 Constants required to specify the distance function.
 }
-  \item{progress}{
-Boolean variable (TRUE or FALSE) to indicate whether the progress inform must be displayed on the screen.
+\item{verbose}{
+Boolean variable (TRUE or FALSE) to indicate whether to report information on progress.
 }
 }
 \details{
@@ -47,7 +47,7 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representat
 Leon, T., Zuccarello, P., Ayala, G., de Ves, E., and Domingo, J., (2007), Applying logistic regression to relevance feedback in image retrieval systems, \emph{Pattern Recognition} \bold{40}, 2621--2632.
 }
 \note{
-This function requires a C code called cast.c. In order to use  \code{\link{GetDistMatrix}} outside the package, the dynamic-link library is called by means of the sentence \code{dyn.load("cast.so")} (In Windows, it would be \code{dyn.load("cast.dll")}). 
+This function requires a C code called cast.c. In order to use  \code{\link{getDistMatrix}} outside the package, the dynamic-link library is called by means of the sentence \code{dyn.load("cast.so")} (In Windows, it would be \code{dyn.load("cast.dll")}). 
 }
 \author{
 Juan Domingo
@@ -58,20 +58,20 @@ Juan Domingo
 \examples{
 \dontrun{
 #Data loading:
-dataDef <- dataDemo
-bust <- dataDef$bust
+dataTrimowa <- sampleSpanishSurvey
+bust <- dataTrimowa$bust
 #First bust class:
-data <- dataDef[(bust >= 74) & (bust < 78), ]   
-num.variables <- dim(data)[2]
+data <- dataTrimowa[(bust >= 74) & (bust < 78), ]   
+numVar <- dim(dataTrimowa)[2]
 
 #Weights calculation:
 orness <- 0.7
-w <- WeightsMixtureUB(orness,num.variables)
+weightsTrimowa <- weightsMixtureUB(orness,numVar)
 
 #Constants required to specify the distance function:
-K <- 3
+numClust <- 3
 bh <- (apply(as.matrix(log(data)),2,range)[2,] 
-       - apply(as.matrix(log(data)),2,range)[1,]) / ((K-1) * 8) 
+       - apply(as.matrix(log(data)),2,range)[1,]) / ((numClust-1) * 8) 
 bl <- -3 * bh
 ah <- c(23,28,20,25,25)
 al <- 3 * ah
@@ -84,7 +84,7 @@ datat <- aperm(datam, c(2,1))
 dim(datat) <- c(1,num.persons*num.variables)   
 
 #Dissimilarity matrix:
-D <- GetDistMatrix(datat,num.persons,num.variables,w,bl,bh,al,ah,TRUE)
+D <- getDistMatrix(datat,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,TRUE)
 
 }
 }

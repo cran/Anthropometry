@@ -7,35 +7,35 @@ Run the archetypoid algorithm several times
 Execute the archetypoid algorithm repeatedly. It is inspired by the \code{\link{stepArchetypes}} function of the \pkg{archetypes} R package.
 }
 \usage{
-stepArchetypoids(i,nearest,data,ArchObj)
+stepArchetypoids(numArchoid,nearest="cand_ns",data,ArchObj)
 }
 \arguments{
-\item{i}{
+\item{numArchoid}{
 Number of archetypoids.
 }
 \item{nearest}{
-Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. This argument is a logical value: if TRUE (FALSE), the \emph{nearest} (\emph{which}) vector is calculated. Both vectors contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2014), archetypes are computed after running the archetype algorithm twenty times). The \emph{nearest} vector is calculated by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The \emph{which} vector is calculated by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). 
+Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. This initial vector contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2015), archetypes are computed after running the archetype algorithm twenty times). This argument is a string vector with three different possibilities. The first and default option is "cand_ns" and allows us to calculate the nearest individuals by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The second option is "cand_alpha" and allows us to calculate the nearest individuals by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). The third and final option is "cand_beta" and allows us to calculate the nearest individuals by identifying the individuals with the maximum beta value for each archetype, i.e. the major contributors in the generation of the archetypes.
 }
 \item{data}{
 Data matrix. Each row corresponds to an observation and each column corresponds to an anthropometric variable. All variables are numeric.
 }
 \item{ArchObj}{
-The list returned by the \code{\link{stepArchetypesMod}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. 
+The list object returned by the \code{\link{stepArchetypesMod}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. 
 }
 }
 \value{
 A list with the following elements:
 
-\emph{archet}: Final vector of k archetypoids.
+\emph{archet}: Final vector of \code{numArchoid} archetypoids.
 
-\emph{rss}: Residual sum of squares corresponding to the final vector of k archetypoids.
+\emph{rss}: Residual sum of squares corresponding to the final vector of \code{numArchoid} archetypoids.
 
-\emph{archet_ini}: Vector of initial archetypoids (\emph{nearest} or \emph{which}).
+\emph{archet_ini}: Vector of initial archetypoids (\emph{cand_ns}, \emph{cand_alpha} or \emph{cand_beta}).
 
 \emph{alphas}: Alpha coefficients for the optimal vector of archetypoids.
 }
 \references{
-Vinue, G., Epifanio, I., and Alemany, S., (2014). Archetypoids: a new approach to define representative archetypal data. \emph{Submitted for publication}.
+Vinue, G., Epifanio, I., and Alemany, S., (2015). Archetypoids: a new approach to define representative archetypal data, \emph{Computational Statistics and Data Analysis} \bold{87}, 102--115.
 
 Cutler, A., and Breiman, L., (1994). Archetypal Analysis, \emph{Technometrics} \bold{36}, 338--347.
 
@@ -56,36 +56,30 @@ Irene Epifanio and Guillermo Vinue
 }
 \examples{
 \dontrun{
-#Cockpit design problem:
-m <- dataUSAF
+#COCKPIT DESIGN PROBLEM:
+USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
 #Variable selection:
-sel <- c(48,40,39,33,34,36)
+variabl_sel <- c(48, 40, 39, 33, 34, 36)
 #Changing to inches: 
-mpulg <- m[,sel] / (10 * 2.54)
+USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
 
 #Data preprocessing:
-preproc <- accommodation(mpulg,TRUE,0.95,TRUE)
+USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
 
-#Computation of archetypes and archetypoids:
 #For reproducing results, seed for randomness:
 set.seed(2010) 
-#Run archetypes algorithm repeatedly from 1 to numArch archetypes:
-numArch <- 10 ; nrep <- 20
-lass <- stepArchetypesMod(data=preproc$data,k=1:numArch,verbose=FALSE,nrep=nrep)  
+#Run archetype algorithm repeatedly from 1 to numArch archetypes:
+numArch <- 10 ; numRep <- 20
+lass <- stepArchetypesMod(data = USAFSurvey_preproc$data, 
+                          numArch=1:numArch, numRep = numRep, 
+                          verbose = FALSE)
 
 #Run archetypoids algorithm repeatedly from 1 to numArch archetypes:
-for(i in 1:numArch){
-  temp <-  stepArchetypoids(i,TRUE,preproc$data,lass)
-  filename <- paste("res", i, sep="")
-  assign(filename,temp)
-  save(list=c(filename),file=paste(filename, ".RData", sep="")) 
-}  
-
-for(i in 1:numArch){
-  temp <-  stepArchetypoids(i,FALSE,preproc$data,lass)
-  filename <- paste("res", i, "_which",sep="")
-  assign(filename,temp)
-  save(list=c(filename),file=paste(filename, ".RData", sep=""))
+for(numArchoid in 1:numArch){
+ temp <-  stepArchetypoids(numArchoid,nearest="cand_ns",USAFSurvey_preproc$data,lass)
+ filename <- paste("res", numArchoid, sep="")
+ assign(filename,temp)
+ save(list=c(filename),file=paste(filename, ".RData", sep="")) 
 }
 }
 }

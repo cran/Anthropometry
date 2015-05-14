@@ -7,13 +7,13 @@ Trimmed clustering based on L1 data depth
 This is the trimmed version of the clustering algorithm based on the L1 depth proposed by Rebecka Jornsten (2004).  She segments all the observations in clusters, and assigns to each point z in the data space, the L1 depth value regarding its cluster. A trimmed procedure is incorporated to remove the more extreme individuals of each cluster (those one with the lowest depth values), in line with \code{\link{trimowa}}.
 }
 \usage{
-TDDclust(x,K,lambda,Th,A,T0,alpha,Trimm,data1)
+TDDclust(data,numClust,lambda,Th,niter,T0,simAnn,alpha,data1,verbose=TRUE)
 }
 \arguments{
-\item{x}{
+\item{data}{
 Data frame. Each row corresponds to an observation, and each column corresponds to a variable. All variables must be numeric.
 }
-\item{K}{
+\item{numClust}{
 Number of clusters. 
 }
 \item{lambda}{
@@ -22,20 +22,23 @@ Tuning parameter that controls the influence the data depth has over the cluster
 \item{Th}{
 Threshold for observations to be relocated, usually set to 0.
 }
-\item{A}{
-Number of iterations. 
+\item{niter}{
+Number of random initializations (iterations).
 }
 \item{T0}{
 Simulated annealing parameter. It is the current temperature in the simulated annealing procedure.
 }
-\item{alpha}{
+\item{simAnn}{
 Simulated annealing parameter. It is the decay rate, default 0.9. 
 }
-\item{Trimm}{
-Proportion of non-accommodated sample.
+\item{alpha}{
+Proportion of trimmed sample.
 }
 \item{data1}{
-The same data frame as \emph{x}, used to incorporate the trimmed observations into the rest of them for the next iteration. 
+The same data frame as \emph{data}, used to incorporate the trimmed observations into the rest of them for the next iteration. 
+}
+\item{verbose}{
+A logical specifying whether to provide descriptive output about the running process. Default TRUE.
 }
 }
 \value{
@@ -56,7 +59,7 @@ A list with the following elements:
 \references{
 Jornsten R., (2004). Clustering and classification based on the L1 data depth, \emph{Journal of Multivariate Analysis} \bold{90}, 67--89
 
-Vinue, G., and Ibanez, M. V., (2014). \emph{Data depth and Biclustering applied to anthropometric data. Exploring their utility in apparel design}. In progress.
+Vinue, G., and Ibanez, M. V., (2014). \emph{Data depth and Biclustering applied to anthropometric data. Exploring their utility in apparel design}. Technical report.
 }
 \author{
 This function has been defined from the original functions developed by Rebecka Jornsten, which were available freely on
@@ -64,20 +67,24 @@ This function has been defined from the original functions developed by Rebecka 
 }
 \examples{
 \dontrun{
-dataDef <- dataDemo[1 : 25, c(2, 3, 5)] #In the interests of simplicity of the computation involved.
-data1 <- dataDemo[1 : 25, c(2, 3, 5)]
+#In the interests of simplicity of the computation involved, only 25 points are selected:
+dataTDDcl <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]  
+dataTDDcl_aux <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]
 
-K <- 3 ; percTrimm <- 0.01 ; lambda <- 0.5 ; A <- 5
-Th <- 0 ; T0 <- 0 ; alpha <- 0.9
+numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5 
+Th <- 0 ; T0 <- 0 ; simAnn <- 0.9  
 
 set.seed(2014)
-Dout <- TDDclust(x = dataDef, K = K, lambda = lambda, Th = Th, A = A,
-                 T0 = T0, alpha = alpha, Trimm = percTrimm, data1 = data1)
+res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
+                      alpha, dataTDDcl_aux,TRUE) 
 
-table(Dout$NN[1,])
-Dout$Cost
-Dout$klBest
-Dout$indivTrimmed
+prototypes <- anthrCases("anthropometry", "TDDclust", res_TDDcl)
+
+table(res_TDDcl$NN[1,]) 
+res_TDDcl$Cost
+res_TDDcl$klBest
+
+trimmed <- trimmOutl("TDDclust", res_TDDcl)
 }
 }
 \keyword{array}

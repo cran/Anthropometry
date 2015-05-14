@@ -9,12 +9,14 @@ The basic foundation of k-means is that the sample mean is the value that minimi
 The k-means method has been proposed by several scientists in different forms. In computer science and pattern recognition the k-means algorithm is often termed the Lloyd algorithm (see Lloyd (1982)). 
 
 This function is proposed to incorporate a modification to \code{\link{LloydShapes}} in order to make the k-means algorithm robust. Robustness is a property very desirable in a lot of applications. As it is well known, the results of the k-means algorithm can be influenced by outliers and extreme data, or bridging points between clusters. Garcia-Escudero et al. (1999) propose a way of making k-means more robust, which combines the k-means idea with an impartial trimming procedure: a proportion alpha (between 0 and 1) of observations are trimmed (the trimmed observations are self-determined by the data). See also \code{\link{trimmedoid}}.
+
+Note that in the generic name of the k-means algorithm, k refers to the number of clusters to search for. To be more specific in the R code, k is referred to as \code{numClust}, see next section \emph{arguments}.
 }
 \usage{
-trimmedLloydShapes(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,print)
+trimmedLloydShapes(array3D,n,alpha,numClust,algSteps=10,niter=10,stopCr=0.0001,verbose)
 }
 \arguments{
-\item{dg}{
+\item{array3D}{
 Array with the 3D landmarks of the sample objects. Each row corresponds to an observation, and each column corresponds to a dimension (x,y,z).
 }
 \item{n}{
@@ -23,20 +25,20 @@ Number of individuals.
 \item{alpha}{
 Proportion of trimmed sample.
 }
-\item{K}{
+\item{numClust}{
 Number of clusters.
 }
-\item{Nsteps}{
+\item{algSteps}{
 Number of steps per initialization. Default value is 10.
 }
 \item{niter}{
-Number of random initializations. Default value is 10.
+Number of random initializations (iterations). Default value is 10.
 } 
 \item{stopCr}{
 Relative stopping criteria. Default value is 0.0001.
 }
-\item{print}{
-Logical value. If TRUE, some messages associated with the running process are displayed.
+\item{verbose}{
+A logical specifying whether to provide descriptive output about the running process.
 }
 }
 \value{
@@ -57,7 +59,7 @@ A list with the following elements:
 \emph{initials}: Random initial values used in each iteration. These values can be used by \code{\link{HartiganShapes}}.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
 
 Lloyd, S. P., (1982). Least Squares Quantization in PCM, \emph{IEEE Transactions on Information Theory} \bold{28}, 129--137.
 
@@ -78,32 +80,30 @@ Amelia Simo
 }
 \examples{
 \dontrun{
-landmarks1 <- na.exclude(landmarks)
-dim(landmarks1) 
+#CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
+landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+dim(landmarksNoNa) 
 #[1] 574 198 
-(num.points <- (dim(landmarks1)[2]) / 3) 
+numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-landmarks2 <- landmarks1[1:50,] #In the interests of simplicity of the computation involved.
-(n <- dim(landmarks2)[1]) 
+#In the interests of simplicity of the computation involved:
+landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
+(numIndiv <- dim(landmarksNoNa_First50)[1])
 #[1] 50         
     
-dg <- array(0,dim = c(num.points,3,n))
-for(k in 1:n){            
- for(l in 1:3){            
-  dg[,l,k] <-  as.matrix(as.vector(landmarks2[k,][seq(l,
-                   dim(landmarks2)[2]+(l-1),by=3)]),ncol=1,byrow=T)
- }
-}
- 
-K <- 3 ; alpha <- 0.01 ; Nsteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-res <- trimmedLloydShapes(dg,n,alpha,K,Nsteps,niter,stopCr,TRUE)
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
 
-#To identify the trimmed women of the optimal iteration:
-iter_opt <- res$trimmsIter[length(res$trimmsIter)]
-trimm_women <- res$trimmWomen[[iter_opt]][[res$betterNstep]]
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+set.seed(2013)
+res <- trimmedLloydShapes(array3D,numIndiv,alpha,numClust,algSteps,niter,stopCr,TRUE)
 
-#Optimal partition:
-table(res$asig)
+#Optimal partition and prototypes:
+clust <- res$asig 
+table(clust)
+prototypes <- anthrCases("anthropometry", "kmeansProcrustes", res)
+
+#Trimmed individuals:
+trimmed <- trimmOutl("kmeansProcrustes", res)
 }
 }
 \keyword{array}

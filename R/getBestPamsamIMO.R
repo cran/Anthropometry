@@ -1,11 +1,11 @@
-getBestPamsamIMO <- function(x,maxsplit,orness=0.7,type, ...){
+getBestPamsamIMO <- function(data,maxsplit,orness=0.7,type,ah,verbose,...){
 
- if (nrow(x) <= maxsplit){
-  maxsplit <- max(nrow(x) - 1, 2)
+ if (nrow(data) <= maxsplit){
+  maxsplit <- max(nrow(data) - 1, 2)
  }
   
  if(maxsplit > 2){
-  DIST <- ext.dist(x, maxsplit, orness) 
+  DIST <- ext.dist(data, maxsplit, orness, ah, verbose) 
   out <- INCAnumclu(DIST, K = maxsplit, method = "pam", L = NULL, noise = NULL)
    if(max(out$INCAindex[2:maxsplit]) <= 0.2){
     k <- 3
@@ -33,10 +33,21 @@ getBestPamsamIMO <- function(x,maxsplit,orness=0.7,type, ...){
        }
       }
      }
-   x.ps <- pamsam(x, k = k, type = type, DIST = DIST, ...)
+   x.ps <- pamsam(data, k = k, type = type, DIST = DIST, ah = ah, verbose = verbose, ...)
  }else{
-   DIST <- ext.dist(x, maxsplit, orness)
-   x.ps <- pamsam(x, k = 2, type = type, DIST = DIST, ...)
+   DIST <- ext.dist(data, maxsplit, orness, ah, verbose)
+   x.ps <- pamsam(data, k = 2, type = type, DIST = DIST, ah = ah, verbose = verbose,...)
   }
- x.ps
+ 
+ #Object checking:
+ check <- c()
+ for(i in 1:length(x.ps)){
+   check[i] <- exists(names(x.ps)[i], where = x.ps)  
+ }
+ 
+ if("FALSE" %in% check){
+   stop("Any of the objects doesn't exist!. Revise the function.") 
+ }else{
+   return(x.ps) 
+ }
 }

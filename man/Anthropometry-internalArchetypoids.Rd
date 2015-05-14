@@ -13,7 +13,7 @@ Several internal functions to compute and represent archetypes and archetypoids
 This file contains six extra functions. The \code{ahull} function is a helper function to calculate the approximated convex hull. The \code{no.scalefn} and \code{no.rescalefn} functions allow us to use the archetype algorithm without standardizing the data (see \code{\link{stepArchetypesMod}}). The other three functions are called by the archetypoid algorithm (\code{\link{archetypoids}}). All these functions are therefore not solely used.
 }
 \references{
-Vinue, G., Epifanio, I., and Alemany, S., (2014). Archetypoids: a new approach to define representative archetypal data. Submitted for publication.
+Vinue, G., Epifanio, I., and Alemany, S., (2015). Archetypoids: a new approach to define representative archetypal data, \emph{Computational Statistics and Data Analysis} \bold{87}, 102--115.
 
 Epifanio, I., Vinue,, G., and Alemany, S., (2013). Archetypal analysis: contributions for estimating boundary cases in multivariate accommodation problem, \emph{Computers & Industrial Engineering} \bold{64}, 757--765.
 

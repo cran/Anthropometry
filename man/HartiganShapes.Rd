@@ -8,23 +8,24 @@ The basic foundation of k-means is that the sample mean is the value that minimi
 
 The k-means method has been proposed by several scientists in different forms. In computer science and pattern recognition the k-means algorithm is often termed the Lloyd algorithm (see Lloyd (1982)). However, in many texts, the term k-means algorithm is used for certain similar sequential clustering algorithms. Hartigan and Wong (1979) use the term k-means for an algorithm that searches for the locally optimal k-partition by moving points from one cluster to another.
 
-This function allows us to use the Hartigan-Wong version of k-means adapted to deal with 3D shapes. 
+This function allows us to use the Hartigan-Wong version of k-means adapted to deal with 3D shapes. Note that in the generic name of the k-means algorithm, k refers to the number of clusters to search for. To be more specific in the R code, k is referred to as \code{numClust}, see next section \emph{arguments}.
 }
 \usage{
-HartiganShapes(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,initials,print)
+HartiganShapes(array3D,numClust,algSteps=10,niter=10,
+               stopCr=0.0001,simul,initLl,initials,verbose)
 }
 \arguments{
-\item{dg}{
+\item{array3D}{
 Array with the 3D landmarks of the sample objects. Each row corresponds to an observation, and each column corresponds to a dimension (x,y,z).
 }
-\item{K}{
+\item{numClust}{
 Number of clusters.
 }
-\item{Nsteps}{
+\item{algSteps}{
 Number of steps per initialization. Default value is 10.
 }
 \item{niter}{
-Number of random initializations. Default value is 10.
+Number of random initializations (iterations). Default value is 10.
 }
 \item{stopCr}{
 Relative stopping criteria. Default value is 0.0001.
@@ -38,12 +39,12 @@ Logical value. If TRUE, see next argument \code{initials}. If FALSE, they are ne
 \item{initials}{
 If \code{initLl=TRUE}, they are the same random initial values used in each iteration of \code{\link{LloydShapes}}. If \code{initLl=FALSE} this argument must be passed simply as an empty vector.
 }
-\item{print}{
-Logical value. If TRUE, some messages associated with the running process are displayed.
+\item{verbose}{
+A logical specifying whether to provide descriptive output about the running process.
 }
 }
 \details{
-There have been several attempts to adapt the k-means algorithm in the context of the statistical shape analysis, each one adapting a different version of the k-means algorithm (Amaral et al. (2010), Georgescu (2009)). In Vinue, G. et al. (2014) (submitted), it is demonstrated that the Lloyd k-means represents a noticeable reduction in the computation involved when the sample size increases, compared with the Hartigan-Wong k-means. We state that Hartigan-Wong should be used in the shape analysis context only for very small samples.
+There have been several attempts to adapt the k-means algorithm in the context of the statistical shape analysis, each one adapting a different version of the k-means algorithm (Amaral et al. (2010), Georgescu (2009)). In Vinue, G. et al. (2014), it is demonstrated that the Lloyd k-means represents a noticeable reduction in the computation involved when the sample size increases, compared with the Hartigan-Wong k-means. We state that Hartigan-Wong should be used in the shape analysis context only for very small samples.
 }
 \value{
 A list with the following elements:
@@ -67,7 +68,7 @@ If a simulation study is carried out, the following elements are returned:
 \emph{AllRate}: Allocation rate.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
 
 Hartigan, J. A., and Wong, M. A., (1979). A K-Means Clustering Algorithm, \emph{Applied Statistics}, 100--108.
 
@@ -86,58 +87,47 @@ This function is based on the kmns.m file available from \url{http://people.sc.f
 Guillermo Vinue
 }
 \seealso{
-\code{\link{LloydShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarks}}, \code{\link{cube8}}, \code{\link{parallelepiped8}}, \code{\link{cube34}}, \code{\link{parallelepiped34}}, \code{\link{procGPA}}, \code{\link{optraProcrustes}}, \code{\link{qtranProcrustes}}
+\code{\link{LloydShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{procGPA}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
 }
 \examples{
 \dontrun{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
-landmarks1 <- na.exclude(landmarks)
-dim(landmarks1) 
+landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+dim(landmarksNoNa) 
 #[1] 574 198 
-(num.points <- (dim(landmarks1)[2]) / 3) 
+numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-landmarks2 <- landmarks1[1:50,] #In the interests of simplicity of the computation involved.
-(n <- dim(landmarks2)[1]) 
-#[1] 50     
-colnames(landmarks2)[seq(1,198,3)]      
-      
-dg <- array(0,dim = c(num.points,3,n))
-for(k in 1:n){            
- for(l in 1:3){            
-  dg[,l,k] <-  as.matrix(as.vector(landmarks2[k,][seq(l,
-                         dim(landmarks2)[2]+(l-1),by=3)]),ncol=1,byrow=T)
- }
-}
-shapes::plotshapes(dg[,,1]) 
-calibrate::textxy(dg[,1,1],dg[,2,1],labs=1:num.points,cex=0.7)
+#In the interests of simplicity of the computation involved:
+landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
+(numIndiv <- dim(landmarksNoNa_First50)[1])
+#[1] 50         
+    
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
+shapes::plotshapes(array3D[,,1]) 
+calibrate::textxy(array3D[,1,1],array3D[,2,1],labs=1:numLandmarks,cex=0.7) 
  
-K <- 3 ; Nsteps <- 5 ; niter <- 3 ; stopCr <- 0.0001
-resHA <- HartiganShapes(dg,K,Nsteps,niter,stopCr,FALSE,FALSE,c(),TRUE)
+numClust <- 3 ; algSteps <- 5 ; niter <- 3 ; stopCr <- 0.0001
+set.seed(2013)
+resHA <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,FALSE,c(),TRUE)
 
 #Numerical and graphical results:
 asig <- resHA$ic1  #table(asig) shows the clustering results.
-copt <- resHA$copt #optimal centers.
+prototypes <- anthrCases("anthropometry", "kmeansProcrustes", resHA)
 
-#Generalised Procrustes analysis into each cluster:
-out_proc <- list()
-for(h in 1 : K){
- out_proc[[h]] = shapes::procGPA(dg[, , asig == h], distances = T, pcaoutput = T)
-}
+data_First50 <- sampleSpanishSurvey[1 : 50, ]
+boxplot(data_First50$necktoground ~ as.factor(asig), main = "Neck to ground")
 
-data <- dataDemo[1:50,]
-boxplot(data$necktoground ~ as.factor(asig), main = "Neck to ground")
-
-shapes::plotshapes(out_proc[[1]]$rotated)
-points(copt[,,1], col = 2)
-legend("topleft", c("Rotated data", "Mean shape"), pch = 1, col = 1:2, text.col = 1:2)
-title("Procrustes rotated data for cluster 1 \n with its mean shape superimposed", sub = "Plane xy")
-
+projShapes(1, array3D, asig, prototypes)
+legend("topleft", c("Registrated data", "Mean shape"),
+       pch = 1, col = 1:2, text.col = 1:2)
+title("Procrustes registrated data for cluster 1 \n
+       with its mean shape superimposed", sub = "Plane xy")
 
 
 #SIMULATION STUDY:
 #Definition of the cluster of cubes:
-Ms_cube <- cube8
-#Ms_cube <- cube34 #for the case of 34 landmarks.
+Ms_cube <- cube8landm
+#Ms_cube <- cube34landm #for the case of 34 landmarks.
 colMeans(Ms_cube)
 dim(Ms_cube) 
 shapes::plotshapes(Ms_cube[,,1])
@@ -169,8 +159,8 @@ colMeans(cl1)
 dim(cl1) 
 
 #Definition of the cluster of parallelepipeds:
-Ms_paral <- parallelepiped8
-#Ms_paral <- parallelepiped34 #for the case of 34 landmarks.
+Ms_paral <- parallelep8landm
+#Ms_paral <- parallelep34landm #for the case of 34 landmarks.
 colMeans(Ms_paral)
 dim(Ms_paral) 
 
@@ -202,16 +192,16 @@ colMeans(cl2)
 dim(cl2) 
 
 #Combine both clusters: 
-dg <- abind::abind(cl1,cl2)
-str(dg)
-shapes3dMod(dg[,,1], loop = 0, type = "p", color = 2, joinline = c(1:1), 
+array3D <- abind::abind(cl1,cl2)
+str(array3D)
+shapes3dShapes(array3D[,,1], loop = 0, type = "p", color = 2, joinline = c(1:1), 
             axes3 = TRUE, rglopen = TRUE, main = "First figure")
 
 #First, the Lloyd algorithm is executed and then the Hartigan algorithm with 
 #the same initial values used by the Lloy algorithm is executed:
-K <- 2 ; Nsteps <- 5 ; niter <- 3 ; stopCr <- 0.0001
-resLLSim <- LloydShapes(dg,K,Nsteps,niter,stopCr,TRUE,TRUE)
-resHASim <- HartiganShapes(dg,K,Nsteps,niter,stopCr,TRUE,TRUE,resLLSim$initials,TRUE)
+numClust <- 2 ; algSteps <- 3 ; niter <- 3 ; stopCr <- 0.0001
+resLLSim <- LloydShapes(array3D,numClust,algSteps,niter,stopCr,TRUE,TRUE)
+resHASim <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,TRUE,TRUE,resLLSim$initials,TRUE)
 }
 }
 \keyword{array}

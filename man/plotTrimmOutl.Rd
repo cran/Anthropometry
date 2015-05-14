@@ -7,13 +7,13 @@ Trimmed or outlier observations representation
 This function represents the scatter plots of bust circumference against other selected variable (chest,hip,neck to ground or waist) jointly with the trimmed individuals discarded in each bust class provided by \code{\link{trimowa}} or with the outlier individuals provided by \code{\link{hipamAnthropom}}.
 }
 \usage{
-plotTrimmOutl(x,rows,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(data,trimmOutl,nsizes,bustVariable,variable,col,xlim,ylim,main)
 }
 \arguments{
-\item{x}{
-Data frame. It should contain the chest, neck to ground, waist, hip and bust measurements of the individuals. In order to be able to represent them, the name of the columns of the database must be 'chest', 'necktoground', 'waist', 'hip' and 'bust' respectively, see \code{\link{dataDemo}}. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
+\item{data}{
+Data frame. It should contain the chest, neck to ground, waist, hip and bust measurements of the individuals. In order to be able to represent them, the name of the columns of the database must be 'chest', 'necktoground', 'waist', 'hip' and 'bust' respectively, see \code{\link{sampleSpanishSurvey}}. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
-\item{rows}{
+\item{trimmOutl}{
 Trimmed women (if \code{\link{trimowa}}) or outlier women (if \code{\link{hipamAnthropom}}).
 }
 \item{nsizes}{
@@ -25,7 +25,7 @@ Bust variable.
 \item{variable}{
 Anthropometric variable to be plotted. It can be 'chest', 'necktoground', 'waist' and 'hip'.
 }
-\item{color}{
+\item{col}{
 A specification for the trimmed or outlier women color in each bust class.
 }
 \item{xlim}{
@@ -34,7 +34,7 @@ Axis lenght of the x axis according to the range of the bust variable.
 \item{ylim}{
 Axis lenght of the y axis according to the range of the selected variable among chest, hip, neck to ground and waist.
 }
-\item{title}{
+\item{main}{
 Title of the plot.
 }
 }
@@ -50,109 +50,99 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representat
 Guillermo Vinue
 }
 \seealso{
-\code{\link{dataDemo}}, \code{\link{hipamAnthropom}}, \code{\link{trimowa}}
+\code{\link{sampleSpanishSurvey}}, \code{\link{hipamAnthropom}}, \code{\link{trimowa}}
 }
 \examples{
 \dontrun{
 #TRIMOWA ALGORITHM:
-#Data loading:
-dataDef <- dataDemo
-num.variables <- dim(dataDef)[2]
-bust <- dataDef$bust
+dataTrimowa <- sampleSpanishSurvey
+numVar <- dim(dataTrimowa)[2]
+bust <- dataTrimowa$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
 orness <- 0.7
-w <- WeightsMixtureUB(orness,num.variables)
+weightsTrimowa <- weightsMixtureUB(orness,numVar)
 
-bustCirc_4 <- seq(74,102,4)  ; bustCirc_6 <- seq(107,131,6)  ; bustCirc <- c(bustCirc_4,bustCirc_6) 
-nsizes <- length(bustCirc)
-K <- 3 ; alpha <- 0.01 ; niter <- 6 ; Ksteps <- 7
+numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
+ah <- c(23, 28, 20, 25, 25)
 
-ahVect <- c(23, 28, 20, 25, 25)
-
+set.seed(2014)
 res_trimowa <- list()
-for (i in 1 : (nsizes-1)){ 
-  data = dataDef[(bust >= bustCirc[i]) & (bust < bustCirc[i + 1]), ]   
-  res_trimowa[[i]] <- trimowa(data,w,K,alpha,niter,Ksteps,ahVect=ahVect)
+for (i in 1 : (bustSizes$nsizes - 1)){ 
+ data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
+ res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
+                             algSteps, ah, verbose = FALSE)
 }
 
-trimmed <- list()
-for (i in 1 : (nsizes-1)){ 
-  trimmed[[i]] <- res_trimowa[[i]][[10]] #or res_trimowa[[i]]$trimm
-}
+trimmed <- trimmOutl("trimowa", res_trimowa, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
 xlim <- c(70,150)
-color <- c("black","red","green","blue","cyan","brown","gray","deeppink3",
+col <- c("black","red","green","blue","cyan","brown","gray","deeppink3",
            "orange","springgreen4","khaki3","steelblue1")
 
 variable <- "chest"
-range(dataDef[,variable])
+range(dataTrimowa[,variable])
 #[1] 76.7755 135.8580
 ylim <- c(70,140)
-title <- "Trimmed women \n bust vs chest"
+main <- "Trimmed women \n bust vs chest"
 
-plotTrimmOutl(dataDef,trimmed,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
 
 variable <- "hip"
-range(dataDef[,variable])
+range(dataTrimowa[,variable])
 #[1] 83.6 152.1
 ylim <- c(80,160)
-title <- "Trimmed women \n bust vs hip"
+main <- "Trimmed women \n bust vs hip"
 
-plotTrimmOutl(dataDef,trimmed,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
 
 variable <- "necktoground"
-range(dataDef[,variable])
+range(dataTrimowa[,variable])
 #[1] 117.6 154.9
 ylim = c(110,160)
-title <- "Trimmed women \n bust vs neck to ground"
+main <- "Trimmed women \n bust vs neck to ground"
 
-plotTrimmOutl(dataDef,trimmed,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
 
 variable <- "waist"
-range(dataDef[,variable])
+range(dataTrimowa[,variable])
 #[1]  58.6 133.0
 ylim <- c(50,140)
-title <- "Trimmed women \n bust vs waist"
+main <- "Trimmed women \n bust vs waist"
 
-plotTrimmOutl(dataDef,trimmed,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
+
 
 #AN EXAMPLE FOR HIPAM ALGORITHM:
-dataDef <- dataDemo
-bust <- dataDef$bust
+dataHipam <- sampleSpanishSurvey
+bust <- dataHipam$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
-bustCirc_4 <- seq(74,102,4)  ; bustCirc_6 <- seq(107,131,6)  ; bustCirc <- c(bustCirc_4,bustCirc_6) 
-nsizes <- length(bustCirc)
-maxsplit <- 5 ; orness <- 0.7 ; alpha <- 0.01 ; type <- "MO" #type <- "IMO" for $HIPAM_{IMO}$
+type <- "IMO"
+maxsplit <- 5 ; orness <- 0.7
+ah <- c(23, 28, 20, 25, 25)
 
-ahVect <- c(23, 28, 20, 25, 25)
-
-hip <- list()
-for(i in 1 : (nsizes - 1)){
-  data =  dataDef[(bust >= bustCirc[i]) & (bust < bustCirc[i + 1]), ]   
-  d <- as.matrix(data)
-  hip[[i]] <- hipamAnthropom(d,maxsplit=maxsplit,orness=orness,type=type,ahVect=ahVect) 
-}   
-str(hip)
-
-ress <- list()
-for(i in 1 : length(hip)){
-  ress[[i]] <- table(hip[[i]]$clustering)
+set.seed(2013)
+res_hipam <- list()
+for(i in 1 : (bustSizes$nsizes - 1)){
+ data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
+ dataMat <- as.matrix(data)
+ res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
+                                  ah = ah, verbose = FALSE)
 }
-ress
+outliers <- trimmOutl("HipamAnthropom", res_hipam, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
-xlim <- c(70,150)
-color <- c("black","red","green","blue","cyan","brown","gray","deeppink3",
-           "orange","springgreen4","khaki3","steelblue1")
-
+xlim <- c(70, 150)
+color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", "deeppink3", "orange", 
+            "springgreen4", "khaki3", "steelblue1")
 variable <- "hip"
-ylim <- c(80,160)
-title <- "Medoids \n bust vs hip"
+ylim <- c(80, 160)
+title_outl <- "Outlier women HIPAM_IMO \n bust vs hip"
 
-list_outl1_2 <- sapply(1:(nsizes-1),outlierHipam,hip)
-title <- "Outlier women \n bust vs hip"
-plotTrimmOutl(dataDef,list_outl1_2,nsizes,bustVariable,variable,color,xlim,ylim,title)
+plotTrimmOutl(dataHipam, outliers, bustSizes$nsizes, bustVariable, variable, color, 
+              xlim, ylim, title_outl)
 }
 }
 \keyword{dplot}

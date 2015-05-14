@@ -1,8 +1,8 @@
-trimmedoid <- function(D,K,alpha,niter,Ksteps){
+trimmedoid <- function(D,numClust,alpha,niter,algSteps=7,verbose){
  
  n <- dim(D)[1]
  no.trim <- floor(n*(1-alpha))
- ll <- (1:K)
+ ll <- (1:numClust)
  ind <- (1:n)
  dist <- ind
 	
@@ -11,19 +11,21 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
 
  #Ramdon restarts:
  for(iter in 1:niter){
-  cat("new iteration")
-  print(iter)
-
-  #Randomly choose the K initial centers:
-  cini <- sample(1:n,size=K,replace=F)
+  if(verbose){ 
+   cat("new iteration")
+   print(iter)
+  }
+   
+  #Randomly choose the numClust initial centers:
+  cini <- sample(1:n,size=numClust,replace=FALSE)
 		
   #C-steps: step 2:
-  for(t in 1:Ksteps){
+  for(t in 1:algSteps){
    disti=c()
    ind=c()
    #Distances of each data point to its closest medoid:
    for(h in 1:n){
-    for(k in 1:K){
+    for(k in 1:numClust){
      ll[k] <- D[h,cini[k]]
     }
     disti[h] <- min(ll)
@@ -35,10 +37,10 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
    Dmod <- D[qq,qq]
    indqq=ind[qq]
 
-   if(length(unique(indqq))<K) {t=Ksteps}
+   if(length(unique(indqq))<numClust) {t=algSteps}
    else{
     #Calculus of the new k centers:
-    for(k in 1:K){
+    for(k in 1:numClust){
      ni <- sum(indqq==k)
      if(ni>1){
       #cini[k,]<-apply(xmod[xmod[,p+1]==k,1:p],2,mean)
@@ -59,12 +61,16 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
 
       obj <- 0
       for(l in 1:no.trim){
-       for (k in 1:K){
+       for (k in 1:numClust){
         ll[k] <- D[l,cini[k]]
        }
        obj <- obj+ min(ll)
       }
-       if(iter<10){print(obj/no.trim)}
+       if(iter<10){
+         if(verbose){ 
+          print(obj/no.trim)
+         }  
+       }
        rm(obj)
 
    }		
@@ -73,7 +79,7 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
   #Calculus of the trimmed k-variance:
   obj <- 0
   for(l in 1:no.trim){
-   for(k in 1:K){
+   for(k in 1:numClust){
     ll[k] <- D[l,cini[k]]
    }
    obj <- obj+ min(ll)
@@ -81,11 +87,13 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
   obj <- obj/no.trim
 
   #Change the optimal value and the optimal centers (copt) if a reduction in the objective function happens:
-  if (obj <vopt){
+  if (obj < vopt){
    vopt <- obj
    #Improvements in the objective functions are printed:
-   cat("optimal")
-   print(vopt)
+   if(verbose){
+    cat("optimal")
+    print(vopt)
+   }
    copt <- cini
   } 
  }
@@ -95,7 +103,7 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
  asig <- rep(0,n)
  #Distances of each data point to its closest medoid:
  for(h in 1:n){
-  for(k in 1:K){
+  for(k in 1:numClust){
    ll[k] <- D[h,cini[k]]
   }
   disti[h] <- min(ll)
@@ -112,14 +120,14 @@ trimmedoid <- function(D,K,alpha,niter,Ksteps){
 
  #Between clusters sum of distances:
  b=0
- for(k in 1:(K-1)){
-  for(j in (k+1):K){
+ for(k in 1:(numClust-1)){
+  for(j in (k+1):numClust){
    b=b+D[cini[k],cini[j]] 
   }
  }
 
  ##ch goodness index:
- ch=b*(no.trim-K)/(vopt*no.trim*(K-1))
+ ch=b*(no.trim-numClust)/(vopt*no.trim*(numClust-1))
 
  rt=list(vopt=vopt,copt=cini,asig=asig,ch=ch,Dmod=Dmod,qq=qq) 
  return(rt)

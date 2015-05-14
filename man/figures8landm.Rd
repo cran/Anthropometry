@@ -1,17 +1,17 @@
 \name{figures8landm}
 \alias{figures8landm}
 \title{
-Figures with labelled landmarks
+Figures of 8 landmarks with labelled landmarks
 }
 \description{
-This function allows us to represent the two geometric figures (a cube and a parallelepiped) of 8 landmarks, with the landmark labels. Both appear in the submitted paper Vinue et al. (2013), referred below.
+This function allows us to represent the two geometric figures (a cube and a parallelepiped) of 8 landmarks, with the landmark labels. Both appear in the paper Vinue et al. (2014), referred below.
 }
 \usage{
 figures8landm(figure,data)
 }
 \arguments{
 \item{figure}{
-A character, two values are admitted: if figure="cube", the cube is represented. If figure="paral", the parallelepiped is represented.
+A character vector, two values are admitted: if figure="cube", the cube is represented. If figure="paral", the parallelepiped is represented.
 }
 \item{data}{
 The data with the landmarks of the corresponding figure.
@@ -21,15 +21,15 @@ The data with the landmarks of the corresponding figure.
 A plot of the cube or the parallelepiped with the landmark labels.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design. Accepted for publication in Advances in Data Analysis and Classification.
+Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
 }
 \author{
 Guillermo Vinue
 }
 \examples{
 \dontrun{
-figures8landm("cube",cube8)
-figures8landm("paral",parallelepiped8)
+figures8landm("cube",cube8landm)
+figures8landm("paral",parallelep8landm)
 }
 }
 \keyword{array}

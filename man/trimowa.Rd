@@ -7,35 +7,38 @@ Trimmed PAM with OWA operators
 This is the methodology developed in Ibanez et al. (2012) to define an efficient apparel sizing system based on clustering techniques jointly with OWA operators. In our approach, we apply the trimmed k-medoids algorithm (\code{\link{trimmedoid}}) to the first twelve bust classes according to the sizes defined in the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals.
 }
 \usage{
-trimowa(x,w,K,alpha,niter,Ksteps,ahVect=c(23,28,20,25,25))
+trimowa(data,w,numClust,alpha,niter,algSteps,ah=c(23,28,20,25,25),verbose)
 }
 \arguments{
-\item{x}{
+\item{data}{
 Data frame. In our approach, this is each of the subframes originated after segmenting the whole anthropometric Spanish survey into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
 \item{w}{
-The aggregation weights of the OWA operators. They are computed with the \code{\link{WeightsMixtureUB}}.
+The aggregation weights of the OWA operators. They are computed with the \code{\link{weightsMixtureUB}}.
 }
-\item{K}{
+\item{numClust}{
 Number of clusters.
 }
 \item{alpha}{
 Proportion of trimmed sample.
 }
 \item{niter}{
-Number of random initializations.
+Number of random initializations (iterations).
 }
-\item{Ksteps}{
-Steps per initialization.
+\item{algSteps}{
+Number of steps of the algorithm per initialization. Default value is 7.
 }
-\item{ahVect}{
-Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
+\item{ah}{
+Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
+}
+\item{verbose}{
+A logical specifying whether to provide descriptive output about the running process.
 }
 }
 \value{
 A list with the following elements:
 
-\emph{meds}: Centroids of the clusters. They are the medoids obtained for each bust class.
+\emph{meds}: Medoids of the clusters. They are the prototypes obtained for each bust class.
 
 \emph{numTrim}: Number of trimmed individuals in each bust class.
 
@@ -43,7 +46,7 @@ A list with the following elements:
 
 \emph{noTrim}: Number of of non-trimmed individuals.
 
-\emph{C1,C2,C3,C4}: Required constant values to define the distance \code{\link{GetDistMatrix}} (\emph{C1} is bh, \emph{C2} is bl, \emph{C3} is ah and \emph{C4} is al).
+\emph{C1,C2,C3,C4}: Required constant values to define the distance \code{\link{getDistMatrix}} (\emph{C1} is bh, \emph{C2} is bl, \emph{C3} is ah and \emph{C4} is al).
 
 \emph{asig}: Vector of the clusters to which each individual belongs.
 
@@ -58,28 +61,27 @@ European Committee for Standardization. Size designation of clothes. Part 3: Mea
 Guillermo Vinue
 }
 \seealso{
-\code{\link{dataDemo}}, \code{\link{WeightsMixtureUB}}, \code{\link{GetDistMatrix}}, \code{\link{trimmedoid}}
+\code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimmedoid}}
 }
 \examples{
 \dontrun{
-#Loading the data to apply the trimowa algorithm:
-dataDef <- dataDemo
-num.variables <- dim(dataDef)[2]
-bust <- dataDef$bust
+dataTrimowa <- sampleSpanishSurvey
+numVar <- dim(dataTrimowa)[2]
+bust <- dataTrimowa$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
 orness <- 0.7
-w <- WeightsMixtureUB(orness,num.variables)
+weightsTrimowa <- weightsMixtureUB(orness,numVar)
 
-bustCirc_4 <- seq(74,102,4)  ; bustCirc_6 <- seq(107,131,6)  ; bustCirc <- c(bustCirc_4,bustCirc_6) 
-nsizes <- length(bustCirc)
-K <- 3 ; alpha <- 0.01 ; niter <- 10 ; Ksteps <- 7
+numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
+ah <- c(23, 28, 20, 25, 25)
 
-ahVect <- c(23,28,20,25,25)
-
+set.seed(2014)
 res_trimowa <- list()
-for (i in 1 : (nsizes-1)){ 
-  data = dataDef[(bust >= bustCirc[i]) & (bust < bustCirc[i + 1]), ]   
-  res_trimowa[[i]] <- trimowa(data,w,K,alpha,niter,Ksteps,ahVect=ahVect)
+for (i in 1 : (bustSizes$nsizes - 1)){ 
+ data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
+ res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
+                             algSteps,ah,verbose=FALSE)
 }
 }
 }

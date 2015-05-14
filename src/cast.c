@@ -78,7 +78,7 @@ void quicksort(double *v,int izq,int der)
  quicksort(v,der+1,ult);
 }
    
-SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SEXP ebl,SEXP ebh,SEXP progress)
+SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SEXP ebl,SEXP ebh,SEXP verbose)
 {
  int nvars,npers;
  double *xt,*w,*al,*ah,*bl,*bh,**x,dist,*adist,l;
@@ -93,7 +93,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
  PROTECT( eah = AS_NUMERIC(eah) );
  PROTECT( ebl = AS_NUMERIC(ebl) );
  PROTECT( ebh = AS_NUMERIC(ebh) );
- PROTECT( progress = AS_INTEGER(progress) );
+ PROTECT( verbose = AS_INTEGER(verbose) );
 
  nvars = INTEGER_POINTER(envars)[0];
  npers = INTEGER_POINTER(enpers)[0]; 
@@ -103,7 +103,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
  ah = NUMERIC_POINTER(eah);
  bl = NUMERIC_POINTER(ebl);
  bh = NUMERIC_POINTER(ebh);
- pr = INTEGER_POINTER(progress)[0];
+ pr = INTEGER_POINTER(verbose)[0];
 
  x=calloc(npers,sizeof(double *));
  for (i=0;i<npers;i++)

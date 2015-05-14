@@ -1,4 +1,4 @@
-CCbiclustAnthropo <- function(data,waist,waistCirc,lowerVars,nsizes,nBic,diffRanges,percDisac,dir){
+CCbiclustAnthropo <- function(data,waistVariable,waistCirc,lowerVar,nsizes,nBic,diffRanges,percDisac,dir){
   
  n <- c()
  dims <- list() ; res <- list() ; wr <- list() ; mat <- list() ; tab_acc <- list() ; 
@@ -7,10 +7,10 @@ CCbiclustAnthropo <- function(data,waist,waistCirc,lowerVars,nsizes,nBic,diffRan
  setwd(dir)
   
  for (i in 1 : (nsizes-1)){ 
-  da_size <- data[(waist >= waistCirc[i]) & (waist < waistCirc[i + 1]), ] 
+  da_size <- data[(waistVariable >= waistCirc[i]) & (waistVariable < waistCirc[i + 1]), ] 
   n[i] <- dim(da_size)[1]
     
-  da_size2 <- da_size[,lowerVars] 
+  da_size2 <- da_size[,lowerVar] 
   da_size3 <- da_size2 / 10 
     
   diff_ranges <- as.vector(apply(da_size3, 2, range)[2,] - apply(da_size3, 2, range)[1,])
@@ -36,7 +36,7 @@ CCbiclustAnthropo <- function(data,waist,waistCirc,lowerVars,nsizes,nBic,diffRan
   if(res[[i]]@Number == 0){
    mat[[i]] <- NA
   }else{
-    mat[[i]] <- sapply(1 : res[[i]]@Number, overlappingRows, res[[i]])
+    mat[[i]] <- sapply(1 : res[[i]]@Number, overlapBiclustersByRows, res[[i]])
     acc <- c()
     for(j in 1:nrow(mat[[i]])){
      acc[j] <- length(which(mat[[i]][j,] == 0)) 
@@ -76,28 +76,3 @@ CCbiclustAnthropo <- function(data,waist,waistCirc,lowerVars,nsizes,nBic,diffRan
   
  return(list(res=res,dims=dims,delta=delta,disac=disac,mat=mat,tab_acc=tab_acc,ColBics=ColBics))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

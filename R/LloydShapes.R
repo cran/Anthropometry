@@ -1,4 +1,4 @@
-LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
+LloydShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,simul,verbose){
 #,computCost  
 
  time_iter <- list()       #List to save the real time in which each iteration ends.
@@ -10,10 +10,10 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
  initials <- list()        #List to save the random initial values used by this Lloyd algorithm. Thus, 
                            #the Hartigan algorithm can be executed with these same values. 
 
- ll <- 1 : K
- dist <- matrix(0, dim(dg)[3], K)
+ ll <- 1 : numClust
+ dist <- matrix(0, dim(array3D)[3], numClust)
  
- if(print){
+ if(verbose){
   print(Sys.time())
  }
  time_ini <- Sys.time()
@@ -28,9 +28,9 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
 
   meanshapes <- 0 ; meanshapes_aux <- 0 ; asig <- 0
   mean_sh <- list()
-  n <- dim(dg)[3]
+  n <- dim(array3D)[3]
  
-  if(print){ 
+  if(verbose){ 
    cat("New iteration:")
    print(iter)
 
@@ -38,45 +38,45 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
    print(vopt)
   }
   
-  #Randomly choose the K initial centers:
-  initials[[iter]] <- sample(1:n, K, replace = F)
-  if(print){
+  #Randomly choose the numClust initial centers:
+  initials[[iter]] <- sample(1:n, numClust, replace = FALSE)
+  if(verbose){
    cat("Initial values of this iteration:")
    print(initials[[iter]]) 
   }
-  meanshapes <- dg[, , initials[[iter]]] 		 
-  meanshapes_aux <- dg[, , initials[[iter]]] 
+  meanshapes <- array3D[, , initials[[iter]]] 		 
+  meanshapes_aux <- array3D[, , initials[[iter]]] 
 
   #if(computCost){
     #time_ini_dist <- Sys.time() 
-    #dist_aux = riemdist(dg[,,1], y = meanshapes[,,1])
+    #dist_aux = riemdist(array3D[,,1], y = meanshapes[,,1])
     #time_end_dist <- Sys.time()
     #cat("Computational cost of the Procrustes distance:") 
     #print(time_end_dist - time_ini_dist)
    #}
   
-  for(step in 1 : Nsteps){
-    for(h in 1 : K){ 
-     dist[,h] = apply(dg[,,1:n], 3, riemdist, y = meanshapes[,,h])
+  for(step in 1 : algSteps){
+    for(h in 1 : numClust){ 
+     dist[,h] = apply(array3D[,,1:n], 3, riemdist, y = meanshapes[,,h])
     }
         
     asig = max.col(-dist)
 
     #if(computCost){
       #time_ini_mean <- Sys.time() 
-      #meanshapes_aux[,,1] = procGPA(dg[, , asig == 1], distances = T, pcaoutput = T)$mshape
+      #meanshapes_aux[,,1] = procGPA(array3D[, , asig == 1], distances = TRUE, pcaoutput = TRUE)$mshape
       #time_end_mean <- Sys.time()
       #cat("Computational cost of the Procrustes mean:") 
       #print(time_end_mean - time_ini_mean)
      #}
     
     
-     for(h in 1 : K){
+     for(h in 1 : numClust){
       if(table(asig == h)[2] == 1){ 
-       meanshapes[,,h] = dg[, , asig == h]
+       meanshapes[,,h] = array3D[, , asig == h]
        mean_sh[[step]] <- meanshapes
       }else{ 
-        meanshapes[,,h] = procGPA(dg[, , asig == h], distances = T, pcaoutput = T)$mshape
+        meanshapes[,,h] = procGPA(array3D[, , asig == h], distances = TRUE, pcaoutput = TRUE)$mshape
         mean_sh[[step]] <- meanshapes
        }
      }
@@ -89,11 +89,11 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
      
    list_asig_step[[step]] <- asig 
 
-   if(print){  
+   if(verbose){  
     paste(cat("Clustering of the Nstep", step, ":\n"))
     print(table(list_asig_step[[step]])) 
    }
-   if(print){
+   if(verbose){
     if(iter <= 10){ 
      paste(cat("Objective function of the Nstep", step))
      print(obj[[step]]) 
@@ -106,7 +106,7 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
        break         
       }
      }
-   }#The Nsteps loop ends here.
+   }#The algSteps loop ends here.
 
     #Calculus of the objective function (the total within-cluster sum of squares):
     obj1 <- 0
@@ -120,7 +120,7 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
      if( min(unlist(obj)) < vopt ){
       vopt <- min(unlist(obj)) 
      
-      if(print){
+      if(verbose){
        #Improvements in the objective functions are printed:
        cat("optimal")
        print(vopt)
@@ -132,7 +132,7 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
     }else if(obj1 < vopt){
      vopt <- obj1
      
-     if(print){
+     if(verbose){
       #Improvements in the objective functions are printed:
       cat("optimal")
       print(vopt)
@@ -146,26 +146,26 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
 
        if(iter == 1){
         comp_time[1] <- difftime(time_iter[[iter]], time_ini, units = "mins")
-        if(print){
+        if(verbose){
          cat("Computational time of this iteration: \n")
          print(time_iter[[iter]] - time_ini)
         } 
        }else{
          comp_time[iter] <- difftime(time_iter[[iter]], time_iter[[iter-1]], units = "mins")
-         if(print){
+         if(verbose){
           cat("Computational time of this iteration: \n")
           print(time_iter[[iter]] - time_iter[[iter - 1]])
          }   
         }   
   
-  if(print){
+  if(verbose){
    #In order to display the optimal clustering related to the optimal objective function, we have to find 
    #the step in which the optimal was obtained. This is provided by (which.min(unlist(obj))). 
    cat("Optimal clustering of this iteration: \n")
   } 
    optim_obj <- which.min(unlist(obj)) 
    list_asig[[iter]] <- list_asig_step[[optim_obj]]
-  if(print){
+  if(verbose){
    print(table(list_asig[[iter]]))
   }
 
@@ -183,7 +183,7 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
        all_rate <- 1
       }
     vect_all_rate[iter] <- all_rate 
-    if(print){
+    if(verbose){
      cat("Optimal allocation rate in this iteration:")
      print(all_rate)
     } 
@@ -198,5 +198,3 @@ LloydShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,print){
    return(list(asig=asig_opt,copt=copt,vopt=vopt,initials=initials))
   }
 }  
-
-

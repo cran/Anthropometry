@@ -1,5 +1,5 @@
-\name{WeightsMixtureUB}
-\alias{WeightsMixtureUB}
+\name{weightsMixtureUB}
+\alias{weightsMixtureUB}
 \title{
 Calculation of the weights for the OWA operators
 }
@@ -7,13 +7,13 @@ Calculation of the weights for the OWA operators
 This function calculates the weights of the OWA operators. They can be used to adjust the compromise between the style of garments and the general comfort sensation of wearers. This function is used both in \code{\link{trimowa}} and \code{\link{hipamAnthropom}}.
 }
 \usage{
-WeightsMixtureUB(orness,dimension)
+weightsMixtureUB(orness,numVar)
 }
 \arguments{
 \item{orness}{
 Quantity to measure the degree to which the aggregation is like a min or max operation.
 }
-\item{dimension}{
+\item{numVar}{
 Number of variables of the database.
 }
 }
@@ -31,13 +31,13 @@ Leon, T., Zuccarello, P., Ayala, G., de Ves, E., and Domingo, J., (2007), Applyi
 Guillermo Ayala
 }
 \seealso{
-\code{\link{dbinom}}, \code{\link{GetDistMatrix}}, \code{\link{trimowa}}, \code{\link{hipamAnthropom}}
+\code{\link{dbinom}}, \code{\link{getDistMatrix}}, \code{\link{trimowa}}, \code{\link{hipamAnthropom}}
 }
 \examples{
 \dontrun{
-num.variables <- dim(dataDemo)[2]
+numVar <- dim(sampleSpanishSurvey)[2]
 orness <- 0.7
-w <- WeightsMixtureUB(orness,num.variables)
+w <- weightsMixtureUB(orness,numVar)
 }
 }
 

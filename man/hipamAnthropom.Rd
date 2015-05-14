@@ -6,18 +6,18 @@ HIPAM algorithm for anthropometric data
 \description{
 The HIerarchical Partitioning Around Medoids clustering method (HIPAM) was originally created to gene clustering (Wit et al. (2004)). The HIPAM algorithm is a divisive hierarchical clustering method based on the PAM algorithm. 
 
-This function is a HIPAM algorithm adapted to deal with anthropometric data. To that end, a different dissimilarity function is incorporated. This function is that explained in McCulloch et al. (1998) and it is implemented in \code{\link{GetDistMatrix}}. We call it $d_{MO}$. In addition, a different method to obtain a classification tree is also incorporated.
+This function is a HIPAM algorithm adapted to deal with anthropometric data. To that end, a different dissimilarity function is incorporated. This function is that explained in McCulloch et al. (1998) and it is implemented in \code{\link{getDistMatrix}}. We call it $d_{MO}$. In addition, a different method to obtain a classification tree is also incorporated.
 
 Two HIPAM algorithms are proposed. The first one, called $HIPAM_{MO}$, is a HIPAM that uses $d_{MO}$. The second one, $HIPAM_{IMO}$, is a HIPAM algorithm that uses $d_{MO}$ and the INCA (Index Number Clusters Atypical) statistic criterion (Irigoien et al. (2008)) to decide the number of child clusters and as a stopping rule. 
 
 See Vinue et al. (2013) for more details.
 }
 \usage{
-hipamAnthropom(x,asw.tol=0,maxsplit=5,local.const=NULL,orness=0.7,type,
-               ahVect=c(23,28,20,25,25),...)
+hipamAnthropom(data,asw.tol=0,maxsplit=5,local.const=NULL,
+               orness=0.7,type,ah=c(23,28,20,25,25),verbose,...)
 }
 \arguments{
-\item{x}{
+\item{data}{
 Data frame. In our approach, this is each of the subframes originated after segmenting the whole anthropometric Spanish survey into twelve bust segments, according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
 \item{asw.tol}{
@@ -30,13 +30,16 @@ The maximum number of clusters that any cluster can be divided into when searchi
 If this value is given (meaningful values are those between -1 and 1), a proposed partition is accepted only if the associated asw is greater than this constant. Default option for this argument is maintained, that is to say, this value is ignored. See page 154 of Wit et al. (2004) for more details.
 }
 \item{orness}{
-Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{WeightsMixtureUB}} and \code{\link{GetDistMatrix}}.
+Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
 Type of HIPAM algorithm to be used. The possible options are 'MO' (for $HIPAM_{MO}$) and 'IMO' (for $HIPAM_{IMO}$).
 }
-\item{ahVect}{
-Constants that define the \code{ah} slopes of the distance function in \code{\link{GetDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
+\item{ah}{
+Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
+}
+\item{verbose}{
+Boolean variable (TRUE or FALSE) to indicate whether to report information on progress.
 }
 \item{...}{
 Other arguments that may be supplied to the internal functions of the HIPAM algorithms.
@@ -94,32 +97,54 @@ All the functions related to the HIPAM algorithm were originally created by E. W
 Guillermo Vinue
 }
 \seealso{
-\code{\link{getBestPamsamMO}}, \code{\link{getBestPamsamIMO}}, \code{\link{checkBranchLocalMO}}, \code{\link{checkBranchLocalIMO}}, \code{\link{plotTreeHipam}}, \code{\link{hipamBigGroups}}, \code{\link{outlierHipam}}   
+\code{\link{getBestPamsamMO}}, \code{\link{getBestPamsamIMO}}, \code{\link{checkBranchLocalMO}}, \code{\link{checkBranchLocalIMO}}, \code{\link{plotTreeHipamAnthropom}}, 
 }
 \examples{
 \dontrun{
-dataDef <- dataDemo
-bust <- dataDef$bust
+dataHipam <- sampleSpanishSurvey
+bust <- dataHipam$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
-bustCirc_4 <- seq(74,102,4)  ; bustCirc_6 <- seq(107,131,6)  ; bustCirc <- c(bustCirc_4,bustCirc_6) 
-nsizes <- length(bustCirc)
-maxsplit <- 5 ; orness <- 0.7 ; type <- "IMO" #type <- "MO" for $HIPAM_{MO}$
+type <- "IMO"
+maxsplit <- 5 ; orness <- 0.7
+ah <- c(23, 28, 20, 25, 25)
 
-ahVect <- c(23, 28, 20, 25, 25)
-
-hip <- list()
-for(i in 1 : (nsizes - 1)){
-  data =  dataDef[(bust >= bustCirc[i]) & (bust < bustCirc[i + 1]), ]   
-  d <- as.matrix(data)
-  hip[[i]] <- hipamAnthropom(d,maxsplit=maxsplit,orness=orness,type=type,ahVect=ahVect) 
-}   
-str(hip) 
-
-ress <- list()
-for(i in 1 : length(hip)){
-  ress[[i]] <- table(hip[[i]]$clustering)
+set.seed(2013)
+res_hipam <- list()
+for(i in 1 : (bustSizes$nsizes - 1)){
+ data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
+ dataMat <- as.matrix(data)
+ res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
+                                  ah = ah, verbose = FALSE)
 }
-ress #clustering results in each bust size.
+res_hipam #clustering results in each bust size.
+
+fitmodels <- anthrCases("anthropometry", "HipamAnthropom", res_hipam, 
+                             oneSize = FALSE, bustSizes$nsizes)
+outliers <- trimmOutl("HipamAnthropom", res_hipam, oneSize = FALSE, bustSizes$nsizes)
+
+#ONLY FOR ONE SIZE:
+set.seed(1900)
+rand <- sample(1:600,20)
+dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
+numVar <- dim(dataComp)[2]
+
+orness <- 0.7
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
+
+maxsplit <- 5
+type <- "IMO"
+ah <- c(28, 25, 25) 
+
+dataMat <- as.matrix(dataComp)
+set.seed(2013)
+res_hipam_One <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
+                             ah = ah, verbose = FALSE)
+
+plotTreeHipamAnthropom(res_hipam_One, main="Proposed Hierarchical PAM Clustering \n")
+
+fitmodels_One <- anthrCases("anthropometry", "HipamAnthropom", res_hipam_One, oneSize = TRUE)
+outliers_One <- trimmOutl("HipamAnthropom", res_hipam_One, oneSize = TRUE)
 }
 }
 \keyword{array}

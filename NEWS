@@ -1,6 +1,14 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.2 [2015-05-07]
+* Some helper funcions have been added. A function for identifying the anthropometric cases (anthrCases). A function for identifying the trimmed and outlier observations (trimmOutl). A function for plotting the projections of the shapes (projShapes). A function for computing the percentils of the archetypoids (matPercs). A function for defining the twelve bust sizes (bustSizesStandard). And a function for defining an array with the 3D landmarks of the sample objects.
+* The naming of variables, data sets and functions have been improved to be consistent, descriptive and informative.
+* The archetypoids and stepArchetypoids functions have been adapted to return the "cand_ns", "cand_alpha" and "cand_beta" vectors with the nearest observations to archetypes.
+* The vignette has been extended by incorporating comments to make it more accessible to readers from clothing design and working environments design and comments regarding the mathematical details behind each algorithm contained in the package. The general presentation of the examples has been also improved.
+* Submitted to CRAN.
+
+
 Version: 1.1 [2014-10-13]
 * The archetypoids and stepArchetypoids functions return the alpha coefficients for the optimal set of archetypoids.
 * The LloydShapes and HartiganShapes functions return the optimal clustering, optimal centers and optimal objective function also when a simulation study is carried out.

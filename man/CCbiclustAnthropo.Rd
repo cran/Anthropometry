@@ -8,22 +8,23 @@ This function is the implementation in R of the algorithm that uses the Cheng an
 
 Designing lower body garments depends not only on the waist circumference (the principal dimension in this case), but also on other secondary control dimensions (for upper body garments the bust circumference is usually required only). Biclustering identifies groups of observations with a similar pattern in a subset of attributes instead of in the whole of them. Therefore, it seems to be more interesting to use a biclustering algorithm with a set of lower body variables. 
 
-In Vinue et al. (2014) (in progress), the way of proceeding was as follows: first, all the body variables related to the lower body part included in the Spanish anthropometric survey were chosen (there were 36). Second, the data set was divided into twelve segments (classes) using waist circumference values according to the European standard. Part 3: Measurements and intervals. Finally, the CC algorithm was applied to each waist class.
+In Vinue et al. (2014), the way of proceeding was as follows: first, all the body variables related to the lower body part included in the Spanish anthropometric survey were chosen (there were 36). Second, the data set was divided into twelve segments (classes) using waist circumference values according to the European standard. Part 3: Measurements and intervals. Finally, the CC algorithm was applied to each waist class.
 }
 \usage{
-CCbiclustAnthropo(data,waist,waistCirc,lowerVars,nsizes,nBic,diffRanges,percDisac,dir)
+CCbiclustAnthropo(data,waistVariable,waistCirc,lowerVar,
+                  nsizes,nBic,diffRanges,percDisac,dir)
 }
 \arguments{
 \item{data}{
 Data matrix. Each row corresponds to an observation, and each column corresponds to a variable. All variables are numeric.
 }
-\item{waist}{
+\item{waistVariable}{
 Vector containing the waist values of the individuals.
 }
 \item{waistCirc}{
 \code{data} is segmented into twelve waist classes. This vector contains the waist values to define each one of the twelve classes.  
 }
-\item{lowerVars}{
+\item{lowerVar}{
 Lower body dimensions.
 }
 \item{nsizes}{
@@ -45,7 +46,7 @@ Working directory where to save the results.
 \details{
 Interesting results in terms of apparel design were found: an efficient partition into different biclusters was obtained. All individuals in the same bicluster can wear a garment designed for the particular body dimensions (waist and other variables) which were the most relevant for defining the group. Each group is represented by the median woman. Because the CC algorithm is nonexhaustive, i.e, some rows (and columns) do not belong to any bicluster, this property can be used to fix a proportion of no accommodated sample.
 
-This approach was descriptive and exploratory. It is emphasized that this function cannot be used with \code{\link{dataDemo}}, because this data file does not contain variables related to the lower body part in addition to waist and hip. However, this function is included in the package in the hope that it could be helpful or useful for other researchers. 
+This approach was descriptive and exploratory. It is emphasized that this function cannot be used with \code{\link{sampleSpanishSurvey}}, because this data file does not contain variables related to the lower body part in addition to waist and hip. However, this function is included in the package in the hope that it could be helpful or useful for other researchers. 
 }
 \value{
  A list with the following elements:
@@ -65,7 +66,7 @@ This approach was descriptive and exploratory. It is emphasized that this functi
 \emph{ColBics}: List with \code{nsizes} elements. Each element contains the variables that belong to each bicluster for each waist segment.
 }
 \references{
-Vinue, G., and Ibanez, M. V., (2014), \emph{Data depth and Biclustering applied to anthropometric data. Exploring their utility in apparel design}. In progress.
+Vinue, G., and Ibanez, M. V., (2014), \emph{Data depth and Biclustering applied to anthropometric data. Exploring their utility in apparel design}. Technical report.
 
 Cheng, Y., and Church, G., (2000). Biclustering of expression data. \emph{Proceedings of the Eighth International Conference on Intelligent Systems for Molecular Biology} \bold{8}, 93--103.
 
@@ -88,7 +89,7 @@ For instance, if we find two biclusters, there should be one or two 0s in each r
 Guillermo Vinue
 }
 \seealso{
-\code{\link{overlappingRows}}
+\code{\link{overlapBiclustersByRows}}
 }
 \examples{
 \dontrun{

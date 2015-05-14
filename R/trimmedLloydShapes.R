@@ -1,4 +1,4 @@
-trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,print){
+trimmedLloydShapes <- function(array3D,n,alpha,numClust,algSteps=10,niter=10,stopCr=0.0001,verbose){
 
  no.trim <- floor(n*(1-alpha)) #Elements that left after the trimmed procedure.
  vect_dist <- c() #Ancillary vector for the trimmed procedure.
@@ -20,10 +20,10 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
  betterNstep <- c()        #Vector to find the Nstep of the iteration where the optimum has reached and 
                            #therefore, to identify the trimmed women of that iteration. 
   
- ll <- 1 : K
- dist <- matrix(0, n, K)
+ ll <- 1 : numClust
+ dist <- matrix(0, n, numClust)
 
- if(print){
+ if(verbose){
   print(Sys.time())
  }  
  time_ini <- Sys.time()
@@ -41,7 +41,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
   meanshapes <- 0 ; asig <- 0
   mean_sh <- list()
  
-  if(print){ 
+  if(verbose){ 
    cat("New iteration:")
    print(iter)
 
@@ -49,17 +49,17 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
    print(vopt)
   } 
 
-  #Randomly choose the K initial centers:
-  initials[[iter]] <- sample(1:n, K, replace = F)
-  if(print){
+  #Randomly choose the numClust initial centers:
+  initials[[iter]] <- sample(1:n, numClust, replace = FALSE)
+  if(verbose){
    cat("Initial values of this iteration:")
    print(initials[[iter]]) 
   } 
-  meanshapes <- dg[, , initials[[iter]]]
+  meanshapes <- array3D[, , initials[[iter]]]
 		
-   for(step in 1 : Nsteps){
-    for(h in 1 : K){
-     dist[,h] = apply(dg[,,1:n], 3, riemdist, y = meanshapes[,,h])
+   for(step in 1 : algSteps){
+    for(h in 1 : numClust){
+     dist[,h] = apply(array3D[,,1:n], 3, riemdist, y = meanshapes[,,h])
     }
         
     asig = max.col(-dist)
@@ -72,18 +72,18 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
       distmod <- dist[qq,]
       asigqq <- asig[qq] #asignations vector of the elements that left after the trimmed procedure.
 
-    if(print){ 
+    if(verbose){ 
      cat("Trimmed woman:")
-     print(setdiff(1:dim(dg)[3],qq))
+     print(setdiff(1:dim(array3D)[3],qq))
      }
-    trimms[[iter]][[step]] <- setdiff(1:dim(dg)[3],qq)
+    trimms[[iter]][[step]] <- setdiff(1:dim(array3D)[3],qq)
     
-      for(h in 1 : K){
+      for(h in 1 : numClust){
        if(table(asigqq == h)[2] == 1){ 
-        meanshapes[,,h] = dg[, , asigqq == h]
+        meanshapes[,,h] = array3D[, , asigqq == h]
         mean_sh[[step]] <- meanshapes
        }else{ 
-         meanshapes[,,h] = procGPA(dg[, , asigqq == h], distances = T, pcaoutput = T)$mshape
+         meanshapes[,,h] = procGPA(array3D[, , asigqq == h], distances = TRUE, pcaoutput = TRUE)$mshape
          mean_sh[[step]] <- meanshapes
         }
       }
@@ -95,12 +95,12 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
       obj[[step]] <- obj[[step]] / no.trim
       list_asig_step[[step]] <- asigqq
  
-      if(print){
+      if(verbose){
        paste(cat("Clustering of the Nstep", step, ":\n"))
        print(table(list_asig_step[[step]])) 
       } 
    
-      if(print){
+      if(verbose){
        if(iter <= 10){ 
         paste(cat("Objective function of the Nstep", step))
         print(obj[[step]]) 
@@ -114,7 +114,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
         break         
        }
       }
-   }#The Nsteps loop ends here.
+   }#The algSteps loop ends here.
 
     #Calculus of the objective function (the total within-cluster sum of squares):
     obj1 <- 0
@@ -127,7 +127,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
     if( obj1 > min(unlist(obj)) ){ 
      if( min(unlist(obj)) < vopt ){
       vopt <- min(unlist(obj)) 
-      if(print){
+      if(verbose){
        #Improvements in the objective functions are printed:
        cat("optimal")
        print(vopt)
@@ -137,7 +137,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
       copt <- mean_sh[[optim_obj]] #optimal centers.
       asig_opt <- list_asig_step[[optim_obj]] 
       
-      if(print){
+      if(verbose){
        cat("Optimal iteration:")
        print(iter)
       }
@@ -146,7 +146,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
      }
     }else if(obj1 < vopt){
      vopt <- obj1
-     if(print){
+     if(verbose){
       #Improvements in the objective functions are printed:
       cat("optimal")
       print(vopt)
@@ -156,7 +156,7 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
      copt <- mean_sh[[optim_obj]] #optimal centers. 
      asig_opt <- list_asig_step[[optim_obj]]
      
-     if(print){
+     if(verbose){
       cat("Optimal iteration:")
       print(iter)
      }
@@ -170,23 +170,23 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
 
        if(iter == 1){
         comp_time[1] <- difftime(time_iter[[iter]], time_ini, units = "mins")
-        if(print){
+        if(verbose){
          cat("Computational time of this iteration: \n")
          print(time_iter[[iter]] - time_ini)
         } 
        }else{
          comp_time[iter] <- difftime(time_iter[[iter]], time_iter[[iter - 1]], units = "mins")
-         if(print){
+         if(verbose){
           cat("Computational time of this iteration: \n")
           print(time_iter[[iter]] - time_iter[[iter - 1]])
          }  
         }   
-  if(print){         
+  if(verbose){         
    cat("Optimal clustering of this iteration: \n")
   } 
    optim_obj <- which.min(unlist(obj))
    list_asig[[iter]] <- list_asig_step[[optim_obj]] 
-  if(print){
+  if(verbose){
    print(table(list_asig[[iter]]))
   } 
 
@@ -195,4 +195,3 @@ trimmedLloydShapes <- function(dg,n,alpha,K,Nsteps=10,niter=10,stopCr=0.0001,pri
  return(list(asig=asig_opt,copt=copt,vopt=vopt,trimmWomen=trimms,trimmsIter=trimms_iter,
              betterNstep=betterNstep,initials=initials))
 }
-

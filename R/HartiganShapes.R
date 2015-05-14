@@ -1,4 +1,5 @@
-HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,initials,print){
+HartiganShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,simul,initLl,initials,
+                           verbose){
 #,computCost  
 
  time_iter <- list() 
@@ -7,10 +8,10 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
  list_ic1_step <- list()
  vect_all_rate <- c()
 
- ll <- 1 : K
- dist <- matrix(0, dim(dg)[3], K)
+ ll <- 1 : numClust
+ dist <- matrix(0, dim(array3D)[3], numClust)
 
- if(print){
+ if(verbose){
   print(Sys.time())
  }  
  time_ini <- Sys.time()
@@ -23,7 +24,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
 
  wss_step <- list() 
  
- if(print){
+ if(verbose){
   cat("New iteration")
   print(iter)
 
@@ -36,24 +37,24 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
  an1 <- c()   ; an2 <- c() ; itran <- c() ; ncp <- c()
  indx <- c() ; d <- c() ; live <- c() ; wss <- c()
 
- n <- dim(dg)[3]
+ n <- dim(array3D)[3]
 
  initials_hart <- list()
  if(initLl){  
   initials_hart[[iter]] <- initials[[iter]]
  }else{
-   initials_hart[[iter]] <- sample(1:n, K, replace = F)
+   initials_hart[[iter]] <- sample(1:n, numClust, replace = FALSE)
   }
- if(print){
+ if(verbose){
   cat("Initial values of this iteration:")
   print(initials_hart[[iter]]) 
  }
- meanshapes <- dg[,,initials_hart[[iter]]] 
- meanshapes_aux <- dg[, , initials[[iter]]] 
+ meanshapes <- array3D[,,initials_hart[[iter]]] 
+ meanshapes_aux <- array3D[, , initials[[iter]]] 
  
  #if(computCost){
    #time_ini_dist <- Sys.time() 
-   #dist_aux = riemdist(dg[,,1], y = meanshapes[,,1])
+   #dist_aux = riemdist(array3D[,,1], y = meanshapes[,,1])
    #time_end_dist <- Sys.time()
    #cat("Computational cost of the Procrustes distance:") 
    #print(time_end_dist - time_ini_dist)
@@ -65,7 +66,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    ic2[i] = 2
  
    for(il in 1 : 2){
-    dt[il] = (riemdist(dg[,,i], meanshapes[,,il]))^2
+    dt[il] = (riemdist(array3D[,,i], meanshapes[,,il]))^2
    }
 
    if(dt[2] < dt[1]){
@@ -77,8 +78,8 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    }
 
    if(simul == FALSE){
-    for(l in 3 : K){
-     db = (riemdist(dg[,,i], meanshapes[,,l]))^2
+    for(l in 3 : numClust){
+     db = (riemdist(array3D[,,i], meanshapes[,,l]))^2
      if(db < dt[2]){
        if(dt[1] <= db){
         dt[2] = db
@@ -96,7 +97,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
   
  #if(computCost){
    #time_ini_mean <- Sys.time() 
-   #meanshapes_aux[,,1] = procGPA(dg[, , ic1 == 1], distances = T, pcaoutput = T)$mshape
+   #meanshapes_aux[,,1] = procGPA(array3D[, , ic1 == 1], distances = TRUE, pcaoutput = TRUE)$mshape
    #time_end_mean <- Sys.time()
    #cat("Computational cost of the Procrustes mean:") 
    #print(time_end_mean - time_ini_mean)
@@ -105,7 +106,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
  
   #STEP 2: Update the cluster centres to be the averages of points contained within them.
   #Check to see if there is any empty cluster at this stage:
-  for(l in 1 : K){
+  for(l in 1 : numClust){
    nc[l] <- table(ic1)[l]
 
    if(nc[l] == 0){
@@ -113,9 +114,9 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    } 
   }
 
-  for(l in 1 : K){
+  for(l in 1 : numClust){
    aa = nc[l] 
-   meanshapes[,,l] = procGPA(dg[, , ic1 == l], distances = T, pcaoutput = T)$mshape
+   meanshapes[,,l] = procGPA(array3D[, , ic1 == l], distances = TRUE, pcaoutput = TRUE)$mshape
    
    
    #Initialize AN1, AN2, ITRAN and NCP.
@@ -138,12 +139,12 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
 
   indx <- 0
   d[1:n] = 0
-  live[1:K] = 0
+  live[1:numClust] = 0
 
-  for(step in 1 : Nsteps){
+  for(step in 1 : algSteps){
    #In this stage, there is only one pass through the data. Each point is re-allocated, if necessary, to the 
    #cluster that will induce the maximum reduction in within-cluster sum of squares:
-   lis <- optraProcrustes(dg,n,meanshapes,K,ic1,ic2,nc,an1,an2,ncp,d,itran,live,indx)
+   lis <- optraShapes(array3D,n,meanshapes,numClust,ic1,ic2,nc,an1,an2,ncp,d,itran,live,indx)
    
    meanshapes <- lis[[1]] ; ic1 <- lis[[2]] ; ic2 <- lis[[3]] ; nc <- lis[[4]] ; an1 <- lis[[5]] ; an2 <- lis[[6]] ; ncp <- lis[[7]]
    d <- lis[[8]] ; itran <- lis[[9]] ; live <- lis[[10]] ; indx <- lis[[11]] 
@@ -151,7 +152,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    #Each point is tested in turn to see if it should be re-allocated to the cluster to which it is most likely 
    #to be transferred, IC2(I), from its present cluster, IC1(I). Loop through the data until no further change 
    #is to take place:
-   lis1 <- qtranProcrustes(dg,n,meanshapes,K,ic1,ic2,nc,an1,an2,ncp,d,itran,indx)
+   lis1 <- qtranShapes(array3D,n,meanshapes,ic1,ic2,nc,an1,an2,ncp,d,itran,indx)
    
    meanshapes <- lis1[[1]] ; ic1 <- lis1[[2]] ; ic2 <- lis1[[3]] ; nc <- lis1[[4]] ; an1 <- lis1[[5]] ; an2 <- lis1[[6]] ; ncp <- lis1[[7]] 
    d <- lis1[[8]] ; itran <- lis1[[9]]  ;  indx <- lis1[[10]] ; icoun <- lis1[[11]] 
@@ -159,21 +160,21 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    mean_sh[[step]] <- meanshapes
 
    #NCP has to be set to 0 before entering OPTRA:
-   for( l in 1 : K ){
+   for( l in 1 : numClust ){
     ncp[l] = 0
    }
    
    #Compute the within-cluster sum of squares for each cluster:
-   wss <- vector("list", K) 
-    for(num_cl in 1 : K){ 
+   wss <- vector("list", numClust) 
+    for(num_cl in 1 : numClust){ 
      wss[[num_cl]] <- 0
-     dg_cl <- array(0, dim = c(n, 3, table(ic1)[num_cl])) #table(ic1)[num_cl] is the number of observations that
+     array3D_cl <- array(0, dim = c(n, 3, table(ic1)[num_cl])) #table(ic1)[num_cl] is the number of observations that
      #belong to each cluster.
-     dg_cl <- dg[,,ic1 == num_cl]
+     array3D_cl <- array3D[,,ic1 == num_cl]
      
      distances <- c()
      for(num_mujs_cl in 1:table(ic1)[num_cl]){
-      distances[num_mujs_cl] <- riemdist(dg_cl[,,num_mujs_cl], meanshapes[,,num_cl])^2
+      distances[num_mujs_cl] <- riemdist(array3D_cl[,,num_mujs_cl], meanshapes[,,num_cl])^2
      }
 
      wss[[num_cl]] <-  sum(distances) / n
@@ -183,11 +184,11 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
     wss_step[[step]] <- sum(unlist(wss)) 
     list_ic1_step[[step]] <- ic1 
 
-    if(print){
+    if(verbose){
      paste(cat("Clustering of the Nstep", step, ":\n"))
      print(table(list_ic1_step[[step]])) 
     }
-    if(print){
+    if(verbose){
      if(iter <= 10){ 
       paste(cat("Objective function of the Nstep", step))
       print(wss_step[[step]]) 
@@ -201,19 +202,19 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
        break         
       }
      }
-   }#The Nsteps loop ends here.
+   }#The algSteps loop ends here.
 
     #Calculus of the objective function (the total within-cluster sum of squares):
-    wss1 <- vector("list", K)
-    for(num_cl in 1 : K){ 
+    wss1 <- vector("list", numClust)
+    for(num_cl in 1 : numClust){ 
      wss1[[num_cl]] <- 0
-     dg_cl1 <- array(0, dim = c(n, 3, table(ic1)[num_cl])) 
-     dg_cl1 <- dg[,,ic1 == num_cl]
+     array3D_cl1 <- array(0, dim = c(n, 3, table(ic1)[num_cl])) 
+     array3D_cl1 <- array3D[,,ic1 == num_cl]
 
      distances1 <- c()
  
      for(num_mujs_cl in 1:table(ic1)[num_cl]){ 
-      distances1[num_mujs_cl] <- riemdist(dg_cl1[,,num_mujs_cl], meanshapes[,,num_cl])^2
+      distances1[num_mujs_cl] <- riemdist(array3D_cl1[,,num_mujs_cl], meanshapes[,,num_cl])^2
      }
 
      wss1[[num_cl]] <-  sum(distances1) / n
@@ -226,7 +227,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
     if(wss_step1 > min(unlist(wss_step))){ 
      if(min(unlist(wss_step)) < vopt){
       vopt <- min(unlist(wss_step))
-      if(print){
+      if(verbose){
        #Improvements in the objective functions are printed:
        cat("optimal")
        print(vopt)
@@ -237,7 +238,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
      }
     }else if(wss_step1 < vopt){
      vopt <- wss_step1
-     if(print){
+     if(verbose){
       #Improvements in the objective functions are printed:
       cat("optimal")
       print(vopt)
@@ -251,23 +252,23 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
 
      if(iter == 1){
       comp_time[1] <- difftime(time_iter[[iter]], time_ini, units = "mins")
-      if(print){
+      if(verbose){
        cat("Computational time of this iteration: \n")
        print(time_iter[[iter]] - time_ini)
       } 
      }else{
        comp_time[iter] <- difftime(time_iter[[iter]], time_iter[[iter-1]], units = "mins")
-       if(print){
+       if(verbose){
         cat("Computational time of this iteration: \n")    
         print(time_iter[[iter]] - time_iter[[iter - 1]])
        }  
       }   
-   if(print){
+   if(verbose){
     cat("Optimal clustering of this iteration: \n")
    }  
    optim_wss <- which.min(unlist(wss_step)) 
    list_ic1[[iter]] <- list_ic1_step[[optim_wss]] 
-   if(print){
+   if(verbose){
     print(table(list_ic1[[iter]]))
    } 
 
@@ -285,7 +286,7 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
        all_rate <- 1
       }
     vect_all_rate[iter] <- all_rate 
-    if(print){
+    if(verbose){
      cat("Optimal allocation rate in this iteration:")
      print(all_rate)
     }    
@@ -300,4 +301,3 @@ HartiganShapes <- function(dg,K,Nsteps=10,niter=10,stopCr=0.0001,simul,initLl,in
    return(list(ic1=ic1_opt,copt=copt,vopt=vopt))
   }
 }
-
