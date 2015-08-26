@@ -78,17 +78,17 @@ numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-res_trimowa <- list()
+res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
 for (i in 1 : (bustSizes$nsizes - 1)){ 
  data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
  res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
                              algSteps,ah,verbose=FALSE)
 }
 
-prototypes <- anthrCases("anthropometry", "trimowa", res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+prototypes <- anthrCases(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
-xlim <- c(70, 150)
+xlim <- c(72, 132)
 color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
            "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
 
@@ -115,14 +115,14 @@ plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable,
                variable, color, xlim, ylim, title, TRUE)
 
 bustVariable <- "bust"
-xlim <- c(70, 150)
+xlim <- c(72, 132)
 color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
            "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
 
 variable <- "necktoground"
 range(dataTrimowa[,variable])
 #[1] 117.6 154.9
-ylim <- c(110, 160)
+ylim <- c(116, 156)
 title <- "Prototypes \n bust vs neck to ground"
 
 plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
@@ -133,7 +133,7 @@ plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable,
 variable <- "waist"
 range(dataTrimowa[,variable])
 #[1]  58.6 133.0
-ylim <- c(50,140)
+ylim <- c(56,136)
 title <- "Prototypes \n bust vs waist"
 
 plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
@@ -152,21 +152,19 @@ maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2013)
-res_hipam <- list()
+res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
 for(i in 1 : (bustSizes$nsizes - 1)){
  data =  dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
  dataMat <- as.matrix(data)
  res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
                                    ah = ah, verbose = FALSE) 
 }  
-
 str(res_hipam)
 
-fitmodels <- anthrCases("anthropometry", "HipamAnthropom", res_hipam, 
-                         oneSize = FALSE, bustSizes$nsizes)
+fitmodels <- anthrCases(res_hipam, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
-xlim <- c(70, 150)
+xlim <- c(72, 132)
 color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
            "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
 

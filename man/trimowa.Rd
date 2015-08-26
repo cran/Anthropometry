@@ -38,7 +38,7 @@ A logical specifying whether to provide descriptive output about the running pro
 \value{
 A list with the following elements:
 
-\emph{meds}: Medoids of the clusters. They are the prototypes obtained for each bust class.
+\emph{cases}: Anthropometric cases (medoids of the clusters). They are the prototypes obtained for each bust class.
 
 \emph{numTrim}: Number of trimmed individuals in each bust class.
 
@@ -50,7 +50,7 @@ A list with the following elements:
 
 \emph{asig}: Vector of the clusters to which each individual belongs.
 
-\emph{trimm}: Trimmed individuals.
+\emph{discarded}: Discarded (trimmed) individuals.
 }
 \references{
 Ibanez, M. V., Vinue, G., Alemany, S., Simo, A., Epifanio, I., Domingo, J., and Ayala, G., (2012). Apparel sizing using trimmed PAM and OWA operators, \emph{Expert Systems with Applications} \bold{39}, 10512--10520.
@@ -64,7 +64,6 @@ Guillermo Vinue
 \code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimmedoid}}
 }
 \examples{
-\dontrun{
 dataTrimowa <- sampleSpanishSurvey
 numVar <- dim(dataTrimowa)[2]
 bust <- dataTrimowa$bust
@@ -82,7 +81,6 @@ for (i in 1 : (bustSizes$nsizes - 1)){
  data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
  res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
                              algSteps,ah,verbose=FALSE)
-}
 }
 }
 \keyword{array}

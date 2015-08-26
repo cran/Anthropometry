@@ -4,7 +4,7 @@ archetypesBoundary <- function(data,numArch,verbose,numRep){
  
   #Run archetypes algorithm repeatedly from 1 to numArchet archetypes:
   sequen <- seq(length = numArch)
-  lass <- stepArchetypesMod(data = ldata, numArch = sequen, 
+  lass <- stepArchetypesRawData(data = ldata, numArch = sequen, 
                             numRep = numRep, verbose = verbose) 
 
   return(lass) 

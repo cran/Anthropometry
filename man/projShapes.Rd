@@ -54,7 +54,7 @@ set.seed(2013)
 res <- trimmedLloydShapes(array3D,numIndiv,alpha,numClust,algSteps,niter,stopCr,TRUE) 
 clust_kmeansProc <- res$asig
 
-prototypes <- anthrCases("anthropometry", "kmeansProcrustes", res)
+prototypes <- anthrCases(res)
 
 projShapes(1, array3D, clust_kmeansProc, prototypes)
 legend("topleft", c("Registrated data", "Mean shape"), pch = 1, col = 1:2, text.col = 1:2)

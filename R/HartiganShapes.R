@@ -295,9 +295,9 @@ HartiganShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,s
 
  if(simul){
   dimnames(copt) <- NULL
-  return(list(ic1=ic1_opt,copt=copt,vopt=vopt,compTime=comp_time,
+  return(list(ic1=ic1_opt,cases=copt,vopt=vopt,compTime=comp_time,
               AllRate=vect_all_rate))
  }else{
-   return(list(ic1=ic1_opt,copt=copt,vopt=vopt))
+   return(list(ic1=ic1_opt,cases=copt,vopt=vopt))
   }
 }

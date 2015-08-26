@@ -51,7 +51,7 @@ A list with the following elements:
 
 \emph{ic1}: Optimal clustering.
 
-\emph{copt}: Optimal centers.
+\emph{cases}: Anthropometric cases (optimal centers).
 
 \emph{vopt}: Optimal objective function.
 
@@ -59,7 +59,7 @@ If a simulation study is carried out, the following elements are returned:
 
 \emph{ic1}: Optimal clustering.
 
-\emph{copt}: Optimal centers.
+\emph{cases}: Anthropometric cases (optimal centers).
 
 \emph{vopt}: Optimal objective function.
 
@@ -112,7 +112,7 @@ resHA <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,FALSE,c(),T
 
 #Numerical and graphical results:
 asig <- resHA$ic1  #table(asig) shows the clustering results.
-prototypes <- anthrCases("anthropometry", "kmeansProcrustes", resHA)
+prototypes <- anthrCases(resHA)
 
 data_First50 <- sampleSpanishSurvey[1 : 50, ]
 boxplot(data_First50$necktoground ~ as.factor(asig), main = "Neck to ground")

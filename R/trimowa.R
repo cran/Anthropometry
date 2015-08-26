@@ -45,5 +45,5 @@ trimowa <- function(data,w,numClust,alpha,niter,algSteps,ah=c(23, 28, 20, 25, 25
     difs <- setdiff(1:n,res_qq) 
     trim <- as.numeric(rownames(data[difs, ]))
 
- return(list(meds=copt,numTrim=s,numClass=n,noTrim=no.trim,C1=bh,C2=bl,C3=ah,C4=al,asig=asig,trimm=trim))
+ return(list(cases=copt,numTrim=s,numClass=n,noTrim=no.trim,C1=bh,C2=bl,C3=ah,C4=al,asig=asig,discarded=trim))
 }

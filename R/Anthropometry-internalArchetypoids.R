@@ -139,7 +139,7 @@ swap2 <- function(vect_arch_end, vect_arch_ini, rss, huge=200, numArchoid, x_gvv
     alphas_def[, j] = coef(nnls(zs, x_gvv[,j]))
   }
   
-  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
+  return(list(cases=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
   
 }
 
@@ -193,6 +193,6 @@ swap2_k1 <- function(vect_arch_end, vect_arch_ini, rss, huge=200, numArchoid, x_
     alphas_def[, j] = coef(nnls(zs, x_gvv[,j]))
   }
   
-  return(list(archet=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
+  return(list(cases=vect_arch_end_aux, rss=rss_aux, archet_ini=vect_arch_ini, alphas=alphas_def))
 }
 

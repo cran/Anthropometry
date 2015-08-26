@@ -46,13 +46,13 @@ A list with the following elements:
 
 \emph{NN}: Cluster assignment, NN[1,] is the final partition. 
 
-\emph{Y}: The multivariate median cluster representatives 
+\emph{cases}: Anthropometric cases (the multivariate median cluster representatives). 
 
 \emph{DD}: Depth values of the observations (only if there are trimmed observations).
 
 \emph{Cost}: Final value of the optimal partition.
 
-\emph{indivTrimmed}: Trimmed observations.
+\emph{discarded}: Discarded (trimmed) observations.
 
 \emph{klBest}: Iteration in which the optimal partition was found.
 }
@@ -78,13 +78,13 @@ set.seed(2014)
 res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
                       alpha, dataTDDcl_aux,TRUE) 
 
-prototypes <- anthrCases("anthropometry", "TDDclust", res_TDDcl)
+prototypes <- anthrCases(res_TDDcl)
 
 table(res_TDDcl$NN[1,]) 
 res_TDDcl$Cost
 res_TDDcl$klBest
 
-trimmed <- trimmOutl("TDDclust", res_TDDcl)
+trimmed <- trimmOutl(res_TDDcl)
 }
 }
 \keyword{array}

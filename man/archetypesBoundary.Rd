@@ -37,13 +37,13 @@ Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Ana
 Zehner, G. F., Meindl, R. S., and Hudson, J. A., (1993). A multivariate anthropometric method for crew station design: abridged. Tech. rep. Ohio: Human Engineering Division, Armstrong Laboratory, Wright-Patterson Air Force Base.
 }
 \note{
-We would like to note that, some time after publishing the paper Epifanio et al. (2013), we found out that the \code{\link{stepArchetypes}} function standardizes the data by default (even when the data are already standardized) and this option is not always desired. In order to avoid this way of proceeding, we have created the \code{\link{stepArchetypesMod}} function, which is used within \code{\link{archetypesBoundary}} instead of using \code{\link{stepArchetypes}}. Therefore, the results provided by \code{\link{archetypesBoundary}} allows us to reproduce the results of Epifanio et al. (2013) but they are now slightly different.
+We would like to note that, some time after publishing the paper Epifanio et al. (2013), we found out that the \code{\link{stepArchetypes}} function standardizes the data by default (even when the data are already standardized) and this option is not always desired. In order to avoid this way of proceeding, we have created the \code{\link{stepArchetypesRawData}} function, which is used within \code{\link{archetypesBoundary}} instead of using \code{\link{stepArchetypes}}. Therefore, the results provided by \code{\link{archetypesBoundary}} allows us to reproduce the results of Epifanio et al. (2013) but they are now slightly different.
 }
 \author{
 Irene Epifanio and Guillermo Vinue
 }
 \seealso{
-\code{\link{archetypes}}, \code{\link{stepArchetypes}}, \code{\link{stepArchetypesMod}}, \code{\link{USAFSurvey}}, \code{\link{nearestToArchetypes}}, \code{\link{preprocessing}}
+\code{\link{archetypes}}, \code{\link{stepArchetypes}}, \code{\link{stepArchetypesRawData}}, \code{\link{USAFSurvey}}, \code{\link{nearestToArchetypes}}, \code{\link{preprocessing}}
 }
 \examples{
 \dontrun{

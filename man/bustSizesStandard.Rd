@@ -38,8 +38,6 @@ Guillermo Vinue
 \code{\link{trimowa}}, \code{\link{hipamAnthropom}}
 }
 \examples{
-\dontrun{
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
-}
 }
 \keyword{math}

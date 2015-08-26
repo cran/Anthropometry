@@ -79,7 +79,7 @@ for (i in 1 : (bustSizes$nsizes - 1)){
 }                             
 
 #Prototypes obtained with the trimowa algorithm:
-prototypes <- anthrCases("anthropometry", "trimowa", res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+prototypes <- anthrCases(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
 length(unlist(prototypes))
 #[1] 36
 meds <- dataTrimowa[unlist(prototypes),]
@@ -99,7 +99,7 @@ dim(medsUNE)
 
 dataAll <- rbind(dataTrimowa,meds,medsUNE)
 dim(dataAll)
-#[1] 672   5
+#[1] 636   5
 
 bh <- (apply(as.matrix(log(dataAll)),2,range)[2,] 
        - apply(as.matrix(log(dataAll)),2,range)[1,]) / ((numClust-1) * 8) 
@@ -109,17 +109,17 @@ al <- 3 * ah
 num.persons <- dim(dataAll)[1]
 dataAllm <- as.matrix(dataAll)
 dataAllt <- aperm(dataAllm, c(2,1))    
-dim(dataAllt) <- c(1,num.persons*num.variables)  
+dim(dataAllt) <- c(1,num.persons*numVar)  
 rm(dataAllm)
 D <- getDistMatrix(dataAllt,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,TRUE)
 
 f <- function(i, D){
- r <- min(D[i,601:636])
+ r <- min(D[i,601:618])
 }
 min_med <- sapply(1:600, f, D) 
 
 f1 <- function(i, D){
- r <- min(D[i,637:672])
+ r <- min(D[i,619:636])
 }
 min_med_UNE <- sapply(1:600, f1, D)
 

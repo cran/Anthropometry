@@ -67,17 +67,17 @@ numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-res_trimowa <- list()
+res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
 for (i in 1 : (bustSizes$nsizes - 1)){ 
  data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
  res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
                              algSteps, ah, verbose = FALSE)
 }
 
-trimmed <- trimmOutl("trimowa", res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+trimmed <- trimmOutl(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
-xlim <- c(70,150)
+xlim <- c(72,132)
 col <- c("black","red","green","blue","cyan","brown","gray","deeppink3",
            "orange","springgreen4","khaki3","steelblue1")
 
@@ -124,17 +124,17 @@ maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2013)
-res_hipam <- list()
+res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
 for(i in 1 : (bustSizes$nsizes - 1)){
  data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
  dataMat <- as.matrix(data)
  res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
                                   ah = ah, verbose = FALSE)
 }
-outliers <- trimmOutl("HipamAnthropom", res_hipam, oneSize = FALSE, bustSizes$nsizes)
+outliers <- trimmOutl(res_hipam, oneSize = FALSE, bustSizes$nsizes)
 
 bustVariable <- "bust"
-xlim <- c(70, 150)
+xlim <- c(72, 132)
 color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", "deeppink3", "orange", 
             "springgreen4", "khaki3", "steelblue1")
 variable <- "hip"

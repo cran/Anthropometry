@@ -66,7 +66,7 @@ numClust <- 3 ; algSteps <- 5 ; niter <- 3 ; stopCr <- 0.0001
 set.seed(2013)
 resHA <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,FALSE,c(),TRUE)
 
-prototypes <- anthrCases("anthropometry", "kmeansProcrustes", resHA)
+prototypes <- anthrCases(resHA)
 
 shapes3dShapes(prototypes[,,1], loop = 0, type = "p", color = 2, joinline = c(1:1), 
             axes3 = TRUE, rglopen = TRUE, main = "Mean shape cluster 1")

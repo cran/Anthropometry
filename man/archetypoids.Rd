@@ -28,13 +28,13 @@ Logical value. If TRUE, the archetypoid algorithm is executed repeatedly within 
 Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. It is computed within \code{\link{stepArchetypoids}}. See \code{nearest} argument below for an explanation of how this vector is calculated.
 }
 \item{ArchObj}{
-The list object returned by the \code{\link{stepArchetypesMod}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. Required when \code{step=FALSE}.
+The list object returned by the \code{\link{stepArchetypesRawData}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. Required when \code{step=FALSE}.
 }
 \item{nearest}{
 Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. Required when \code{step=FALSE}. This initial vector contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2015), archetypes are computed after running the archetype algorithm twenty times). This argument is a string vector with three different possibilities. The first and default option is "cand_ns" and allows us to calculate the nearest individuals by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The second option is "cand_alpha" and allows us to calculate the nearest individuals by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). The third and final option is "cand_beta" and allows us to calculate the nearest individuals by identifying the individuals with the maximum beta value for each archetype, i.e. the major contributors in the generation of the archetypes.
 }
 \item{sequ}{
-Logical value. It indicates whether a sequence of archetypoids (TRUE) or only a single number of them (FALSE) is computed. It is determined by the number of archetypes computed by means of \code{\link{stepArchetypesMod}}.
+Logical value. It indicates whether a sequence of archetypoids (TRUE) or only a single number of them (FALSE) is computed. It is determined by the number of archetypes computed by means of \code{\link{stepArchetypesRawData}}.
 }
 \item{aux}{
 If \code{sequ}=FALSE, this value is equal to \code{numArchoid}-1 since for a single number of archetypoids, the list associated with the archetype object only has one element.
@@ -46,7 +46,7 @@ As mentioned, this algorithm is based on PAM. These types of algorithms aim to f
 \value{
 A list with the following elements:
 
-\emph{archet}: Final vector of \code{numArchoid} archetypoids.
+\emph{cases}: Anthropometric cases (final vector of \code{numArchoid} archetypoids).
 
 \emph{rss}: Residual sum of squares corresponding to the final vector of \code{numArchoid} archetypoids.
 
@@ -72,7 +72,7 @@ It may be happen that \code{\link{archetypes}} does not find results for \code{n
 Irene Epifanio and Guillermo Vinue
 }
 \seealso{
-\code{\link{stepArchetypesMod}}, \code{\link{archetypes}}, \code{\link{stepArchetypoids}}
+\code{\link{stepArchetypesRawData}}, \code{\link{archetypes}}, \code{\link{stepArchetypoids}}
 }
 \examples{
 \dontrun{
@@ -92,7 +92,7 @@ preproc <- preprocessing(mat,stand=TRUE,percAccomm=1)
 set.seed(4321)
 #Run archetype algorithm repeatedly from 1 to 15 archetypes:
 numArch <- 15
-lass15 <- stepArchetypesMod(data=preproc$data,numArch=1:numArch,numRep=20,verbose=FALSE)
+lass15 <- stepArchetypesRawData(data=preproc$data,numArch=1:numArch,numRep=20,verbose=FALSE)
 screeplot(lass15) 
 
 #Calculating real archetypes:
@@ -130,7 +130,7 @@ legend("topleft",c("archetypes of Eugster","archetypes of our proposal"),
 #If a specific number of archetypes is computed only:
 numArchoid <- 3
 set.seed(4321)
-lass3 <- stepArchetypesMod(data=preproc$data,numArch=numArchoid,numRep=3,verbose=FALSE)
+lass3 <- stepArchetypesRawData(data=preproc$data,numArch=numArchoid,numRep=3,verbose=FALSE)
 res3 <- archetypoids(numArchoid,preproc$data,huge=200,step=FALSE,ArchObj=lass3,nearest="cand_ns",
                      sequ=FALSE,aux=2)
 arquets3 <- NBAPlayerStatistics0910[res3[[1]],c("Name","TotalMinutesPlayed","FieldGoalsMade")]
@@ -150,7 +150,7 @@ USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesMod(data=USAFSurvey_preproc$data,numArch=1:numArch,
+lass <- stepArchetypesRawData(data=USAFSurvey_preproc$data,numArch=1:numArch,
                           numRep=numRep,verbose=FALSE)  
 screeplot(lass)
 

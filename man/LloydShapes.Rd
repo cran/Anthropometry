@@ -44,7 +44,7 @@ A list with the following elements:
 
 \emph{asig}: Optimal clustering.
 
-\emph{copt}: Optimal centers.
+\emph{cases}: Anthropometric cases (optimal centers).
 
 \emph{vopt}: Optimal objective function.
 
@@ -54,7 +54,7 @@ If a simulation study is carried out, the following elements are returned:
 
 \emph{asig}: Optimal clustering.
 
-\emph{copt}: Optimal centers.
+\emph{cases}: Anthropometric cases (optimal centers).
 
 \emph{vopt}: Optimal objective function.
 
@@ -98,6 +98,7 @@ numClust <- 3 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
 resLL <- LloydShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,TRUE)
 asig <- resLL$asig 
 table(resLL$asig) 
+prototypes <- anthrCases(resLL)
 
 
 #SIMULATION STUDY:

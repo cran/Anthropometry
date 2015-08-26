@@ -46,7 +46,7 @@ USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesMod(data=USAFSurvey_preproc$data, 
+lass <- stepArchetypesRawData(data=USAFSurvey_preproc$data, 
                           numArch=1:numArch, numRep=numRep, 
                           verbose=FALSE)  
 
@@ -55,7 +55,7 @@ numArchoid <- 3 #number of archetypoids.
 res_ns <- archetypoids(numArchoid,USAFSurvey_preproc$data,huge=200,step=FALSE,
                        ArchObj=lass,nearest="cand_ns",sequ=TRUE)
 
-boundaries_ns <- anthrCases("ergonomics", resMethod = res_ns)
+boundaries_ns <- anthrCases(res_ns)
 
 matPer <- matPercs(boundaries_ns, USAFSurvey_preproc$data)
 

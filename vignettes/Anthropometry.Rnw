@@ -6,6 +6,7 @@
 \usepackage{float}
 \usepackage{natbib} 
 \usepackage[utf8]{inputenc}
+\usepackage{appendix}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{listings}
@@ -83,7 +84,7 @@ Unlike clothing design, where representative cases correspond to central individ
 
 As far as we know, there is currently no reference in the literature related on Anthropometry or Ergonomics that provides the programming of the proposed algorithms. In addition, to the best of our knowledge, with the exception of modern human modelling tools like Jack and Ramsis, which are two of the most widely used tools by a broad range of industries \citep{Jack}, there are no other general software applications or statistical packages available on the Internet to tackle the definition of an efficient sizing system or the accommodation problem. Within this context, this paper introduces a new \proglang{R} package \citep{R} called \pkg{Anthropometry}, which brings together the algorithms associated with all the above-mentioned methodologies. All of them were applied to the anthropometric study of the Spanish female population and to the 1967 United States Air Force (USAF) survey. \pkg{Anthropometry} includes several data files related to both anthropometric databases. All the statistical methodologies, anthropometric databases and this \proglang{R} package were announced in the author's PhD thesis \citep{Tesis}, which is freely available in a Spanish institutional open archive. The latest version of \pkg{Anthropometry} is always available from the Comprehensive \proglang{R} Archive Network at \href{http://cran.r-project.org/package=Anthropometry}{http://cran.r-project.org/package=Anthropometry}.
 
-The outline of the paper is as follows: Section \ref{data} describes all the data files included in \pkg{Anthropometry}. Section \ref{comparison} is intended to guide users in their choice of the different methods presented. Section \ref{methods} gives a brief explanation of each statistical technique developed. In Section \ref{examples} some examples of their application are shown, pointing out at the same time the consequences of choosing different argument values. Section \ref{practApp} provides an insight into the practical usefulness of the methods. Finally, concluding remarks are given in Section \ref{conclusions}.
+The outline of the paper is as follows: Section \ref{data} describes all the data files included in \pkg{Anthropometry}. Section \ref{comparison} is intended to guide users in their choice of the different methods presented. Section \ref{methods} gives a brief explanation of each statistical technique developed. In Section \ref{examples} some examples of their application are shown, pointing out at the same time the consequences of choosing different argument values. Section \ref{practApp} provides a discussion about the practical usefulness of the methods. Finally, concluding remarks are given in Section \ref{conclusions}. One appendix describes the algorithms listings related to each methodology.
 
 
 \section{Data}\label{data}
@@ -94,9 +95,9 @@ The Spanish National Institute of Consumer Affairs (INC according to its Spanish
 
 As illustrative data of the whole Spanish survey, \pkg{Anthropometry} contains a database called \code{sampleSpanishSurvey}, made up of a sample of 600 Spanish women and their measurements for five anthropometric variables: bust, chest, waist and hip circumferences and neck to ground length. These variables are chosen for three main reasons: they are recommended by experts, they are commonly used in the literature and they appear in the European standard on sizing systems. Size designation of clothes. Part 2: Primary and secondary dimensions \citep{NormaUNE2}.
 
-This data set will be used by \emph{trimowa}, \emph{TDDclust} and \emph{hipamAnthropom}. As mentioned above, the women's shape is represented by a set of landmarks, specifically 66 points. A data file called \code{landmarksSampleSpaSurv} contains the configuration matrix of landmarks for each of the 600 women. The \emph{kmeansProcrustes} methodology will need this data file.
-
-As also noted above, a 3D binary image of each woman's trunk is available. Hence, the dissimilarity between trunk forms can be computed and a distance matrix between women can be built. The distance matrix used in \cite{Vinue2013Arch} is included in \pkg{Anthropometry} and is called \code{descrDissTrunks}. 
+%This data set will be used by \emph{trimowa}, \emph{TDDclust} and \emph{hipamAnthropom}. 
+As mentioned above, the women's shape is represented by a set of landmarks, specifically 66 points. A data file called \code{landmarksSampleSpaSurv} contains the configuration matrix of landmarks for each of the 600 women. As also noted above, a 3D binary image of each woman's trunk is available. Hence, the dissimilarity between trunk forms can be computed and a distance matrix between women can be built. The distance matrix used in \cite{Vinue2013Arch} is included in \pkg{Anthropometry} and is called \code{descrDissTrunks}. %The \emph{kmeansProcrustes} methodology will need this data file.
+ 
 
 \subsection{USAF survey}
 
@@ -104,17 +105,20 @@ This database contains the information provided by the 1967 United States Air Fo
 
 \subsection{Geometric figures}
 
-In the \emph{kmeansProcrustes} approach, a numerical simulation with controlled data is performed to show the utility of our methodology. The controlled data are two geometric figures, a cube and a parallelepiped, made up of 8 and 34 landmarks. These data sets are available in the package as \code{cube8landm}, \code{cube34landm}, \code{parallelep8landm} and \code{parallelep34landm}, respectively.
-
-
-\section{Comparison of the clustering methods: Guidance for users}\label{comparison}
-
-In the \pkg{Anthropometry} \proglang{R} package five clustering methods are available (\emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{TDDclust}, \emph{hipamAnthropom} and \emph{kmeansProcrustes}), each offering a different theoretical foundation and practical benefits. The purpose of this section is to provide users with insights that can enable them to make a suitable selection of the proposed methods.
+%In the \emph{kmeansProcrustes} approach, a numerical simulation with controlled data is performed to show the utility of our methodology. The controlled data are 
+Two geometric figures, a cube and a parallelepiped, made up of 8 and 34 landmarks, are available in the package as \code{cube8landm}, \code{cube34landm}, \code{parallelep8landm} and \code{parallelep34landm}, respectively.
 
 %There are situations under which each one of them are especially useful. 
-The main difference between them is their practical objective. This is the first key to finding out which method is right for the user. If the goal of the practitioner is to obtain representative fit models for apparel sizing, the \emph{hipamAnthropom} algorithm must be used. Otherwise, if the goal is to create clothing size groups and size prototypes, the other four methods are suitable for this task. If the user wanted to design lower body garments, \emph{CCbiclustAnthropo} should be chosen. Otherwise, \emph{trimowa}, \emph{TDDclust} and \emph{kmeansProcrustes} are suitable for designing upper body garments. Finally, choosing one of the latter three methods depends on the kind of data being collected. If the database contains a set of 3D landmarks representing the shape of women, the \emph{kmeansProcrustes} method must be applied. On the other hand, \emph{trimowa} and \emph{TDDclust} can be used when the data are 1D body measurements. 
+\section{Anthropometric problems and their algorithmic solutions}\label{comparison}
 
-For illustrative purposes, Figure \ref{tree} shows a decision tree that helps the user to decide which clustering approach is best suited. 
+In the \pkg{Anthropometry} \proglang{R} package five clustering methods are available (\emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{TDDclust}, \emph{hipamAnthropom} and \emph{kmeansProcrustes}), each offering a different theoretical foundation and practical benefits. In addition, the archetypoid algorithm is included. The purpose of this section is to provide users with insights that can enable them to make a suitable selection of the proposed methods. Clustering methodologies have been developed to obtain central cases. On the other hand, methods based on archetype and archetypoid analysis aim to identify boundary cases. Fig. \ref{tree1} shows a decision tree which indicates when each approach is best suited to obtain representative central or boundary cases. 
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{decisionTree_1.png}
+\caption{Decision tree for case selection methods.}\label{tree1}
+\end{figure}
+
+Regarding clustering methods, the main difference between them is their practical objective. This is the first key to finding out which method is right for the user. If the goal of the practitioner is to obtain representative fit models for apparel sizing, the \emph{hipamAnthropom} algorithm must be used. Otherwise, if the goal is to create clothing size groups and size prototypes, the other four methods are suitable for this task. If the user wanted to design lower body garments, \emph{CCbiclustAnthropo} should be chosen. Otherwise, \emph{trimowa}, \emph{TDDclust} and \emph{kmeansProcrustes} are suitable for designing upper body garments. Finally, choosing one of the latter three methods depends on the kind of data being collected. If the database contains a set of 3D landmarks representing the shape of women, the \emph{kmeansProcrustes} method must be applied. On the other hand, \emph{trimowa} and \emph{TDDclust} can be used when the data are 1D body measurements. For illustrative purposes, Figure \ref{tree} shows a decision tree that helps the user to decide which clustering approach is best suited. 
 
 \begin{figure}[H]
 \centering
@@ -122,43 +126,7 @@ For illustrative purposes, Figure \ref{tree} shows a decision tree that helps th
 \caption{Decision tree as user guidance for choosing which of the different clustering methods to apply.}\label{tree}
 \end{figure}
 
-As a conclusion to this discussion, an illustrative comparison of the outcomes of using \emph{trimowa} and \emph{TDDclust} on a random sample subset is given below. We restrict our attention to these two methods because both of them have the same intention. The \emph{trimowa} and \emph{TDDclust} methods are implemented in the \code{trimowa} and \code{TDDclust} functions, respectively. More details about the use of these functions are given in Section \ref{examples}. We run both algorithms for twenty randomly selected women. To reproduce the results, a seed for randomness is fixed. The arguments that share both algorithms are given the same value. They are \code{numClust} (number of clusters), \code{alpha} (trimmed percentage), \code{niter} (number of iterations) and \code{verbose} (to provide descriptive output on progress). 
-
-<<comp1,eval=FALSE,tidy=FALSE>>=
-library("Anthropometry")
-
-set.seed(1900)
-rand <- sample(1:600,20)
-
-dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
-numVar <- dim(dataComp)[2] 
-dataComp_aux <- sampleSpanishSurvey[rand, c(2, 3, 5)]
-
-numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5 
-Th <- 0 ; T0 <- 0 ; simAnn <- 0.9
-ah <- c(28, 25, 25) ; orness <- 0.7 ; algSteps <- 7
-
-#TDDclust:
-set.seed(1900)
-TDDcl <- TDDclust(dataComp, numClust, lambda, Th, niter, T0,
-                 simAnn, alpha, dataComp_aux, verbose = FALSE)
-prototypes_TDDcl <- anthrCases("anthropometry", "TDDclust", TDDcl)
-
-#Trimowa:
-weightsTrimowa <- weightsMixtureUB(orness, numVar)
-set.seed(1900)
-Trimowa <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
-                   algSteps, ah, verbose = FALSE)
-prototypes_Trimowa <- anthrCases("anthropometry", "trimowa", 
-                                 Trimowa, oneSize = TRUE)
-
-#Table 1 is generated with:
-#dataComp[which(rownames(dataComp) %in% prototypes_TDDcl),]
-#dataComp[which(rownames(dataComp) %in% prototypes_Trimowa ),]
-@
-
-%\vspace*{-2cm}
-Table \ref{upper} shows, in blue and with a frame box, the upper prototypes obtained with \emph{TDDclust}  and with \emph{trimowa}, respectively. In this case, two of the three prototypes match. However, it is worth pointing out that in another case it is possible that none of them would match. This is because of the different statistical foundation of each approach. At this point, it would be recommendable to use the \emph{trimowa} methodology because it has been developed further than \emph{TDDclust}, returns outcomes with a significantly lower computational time, regardless of the sample size, and is endorsed by a scientific publication.
+As a conclusion to this discussion, an illustrative comparison of the outcomes of using \emph{trimowa} and \emph{TDDclust} on a random sample subset is given below. We restrict our attention to these two methods because both of them have the same intention. Table \ref{upper} shows, in blue and with a frame box, the upper prototypes obtained with \emph{TDDclust} and with \emph{trimowa}, respectively (the R code used to obtain these results is available in \href{http://www.uv.es/vivigui/software/section3.R}{http://www.uv.es/vivigui/software/sect3.R}). In this case, two of the three prototypes match. However, it is worth pointing out that in another case it is possible that none of them would match. This is because of the different statistical foundation of each approach. At this point, it would be recommendable to use the \emph{trimowa} methodology because it has been developed further than \emph{TDDclust}, returns outcomes with a significantly lower computational time, regardless of the sample size, and is endorsed by a scientific publication.
 
 %\vspace*{-5cm}
 \begin{table}[H]
@@ -177,37 +145,46 @@ Label women  & neck to ground &   waist  &    bust \\
 \caption{Upper size prototypes obtained by \emph{TDDclust} (in blue) and by \emph{trimowa} (frame box).}\label{upper}
 \end{table}
 
-%\vspace*{-2cm}
-\subsection{Additional remark: selecting anthropometric cases}
-
-Clustering methodologies have been developed to obtain central cases. On the other hand, methods based on archetype and archetypoid analysis aim to identify boundary cases. Having explained the differences between the clustering methods, it is also of great importance to remember when each approach is best suited to obtain representative central or boundary cases. Fig. \ref{tree1} shows a decision tree providing guidance in this question.
-
-\begin{figure}[H]
-\includegraphics[width=\textwidth]{decisionTree_1.png}
-\caption{Decision tree for case selection methods.}\label{tree1}
-\end{figure}
-
 
 
 
 \section{Statistical methodologies}\label{methods}
 
-In Section \ref{clust}, the \emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{TDDclust} and \emph{hipamAnthropom} methodologies are described. Section \ref{ssa} focuses on the \emph{kmeansProcrustes} methodology. Section \ref{Arch} provides an explanation of the methodologies based on archetypal analysis.
+%In Section \ref{clust}, the \emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{TDDclust} and \emph{hipamAnthropom} methodologies are described. Section \ref{ssa} focuses on the \emph{kmeansProcrustes} methodology. Section \ref{Arch} provides an explanation of the methodologies based on archetypal analysis. 
 
-For practical guidance, the method used for clustering-based approaches is as follows: Firstly, the data matrix is segmented using a primary control dimension (bust circumference in the case of \emph{trimowa}, \emph{hipamAnthropom}, \emph{kmeansProcrustes} and \emph{TDDclust}, and waist circumference in the case of \emph{CCbiclustAnthropo}, according to the classes suggested in the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals \citep{NormaUNE3}. This standard is drawn up by the European Union and is a set of guidelines for the textile industry to promote the implementation of a clothing sizing system, that is adapted to users). Then, a further clustering segmentation is carried out using other secondary control anthropometric variables. In this way, the first segmentation provides a first easy input to choose the size, while the resulting clusters (subgroups) for each bust (or waist) and other anthropometric measurements optimize the sizing. From the point of view of clothing design, by using a more appropriate statistical strategy, such as clustering, homogeneous subgroups are generated taking into account the anthropometric variability of the secondary dimensions that have a significant influence on garment fit.
-                                                                                                                                                              
-Regarding the methodologies using archetypal analysis, the steps are as follows: first, depending on the problem, the data may or may not be standardized. Then, an accommodation subsample is selected to obtain the archetypal individuals as the third and last step.                                                                                                                          
-                                                                                                                                                        
+\subsection{Anthropometric dimensions-based clustering and shape analysis}\label{clust}
 
-\subsection{Anthropometric dimensions-based clustering}\label{clust}
+For practical guidance, Algorithm \ref{workflowClust} explains the workflow for clustering-based approaches from an Anthropometry point of view, followed by the description of individual algorithms. See Appendix \hyperref[appendix]{A} for details about the algorithm listings.
+
+\begin{algorithm}%[H]
+\caption{Workflow for clustering-based approaches.} \label{workflowClust}
+\begin{algorithmic}
+{\footnotesize
+\STATE 1. The data matrix is segmented using a primary control dimension (bust or waist).
+\STATE {\bf Note 1:} The segmentation is done according to the classes suggested in the European \\ \hspace*{0.2cm} standard on sizing systems. Size designation of clothes. Part 3: Measurements \\ \hspace*{0.2cm} and intervals \citep{NormaUNE3}. This standard \\ \hspace*{0.2cm} is drawn up by the European Union and is a set of guidelines for the textile \\ \hspace*{0.2cm} industry to promote the implementation of a clothing sizing system, that is \\ \hspace*{0.2cm} adapted to users.
+\STATE 2. A further clustering segmentation is carried out using other secondary control anthropometric variables.
+\IF {bust was selected in 1.} \STATE use one of the following methodologies:
+\STATE \emph{- trimowa} (see Algorithm \ref{algtrimmedkmedoids}).
+\STATE \emph{- TDDclust} (see Algorithm \ref{TDDclust_Alg}).
+\STATE \emph{- hipamAnthropom} (see Algorithm \ref{hipam_imo}).
+\STATE \emph{- kmeansProcrustes} (see Algorithm \ref{Lloyd_sa}, \ref{trimmed_Lloyd_sa} and \ref{Hart_sa}). 
+\ELSE 
+\IF {waist was selected in 1.} \STATE use \emph{CCbiclustAnthropo} (see Algorithm \ref{cod}).
+\ENDIF
+\ENDIF
+\STATE {\bf Note 2:} In this way, the first segmentation provides a first easy input to choose the \\ \hspace*{0.2cm} size, while the resulting clusters (subgroups) for each bust (or waist) and other \\ \hspace*{0.2cm} anthropometric measurements optimize the sizing. From the point of view of \\ \hspace*{0.2cm} clothing design, by using a more appropriate statistical strategy, such as \\ \hspace*{0.2cm} clustering, homogeneous subgroups are generated taking into account the \\ \hspace*{0.2cm} anthropometric variability of the secondary dimensions that have a significant \\ \hspace*{0.2cm} influence on garment fit.\\ \hspace*{0.1cm}
+}
+\end{algorithmic}
+\end{algorithm}
+
 
 \vspace*{0.2cm}
 %\subsubsection{Trimowa}
 {\bf The \emph{trimowa} methodology}
 
-The aim of a sizing system is to divide a varied population into groups using certain key body dimensions \citep{libroAshdown,Chung2007}. Three types of approaches can be distinguished for creating a sizing system: traditional step-wise sizing, multivariate methods and optimization methods. Traditional methods are not useful because they use bivariate distributions to define a sizing chart and do not consider the variability of other relevant anthropometric dimensions. Recently, more sophisticated statistical methods have been developed, especially using principal component analysis (PCA) and clustering \citep{Gupta2004,Hsu09,Luximon2012,Hsu2009Apparel,Chung2007,Zheng2007,Bagherzadeh2010}. Peter Tryfos was the first to suggest an optimization method \citep{Tryfos1986}. Later, McCulloch et al. \citep{McCullochPaalAshdown98} modified Tryfos' approach. 
+The aim of a sizing system is to divide a varied population into groups using certain key body dimensions \citep{libroAshdown,Chung2007}. Three types of approaches can be distinguished for creating a sizing system: traditional step-wise sizing, multivariate methods and optimization methods. Traditional methods are not useful because they use bivariate distributions to define a sizing chart and do not consider the variability of other relevant anthropometric dimensions. Recently, more sophisticated statistical methods have been developed, especially using principal component analysis (PCA) and clustering \citep{Gupta2004,Hsu09,Luximon2012,Hsu2009Apparel,Chung2007,Zheng2007,Bagherzadeh2010}. Peter Tryfos was the first to suggest an optimization method (\cite{Tryfos1986}). He developed an integer programming procedure to maximize garment sales. Later, McCulloch et al. (\cite{McCullochPaalAshdown98}) modified Tryfos' approach by focusing the problem on maximizing the quality of fit instead of on the sales. The sizes were determined by means of a nonlinear optimization problem. The objective function measured the misfit between a person and the prototype, using a particular dissimilarity measure and removing from the data set a prefixed proportion of the sample.
 
-The first clustering methodology proposed, called \emph{trimowa}, is closed to the one developed in \cite{McCullochPaalAshdown98}. However, there are two main differences. First, when searching for $k$ prototypes, a more statistical approach is assumed. To be specific, a trimmed version of the partitioning around medoids (PAM or $k$-medoids) clustering algorithm is used. The trimming procedure allows us to remove outlier observations \citep{GE2008,Garcia-Escudero:2003:TTE}. Second, the dissimilarity measure defined in \cite{McCullochPaalAshdown98} is modified using an OWA (ordered weighted average) operator to consider the user morphology. This approach was published in \cite{Ibanez2012} and it is implemented in the \code{trimowa} function. Next, the mathematical details behind this procedure are briefly explained. A detailed exposition is given in \cite{Ibanez2012,Tesis}. The dissimilarity measure is defined as follows. Let $x=(x_1,\ldots,x_p)$ be an individual of the user population represented by a feature vector of size $p$ of his/her body measurements. In the same way, let $y=(y_1,\ldots,y_p)$ be the $p$ measurements of the prototype of a particular size. Then, $d(x,y)$ measures the misfit between a particular individual and the prototype. In other words, $d(x,y)$ indicates how far a garment made for prototype $y$ would be from the measurements for a given person $x$. In \cite{McCullochPaalAshdown98} the dissimilarity measure in each measurement has the following expression:
+The first clustering methodology proposed, called \emph{trimowa}, is closed to the one developed in \cite{McCullochPaalAshdown98}, in terms of maximizing the quality of fit by using a dissimilarity measure to compare individuals and prototypes and by leaving out some individuals of the data set. However, there are two main differences. First, when searching for $k$ prototypes, a more statistical approach is assumed. To be specific, a trimmed version of the partitioning around medoids (PAM or $k$-medoids) clustering algorithm is used. The trimming procedure allows us to remove outlier observations \citep{GE2008,Garcia-Escudero:2003:TTE}. Second, the dissimilarity measure defined in \cite{McCullochPaalAshdown98} is modified using an OWA (ordered weighted average) operator to consider the user morphology. This approach was published in \cite{Ibanez2012} and it is implemented in the \code{trimowa} function. Next, the mathematical details behind this procedure are briefly explained. A detailed exposition is given in \cite{Ibanez2012,Tesis}. The dissimilarity measure is defined as follows. Let $x=(x_1,\ldots,x_p)$ be an individual of the user population represented by a feature vector of size $p$ of his/her body measurements. In the same way, let $y=(y_1,\ldots,y_p)$ be the $p$ measurements of the prototype of a particular size. Then, $d(x,y)$ measures the misfit between a particular individual and the prototype. In other words, $d(x,y)$ indicates how far a garment made for prototype $y$ would be from the measurements for a given person $x$. In \cite{McCullochPaalAshdown98} the dissimilarity measure in each measurement has the following expression:
 
 \begin{equation}  \label{eq:mcculloch_metrica 2}
 d_i(x_i,y_i) = \left\{ \begin{array}{l l}
@@ -240,7 +217,576 @@ d(x,y) = \sum_{i=1}^p w_i \big ( d_i(x_i,y_i) \big )^2
 
 In short, the dissimilarity presented in Equation~\ref{eq:our_metrica} is defined as a sum of squared discrepancies over each of the $p$ body measurements considered, adjusting the importance of each one of them by assigning to each one of them a particular OWA weight. The set of weights $W=(w_1,\ldots,w_p)$ is based on using  a mixture of the binomial $Bi(p-1,1.5-2 \cdot orness)$ and the discrete uniform probability distributions. Specifically, each weight is calculated as $w_i=\lambda \cdot \pi_i + (1-\lambda) \cdot \frac{1}{p}$, where $\pi_i$ is the binomial probability for each $i=0,\ldots,p-1$. The algorithm associated with the \emph{trimowa} methodology is summarized in Algorithm \ref{algtrimmedkmedoids} (the number of clusters is labeled $k$ as in the $k$-medoids algorithm).
 
-\begin{algorithm}
+Our approach allows us to obtain more realistic prototypes (medoids) because they correspond to real women from the database and the selection of individual discommodities. In addition, the use of OWA operators has resulted in a more realistic dissimilarity measure between individuals and prototypes. We learned from this situation that there is an ongoing search for advanced statistical approaches that can deliver practical solutions to the definition of central people and optimal size groups. Consequently, we have come across two different statistical strategies in the literature and have aimed to discuss their potential usefulness in the definition of an efficient clothing sizing system. These approaches are based on biclustering and data depth and will be summarized below.
+
+\vspace*{0.5cm}
+
+%\subsubsection{CCbiclustAnthropo}
+{\bf The \emph{CCbiclustAnthropo} methodology}
+
+Given a data set with a number of rows and columns, conventional clustering can be applied to either the
+rows or the columns of the data matrix, separately. In a traditional row cluster, each row is defined using all the columns of the data matrix. Something similar would occur with a column cluster. Biclustering is a novel clustering approach that consists of simultaneously partitioning the set of rows and the set of columns into subsets. With biclustering, each row in a bicluster is defined using only a subset of columns and vice versa. Therefore, clustering provides a global model but biclustering defines a local one (\cite{Madeira2004}). This interesting property made us think that biclustering could perhaps be useful for obtaining efficient size groups, since they would only be defined for the most relevant anthropometric dimensions that describe a body in the detail necessary to design a well-fitting garment.
+
+Recently, a large number of biclustering methods have been developed. Some of them are implemented in different sources, including \proglang{R}. Currently, the most complete \proglang{R} package for biclustering is \pkg{biclust} \citep{Kaiser2008,biclust}. The usefulness of the approaches included in \pkg{biclust} for dealing with anthropometric data was investigated in \cite{Vinue2012}. Among the conclusions reached, the most important was concerned with the possibility of considering the Cheng \& Church biclustering algorithm \citep{Cheng2000} (referred to below as CC) as a potential statistical approach to be used for defining size groups. Specifically, in \cite{Vinue2012} an algorithm to find size groups (biclusters) and disaccommodated women with CC was set out. This methodology is called \emph{CCbiclustAnthropo} and it is implemented in the \code{CCbiclustAnthropo} function. Next, the mathematical details behind the \emph{CCbiclustAnthropo} procedure are briefly described. First of all, the CC algorithm must be introduced (see \cite{Cheng2000,Tesis,Kaiser2008}). The CC algorithm searches for biclusters with constant values (in rows or in columns). To that end, it defines the following score:
+
+\begin{equation}\nonumber
+H(I,J) = \displaystyle\frac{1}{|I||J|}\sum_{i \in I, j \in J}\hspace*{-0.26cm}(a_{ij} - a_{iJ} - a_{Ij} + a_{IJ})^2,
+\end{equation}
+
+where $a_{iJ}$ is the mean of the $i$th row of the bicluster, $a_{Ij}$ is the mean of the $j$th column of the bicluster and $a_{IJ}$ is its overall mean. Then, a subgroup is called a bicluster if the score is below a value $\delta \geq 0$ and above an $\alpha$-fraction of the score of the whole data ($\alpha > 1$).
+
+The CC algorithm implemented in the \code{biclust} function of the \pkg{biclust} package requires three arguments. Firstly, the maximum number of biclusters to be found. We propose that this number should be fixed for each waist size according to the number of women it contains: For less than 150, fix 2 biclusters; between 151-300, 3; between 351-450, 4; greater than 415, 5. Secondly, the $\alpha$ value. Its default value ($1.5$) is maintained. Finally, the $\delta$ value. Because CC is nonexhaustive, i.e., it might not group every woman into a bicluster, the value of $\delta$ can be iteratively adapted to the number of disaccommodated women we want to discard in each size. The proportion of the trimmed sample is prefixed to $0.01$ per size. In this way, a number of women between $0$ and the previous fixed proportion will not be assigned to any group. The algorithm associated with the \emph{CCbiclustAnthropo} methodology is summarized in Algorithm \ref{cod}.
+
+Designing lower body garments depends not only on the waist circumference (the principal dimension in this case), but also on other secondary control dimensions (for upper body garments only the bust circumference is usually needed). Biclustering produces subgroups of objects that are similar in one subgroup of variables and different in the remaining variables. Therefore, it seems more interesting to use a biclustering algorithm with a set of lower body dimensions. For that purpose, all the body variables related to the lower body in the Spanish anthropometric survey were chosen (there were 36). An efficient partition into different biclusters was obtained with promising results. All individuals in the same bicluster can wear a garment designed for the specific body dimensions (waist and other variables) which were the most relevant for defining the group. Each group is represented by the median woman. 
+
+The main interest of this approach was descriptive and exploratory and the important point to note here is that \code{CCbiclustAnthropo} cannot be used with \code{sampleSpanishSurvey}, since this data file does not contain variables related to the lower body in addition to waist and hip. However, this function is included in the package in the hope that it could be helpful or useful for other researchers. All theoretical and practical details are given in \cite{VinueIbanez2013}, \cite{Tesis} and \cite{Vinue2012}.
+
+
+\vspace*{0.5cm}
+
+%\subsubsection{TDDclust}
+{\bf The \emph{TDDclust} methodology}
+
+The statistical concept of data depth is another general framework for descriptive and inferential analysis of numerical data in a certain number of dimensions. In essence, the notion of data depth is a generalization of standard univariate rank methods in higher dimensions. A depth function measures the degree of centrality of a point regarding a probability distribution or a data set. The highest depth values correspond to central points and the lowest depth values correspond to tail points \citep{Liu1999,Zuo2000}. Therefore, the depth paradigm is another very interesting strategy for identifying central prototypes.
+
+The development of clustering and classification methods using data depth measures has received increasing attention  in recent years \citep{Duttaetal12,Langeetal12,Lopez2010,Ding2007}. The most relevant contribution to this field has been made by Rebecka J\"ornsten in \cite{Jornsten2004} \citep[see][for more details]{Jornsten2002,Pan2004}. She introduced two clustering and classification methods (\emph{DDclust} and \emph{DDclass}, respectively) based on $L_1$ data depth (see \cite{Vardi2000}).  The \emph{DDclust} method is proposed to solve the problem of minimizing the sum of $L_1$-distances from the observations to the nearest cluster representatives.  In clustering terms, the $L_1$ data depth is the amount of probability mass needed at a point $z$ to make $z$ the multivariate $L_1$-median (a robust representative) of the data cluster.
+
+An extension of \emph{DDclust} is introduced which incorporates a trimmed procedure, aimed at segmenting the data into efficient size groups using central (the deepest) people. This methodology will be referred to below as \emph{TDDclust} and it can be used within \pkg{Anthropometry} by using a function with the same name. Next, the mathematical details behind the \emph{TDDclust} procedure are briefly described. A thorough explanation is given in \cite{VinueIbanez2013,Tesis}. First, the $L_1$ multivariate median (from now on, $L_1$-MM) is defined as the solution of the  Weiszfeld problem \citep{Vardi2000}. Vardi et al. \citep{Vardi2000} proved that the depth function associated with the $L_1$-MM, called $L_1$ data depth, is:
+
+\begin{equation}\label{Dy}
+%\begin{displaymath}
+D(y)=
+\left \{ \begin{array}{lr}
+1 - ||\bar{e}(y)|| \;\;\;\;\;\;\;\;\;\;\; \;\;\;\hspace*{0.17cm}  if \;\; y \notin \{x_1,\ldots,x_m\}, \\
+\\
+1 - (||\bar{e}(y)|| - f_k) \;\;\;\;\; if \;\; y=x_k.\\ 
+\end{array} \right.
+%\end{displaymath}
+\end{equation}
+
+where $e_i(y) = (y - x_i) / ||y - x_i||$ (unit vector from $y$ to $x_i$) and $\bar{e}(y) = \sum_{x_k \neq y} e_i(y)f_i$ (average of the unit vectors from $y$ to all observations), with $f_i = \eta_i \hspace*{0.1cm}/ \sum_{j=1}^k \eta_j$ ($\eta_i$ is a weight for $x_i$) and $||\bar{e}(y)||$ is close to 1 if $y$ is close to the edge of the data, and close to 0 if $y$ is close to the center.
+
+The \emph{DDclust} method is proposed to solve the problem of minimizing the sum of $L_1$-distances from the observations to the nearest cluster representatives. Specifically, \emph{DDclust} iterates between median computations via the modified Weiszfeld algorithm \citep{Weiszfeld1937} and a Nearest-Neighbor allocation scheme with simulation annealing. The clustering criterion function used in \emph{DDclust} is the maximization of:
+
+\begin{eqnarray} \label{TDDevaluationfunction}
+C(I_{1}^K) = \displaystyle \frac{1}{N} \sum_{k=1}^K \hspace*{0.1cm} \sum_{i \in I(k)} (1 - \lambda)sil_i + \lambda ReD_i
+\end{eqnarray}
+
+with respect to a partition $I_{1}^K = \{I(1),\ldots,I(K)\}$. For each point $i$, $sil_i$ is the silhouette width, $ReD_i$ is the difference between the within cluster $L_1$ data depth and the between cluster $L_1$ data depth, and  $\lambda \in [0,1]$ is a parameter that controls the influence the data depth has over the clustering. Following \cite{Zuo06}, for any $0 < \alpha < \alpha^{*} = sup_{x} (D(x))\leq1$, the $\alpha$-th trimmed depth region is:
+
+\begin{eqnarray}
+D^{\alpha}=\{x:D(x)\geq \alpha \}.
+\end{eqnarray}
+
+The idea behind \emph{TDDclust} is to define trimmed regions at each step of the iterative algorithm and to apply the \emph{DDclust} algorithm to the remaining set of observations. The algorithm associated with the \emph{TDDclust} methodology is summarized in Algorithm \ref{TDDclust_Alg}. 
+
+
+\vspace*{0.5cm}
+
+%\subsubsection{hipamAnthropom}
+{\bf The \emph{hipamAnthropom} methodology}
+
+Representative fit models are important for defining a meaningful sizing system. However, there is no agreement among apparel manufacturers and almost every company employs a different fit model. Companies try to improve the quality of garment fit by scanning their fit models and deriving dress forms from the scans \citep{libroAshdown,Song2010}. A fit model's measurements correspond to the commercial specifications established by each company to achieve the company's fit \citep{Loker2005,Workman2000,Workman1991}. Beyond merely wearing the garment for inspection, a fit model provides objective feedback about the fit, movement or comfort of a garment in place of the consumer. The \emph{hipamAnthropom} methodology is proposed in order to provide new insights about this problem. This methodology is available in the \code{hipamAnthropom} function. It consists of two classification algorithms based on the hierarchical partitioning around medoids (HIPAM) clustering method presented in \cite{Wit2004}, which has been modified to deal with anthropometric data. HIPAM is a divisive hierarchical clustering algorithm using PAM. This procedure was published in \cite{Vinue2013}. The outputs of the two algorithms include a set of central representative subjects or medoids taken from the original data set, which constitute our fit models. They can also detect outliers. The first one, called $HIPAM_{MO}$, is a slightly modification of the HIPAM that uses the dissimilarity defined in Equation ~\ref{eq:our_metrica}. $HIPAM_{MO}$ uses the average silhouette width (asw) as a measure of cluster structure and the maximization of the asw as the rule to subdivide each already accepted cluster. The use of asw could be too restrictive. That's why a second algorithm, $HIPAM_{IMO}$, is proposed, where the differences regarding the original HIPAM are even deeper. It incorporates a different criterion: the INCA statistic criterion (\cite{Irigoien2008,Arenas2002,ICGE}) to decide the number of child clusters and as a stopping rule. In short, INCA is defined as the probability of properly classified individuals and it is estimated with the following expression:
+
+\begin{equation}
+INCA_k =  \frac{1}{k} \sum_{j=1}^k \frac{N_j}{n_j}
+\end{equation}
+
+where $N_j$ is the total number of units in a cluster $C_j$ which are well classified and $n_j$ is the size of cluster $C_j$. Next, a briefly exposure about the details behind $HIPAM_{MO}$ and $HIPAM_{IMO}$ is given. Let's start with $HIPAM_{MO}$: The output of a HIPAM algorithm is represented by a classification tree where each node corresponds to a cluster. The end nodes give us the final partition. The highest or top node, $T$, corresponds to the whole database. For a given node $P$, the algorithm must decide if it is convenient to split this (parent) cluster into new (child) clusters, or stop. If $|P| \leq 2$, then it is an end (or terminal) node. If not, a PAM is applied to $P$ with $k_1$ groups, where $k_1$ is chosen by maximizing the asw of the new partition. After a post-processing step, a partition $C=\{C_1,\ldots,C_k\}$ is finally obtained from $P$ ($k$ is not necessarily equal to $k_1$). Next, the mean silhouette width of $C$ (or $asw_C$) is obtained, and then the same steps used to generate $C$ are applied to each $C_i$ to obtain a new partition. If we denote by $SS_i$ the asw of the new partition with $i = 1, \ldots, k$ (if $|C_i| \leq 2$ then $SS_i=0$), then the Mean Split Silhouette (MSS) is defined as the mean of the $SS_i$'s. If $MSS(k) < asw_C$, then these new $k$ child clusters of the partition $C$ are included in the classification tree. Otherwise, $P$ is a terminal node. On the other hand, the algorithm $HIPAM_{IMO}$ is summarized in Algorithm \ref{hipam_imo}. The main difference between $HIPAM_{MO}$ and $HIPAM_{IMO}$ is in the use of the INCA criterion:
+
+\begin{enumerate}
+\item At each node $P$, if there is $k$ such that $INCA_k > 0.2$, then we select the $k$ prior to the first largest slope decrease.
+\item On the other hand, if  $INCA_k < 0.2$ for all $k$, then $P$ is a terminal node.
+\end{enumerate}
+  
+However, this procedure does not apply either to the top node $T$, or to the generation of the new partitions from which the MSS is calculated. In this case, even when all $INCA_k < 0.2$, we fix $k=3$ as the number of groups to divide and proceed.
+
+
+\vspace*{0.5cm}
+%\subsection{Statistical shape analysis}\label{ssa}
+{\bf The \emph{kmeansProcrustes} methodology}
+
+The clustering methodologies explained so far use a set of control anthropometric variables as the basis for a different type of sizing system in which people are grouped in a size group based on a full range of measurements. Consequently, clustering is done in the Euclidean space. The shape of the women recruited into the Spanish anthropometric survey is represented by a a configuration matrix of correspondence points called landmarks. Taking advantage of this fact, we have adapted the $k$-means clustering algorithm to the field of statistical shape analysis, to define size groups of women according to their body shapes. The representative of each size group is the average woman. This approach was published in \cite{Vinue2013ssa}. We have adapted both the original Lloyd and Hartigan-Wong (H-W) versions of $k$-means to the field of shape analysis and we have demonstrated, by means of a simulation study, that the Lloyd version is more efficient for clustering shapes than the H-W version. The function that uses the Lloyd version of $k$-means adapted to shape analysis (what we called \emph{kmeansProcrustes}) is \code{LloydShapes}. The function that uses the H-W version of $k$-means adapted to shape analysis is \code{HartiganShapes}. A trimmed version of \emph{kmeansProcrustes} can be also executed with \code{trimmedLloydShapes}.
+
+To adapt $k$-means to the context of shape analysis, we integrated the Procrustes distance and Procrustes mean into it. A glossary of the concepts of shape analysis used is provided below. The following general notation will be used: $n$ refers to the number of objects, $h$ to the number of landmarks and $m$ to the number of dimensions (in our case, $m=3$). Then, each object is described by an $h \times m$ configuration matrix $X$ containing the $m$ Cartesian coordinates of its $h$ landmarks. The pre-shape of an object is what is left after allowing for the effects of translation and scale. The shape of an object is what is left after allowing for the effects of translation, scale and rotation. The shape space $\Sigma^h_m$ (named Kendall shape space) is the set of all possible shapes. The Procrustes distance is the square root of the sum of squared differences between the positions of the landmarks in two optimally (by least-squares) superimposed configurations at centroid size (the centroid size is the most commonly used measure of size for a configuration). The Procrustes mean is the shape that has the least summed squared Procrustes distance to all the configurations of a sample. Algorithms \ref{Lloyd_sa}, \ref{trimmed_Lloyd_sa} and \ref{Hart_sa} show the algorithms behind \code{LloydShapes}, \code{trimmedLloydShapes} and \code{HartiganShapes}, respectively. 
+
+
+                                                                                                                              \subsection{Archetypal analysis}\label{Arch}
+
+Regarding the methodologies using archetypal analysis, for practical guidance, Algorithm \ref{workflowArc} explains their corresponding workflow, followed by the description of individual algorithms. See Appendix \hyperref[appendix]{A} for details about the algorithm listings.
+                                                                               
+\begin{algorithm}%[H]
+\caption{Workflow for archetypal-based approaches.} \label{workflowArc}
+\begin{algorithmic}
+{\footnotesize
+\STATE 1. Depending on the problem, the data may or may not be standardized.
+\STATE 2. An accommodation subsample is selected.
+\STATE 3. A number $k$ of archetypes is obtained (see Algorithm \ref{archeAlg}).
+\STATE 4. The nearest individuals to the archetypes are computed.
+\STATE 5. A number $k$ of archetypoids is obtained (see Algorithm \ref{archoidAlg}).\\ \hspace*{0.1cm}
+}
+\end{algorithmic}
+\end{algorithm}
+
+In ergonomic-related problems, where the goal is to create more efficient people-machine interfaces, a small set of extreme cases (boundary cases), called human models, is sought. Designing for extreme individuals is appropriate where some limiting factor can define either a minimum or maximum value which will accommodate the population. The basic principle is that accommodating boundary cases will be sufficient to accommodate the whole population.
+
+For too long, the conventional solution for selecting this small group of boundary models was based on the use of percentils. However, percentils are a kind of univariate descriptive statistic, so they are suitable only for univariate accommodation and should not be used in designs that involve two or more dimensions. Furthermore, they are not additive \citep{Zehner1983,Robinette1981,Moroney1972}. Today, the alternative commonly used for the multivariate accommodation problem is based on PCA \citep{Friess2003,Hudson1998,Robinson1992,Bittner1987}. However, it is known that the PCA approach presents some drawbacks \citep{Friess2005}. In \cite{EpiVinAle}, a different statistical approach for determining multivariate limits was put forward: archetypal analysis \citep{Cutler1994}, and its advantages regarding over PCA were demonstrated. 
+
+The theoretical basis of archetype analysis is as follows. Let $\bold{X}$ be an $n \times m$ matrix that represents a multivariate dataset with $n$ observations and $m$ variables. The goal of archetype analysis is to find a $k \times m$ matrix $\bold{Z}$ that characterizes the archetypal patterns in the data, such that data can be represented as mixtures of those archetypes. Specifically, archetype analysis is aimed at obtaining the two $n \times k$ coefficient matrices $\bold{\alpha}$ and $\bold{\beta}$ which minimize the residual sum of squares that arises from combining the equation that shows $\bold{x}_i$ as being approximated by a linear combination of $\bold{z}_j$'s (archetypes) and the equation that shows $\bold{z}_j$'s as linear combinations of the data:
+
+%\begin{displaymath}
+\begin{equation}\label{arche}
+\left. \begin{array}{l}
+\hspace{0.2cm} \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2\\
+\\
+\hspace{0.2cm} \bold{z}_j = \displaystyle \sum_{l=1}^n \beta_{jl} \bold{x}_l\\
+\end{array} \right\}
+\Rightarrow RSS = \displaystyle \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2 = \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \sum_{l=1}^n \beta_{jl} \bold{x}_l\|^2{,}
+%\end{displaymath}
+\end{equation}
+
+under the constraints
+
+\begin{enumerate}
+\item[1)] $\displaystyle \sum_{j=1}^k \alpha_{ij} = 1$ with $\alpha_{ij} \geq 0$ and $i=1,\ldots,n$ {and}
+\item[2)] $\displaystyle \sum_{l=1}^n \beta_{jl} = 1$ with $\beta_{jl} \geq 0$ and $j=1,\ldots,k${.}
+\end{enumerate}
+
+On the one hand, constraint 1) tells us that the predictors of $\bold{x}_i$ are finite mixtures of archetypes, $\bold{\hat{x}}_i = \displaystyle \sum_{j=1}^k \alpha_{ij} \bold{z}_j$. Each $\alpha_{ij}$ is the weight of the archetype $j$ for the individual $i$, that is to say, the $\alpha$ coefficients represent how much each archetype contributes to the approximation of each individual. On the other hand, constraint 2) implies that archetypes $\bold{z}_j$ are convex combinations of the data points, $\bold{z}_j = \displaystyle \sum_{l=1}^n \beta_{jl} \bold{x}_l$. Algorithm \ref{archeAlg} shows an outline of the archetypal algorithm, following \cite{Eugster2009}.
+
+The function that allows us to reproduce the results discussed in \cite{EpiVinAle} is \code{archetypesBoundary} (use \code{set.seed(2010)} to obtain the same results). 
+
+According to the previous definition, archetypes computed by archetypal analysis are a convex combination of the sampled individuals, but they are not necessarily real observations. The archetypes would correspond to specific individuals when $\bold{z}_j$ is an observation of the sample, that is to say, when only one $\beta_{jl}$ is equal to $1$ in constraint 2) for each $j$. As $\beta_{jl} \geq 0$ and the sum of constraint 2) is 1, this implies that $\beta_{jl}$ should only take on the value 0 or 1. In some problems, it is crucial that the archetypes are real subjects, observations of the sample, and not fictitious. To that end, we have proposed a new archetypal concept: the archetypoid, which corresponds to specific individuals and each observation of the data set can be represented as a mixture of these archetypoids. In the analysis of archetypoids, the original continuos optimization problem therefore becomes:
+
+\begin{equation}\label{arche_adapt}
+RSS = \displaystyle \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2 = \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \sum_{l=1}^n \beta_{jl} \bold{x}_l\|^2 {,}
+\end{equation}
+
+under the constraints
+
+\begin{enumerate}
+\item[1)] $\displaystyle \sum_{j=1}^k \alpha_{ij} = 1$ with $\alpha_{ij} \geq 0$ and $i=1,\ldots,n$ {and}
+\item[2)] $\displaystyle \sum_{l=1}^n \beta_{jl} = 1$ with $\beta_{jl} \in \{0,1\}$ and $j=1,\ldots,k$ i.e. $\beta_{jl}=1$ \mbox{for one and only one $l$} and $\beta_{jl}=0$ otherwise.
+  
+\end{enumerate}
+
+This new concept archetypoids is introduced in a paper published in \cite{Vinue2013Arch}. We have developed an efficient computational algorithm based on PAM to compute archetypoids (called archetypoid algorithm), we have analyzed some of their theoretical properties, we have explained how they can be obtained when only dissimilarities between observations are known (features are unavailable) and we have demonstrated some of their advantages regarding over classical archetypes. 
+
+The archetypoid algorithm has two phases: a BUILD phase and a SWAP phase, like PAM.  In the BUILD step, an initial set of archetypoids is determined, made up of the nearest individuals to the archetypes computed in the first instance. This set can be defined in three different ways: The first possibility consists in computing the Euclidean distance between the $k$ archetypes and the individuals and choosing the nearest ones, as mentioned in \cite{EpiVinAle} (set $cand_{ns}$). The second choice identifies the individuals with the maximum $\alpha$ value for each archetype, i.e. the individuals with the largest relative share for the respective archetype (set $cand_{\alpha}$, used in \cite{Eugster2012} and \cite{Seiler2013}). The third choice identifies the individuals with the maximum $\beta$ value for each archetype, i.e., the major contributors in the generation of the archetypes (set $cand_{\beta}$). Accordingly, the initial set of archetypoids is $cand_{ns}$, $cand_{\alpha}$ or $cand_{\beta}$. The aim of the SWAP phase of the archetypoid algorithm is the same as that of the SWAP phase of PAM, but the objective function is now given by Equation~\ref{arche_adapt} (see \cite{Vinue2013Arch, Tesis}). Algorithm \ref{archoidAlg} shows an outline of the archetypoid algorithm.
+
+%The \code{stepArchetypoids} function calls the \code{archetypoids} function to run the archetypoid algorithm repeatedly.
+
+
+\section{Applications}\label{examples}
+
+This section presents a detailed explanation of the numerical and graphical outcome provided by each method by means of several examples. In addition, some relevant comments are given about the consequences of choosing different argument values in each case.
+
+First of all, \pkg{Anthropometry} must be loaded into \proglang{R}:
+
+<<paquete,eval=FALSE>>=
+library("Anthropometry")
+@
+
+\subsection[Clustering]{Anthropometric dimensions-based clustering and shape analysis}
+
+\vspace*{0.2cm}
+%\subsubsection{Trimowa}
+{\bf The \emph{trimowa} methodology}
+
+The following code executes the \emph{trimowa} methodology. A similar code was used to obtain the results described in \cite{Ibanez2012}. We use \code{sampleSpanishSurvey} and its five anthropometric variables. The bust circumference is used as the primary control dimension. Twelve bust sizes (from $74$ cm to $131$ cm) are defined according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals \citep{NormaUNE3}).
+
+<<trimowa1,eval=FALSE,tidy=FALSE>>=
+dataTrimowa <- sampleSpanishSurvey
+numVar <- dim(dataTrimowa)[2]
+bust <- dataTrimowa$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
+@
+
+The aggregation weights of the OWA operator are computed. They are used to calculate the global dissimilarity between the individuals and the prototypes. We give orness a value of $0.7$ in order to highlight the largest aggregated values, that is to say, the largest discrepancies between the women's body measurements and those of the prototype. An orness value close to 1 gives more importance to the worst fit, whilst an orness value close to 0 gives more importance to the best fit (see \citet[p.~27-31]{Tesis} for details). 
+
+<<trimowa2,eval=FALSE,tidy=FALSE>>=
+orness <- 0.7
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
+@
+
+Next the \code{trimowa} algorithm is used within each bust class. Three size groups (clusters, argument \code{numClust}) are calculated per bust segment. This number of groups is quite well aligned with the strategy used by companies to design sizes. A larger \code{numClust} will result in many sizes being designed, increasing the production a lot. A smaller \code{numClust} corresponds to too few sizes being designed and having a poor accommodation index. 
+
+The trimmed proportion, \code{alpha}, is prefixed to $0.01$ per segment (therefore, the accommodation rate in each bust size will be $99\%$). This selection allows us to accommodate a very large percentage of the population in the sizing system. A larger trimmed proportion would result in a smaller amount of accommodated people. The number of random initializations is 10 (\code{niter}), with seven steps per initialization (\code{algSteps}). These values are small in the interests of a fast execution. The more random repetitions, the more accurate the prototypes and the more representative of the size group. In \cite{Ibanez2012}, the number of random initializations was 600. 
+
+In addition, a vector of five constants (one per variable) is needed to define the dissimilarity. The numbers collected in the \code{ah} argument are related to the particular five variables selected in \code{sampleSpanishSurvey}. Different body variables would require different constants \citep[see][for further details]{McCullochPaalAshdown98,Tesis}. 
+
+To reproduce results, a seed for randomness is fixed. This will also be done with the other methods presented below.
+
+<<trimowa3,eval=FALSE,tidy=FALSE>>=
+numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
+ah <- c(23, 28, 20, 25, 25)
+
+set.seed(2014)
+res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
+for (i in 1 : (bustSizes$nsizes - 1)){ 
+ data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & 
+                    (bust < bustSizes$bustCirc[i + 1]), ]   
+ res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
+                             algSteps, ah, verbose = FALSE)
+}
+@
+
+The prototypes are the clustering medoids. The \code{anthrCases} generic function allows us to obtain the estimated cases by each method.
+
+<<trimowa4,eval=FALSE,tidy=FALSE>>=
+prototypes <- anthrCases(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+@
+
+Figure~\ref{trimowaExample} shows the scatter plots of bust circumference against neck to ground with the three prototypes obtained for each bust class without (left) and with (right) the prototypes defined by the European standard. The prototypes color and the plot title must be provided.
+
+<<trimowa5,eval=FALSE,tidy=FALSE>>=
+bustVariable <- "bust"
+xlim <- c(72, 132)
+color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
+           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
+
+variable <- "necktoground"
+ylim <- c(116, 156)
+title <- "Prototypes \n bust vs neck to ground"
+
+plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
+               variable, color, xlim, ylim, title, FALSE)
+plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
+               variable, color, xlim, ylim, title, TRUE)
+@
+
+\begin{figure}[ht]
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c}
+\includegraphics[width=\textwidth]{trimowa1.pdf}
+\end{tabular}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=\textwidth]{trimowa2.pdf}
+\end{minipage}
+\caption{Bust vs. neck to ground, jointly with our medoids (left) and the prototypes defined by the European standard (right).}
+\label{trimowaExample}
+\end{figure}
+
+\vspace*{0.1cm}
+%\subsubsection{TDDclust}
+{\bf The \emph{TDDclust} methodology}
+
+A basic example of the \emph{TDDclust} methodology is shown here. Computing data depth is very demanding. As an illustration, only 25 individuals are selected. In addition, the neck to ground, waist and bust variables are selected.
+
+<<TDDclust,eval=FALSE,tidy=FALSE>>=
+dataTDDcl <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)] 
+dataTDDcl_aux <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]
+@
+
+
+In line with \code{trimowa}, three size groups are calculated (\code{numClust}) and a trimmed proportion is fixed to $0.01$ (\code{alpha}). The \code{lambda} controls the influence the data depth has over the clustering. If \code{lambda} is 1, the clustering criterion is equivalent to the average silhouette width. On the contrary, if \code{lambda} is 0, it is given by the average relative data depth. Fixing \code{lambda} to $0.5$ is an intermediate and suggested scenario. A detailed explanation of the consequences of different \code{lambda} values is given in \cite{Jornsten2004}. Because the depth computation is costly, we only run the algorithm for five iterations (\code{niter}). 
+
+The other arguments are given by default. A different value for \code{Th} may result in the optimum clustering not being found \citep[see][page 75]{Jornsten2004}. A different simulated annealing parameter (\code{T0} and \code{simAnn}) may change the clustering results obtained. %To reproduce results, a seed for randomness is fixed.
+
+
+<<TDDclust2,eval=FALSE,tidy=FALSE>>=
+numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5 
+Th <- 0 ; T0 <- 0 ; simAnn <- 0.9  
+
+set.seed(2014)
+res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
+                      alpha, dataTDDcl_aux, verbose = FALSE) 
+@
+
+The following sentences allow us to analyze the clustering results, the final value of the optimal partition and the iteration in which the optimal partition was found, respectively.
+
+<<TDDclust3,eval=FALSE,tidy=FALSE>>=
+table(res_TDDcl$NN[1,]) 
+#1  2  3 
+#5 10  9 
+res_TDDcl$Cost
+#[1] 0.3717631
+res_TDDcl$klBest
+#[1] 3
+@
+
+The prototypes are obtained with \code{anthrCases}. In addition, the \code{trimmOutl} generic function allows us to obtain the trimmed or outlier observations discarded by each method.
+
+<<TDDclust4,eval=FALSE,tidy=FALSE>>=
+prototypes <- anthrCases(res_TDDcl)
+trimmed <- trimmOutl(res_TDDcl)
+@
+
+\vspace*{0.3cm}
+%\subsubsection{hipamAnthropom}
+{\bf The \emph{hipamAnthropom} methodology}
+
+The following sentences illustrate how to use the \emph{hipamAnthropom} methodology. The same twelve bust segments as in \code{trimowa} are used.
+
+<<hipam,eval=FALSE,tidy=FALSE>>=
+dataHipam <- sampleSpanishSurvey
+bust <- dataHipam$bust
+bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
+@
+
+The $HIPAM_{IMO}$ algorithm is used. It was verified in \cite{Vinue2013} that $HIPAM_{IMO}$ showed better performance for finding representative prototypes. The maximum number of clusters that any cluster can be divided into is fixed to five (\code{maxsplit}). In the HIPAM algorithm the number of sub-clusters that any cluster is potentially divided into is between 2 and \code{maxsplit}. A larger \code{maxsplit} than five could result in too many clusters, which is not interesting from the point of view of the strategy used by companies to design sizes.
+
+The same orness and vector of constants as in \code{trimowa} are used. %To reproduce results, a seed for randomness is fixed.
+
+<<hipam2,eval=FALSE,tidy=FALSE>>=
+type <- "IMO"
+maxsplit <- 5 ; orness <- 0.7 
+ah <- c(23, 28, 20, 25, 25)
+
+set.seed(2013)
+res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
+for(i in 1 : (bustSizes$nsizes - 1)){
+ data =  dataHipam[(bust >= bustSizes$bustCirc[i]) & 
+                  (bust < bustSizes$bustCirc[i + 1]), ]   
+ dataMat <- as.matrix(data)
+ res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, 
+                                 orness = orness, type = type, 
+                                 ah = ah, verbose = FALSE)
+}   
+@
+
+The fit models are the clustering medoids and the outliers are the discarded observations.
+
+<<hipam3,eval=FALSE,tidy=FALSE>>= 
+fitmodels <- anthrCases(res_hipam, oneSize = FALSE, bustSizes$nsizes)
+outliers <- trimmOutl(res_hipam, oneSize = FALSE, bustSizes$nsizes)
+@
+
+Figure~\ref{hipamExample} displays the fit models (left) and the outliers (right) corresponding to each bust size. The fit models color and the plot title must be provided. The important point to note here is the fact that each bust segment has a small sample size. This might explain the fact that this algorithm (and also $HIPAM_{MO}$) does not find large homogeneous clusters and therefore identifies a lot of women as outliers in each class for this database. One of the features of the HIPAM algorithm is that it is a very sensitive algorithm for identifying outliers. A broad discussion, analysis and thoughts on the anthropometric meaning of these outliers is given in \cite{Vinue2013} (including the supplementary material).
+
+<<hipam4,eval=FALSE,tidy=FALSE>>=
+bustVariable <- "bust"
+xlim <- c(72, 132)
+color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
+           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
+
+variable <- "hip"
+ylim <- c(83, 153)
+title <- "Fit models HIPAM_IMO \n bust vs hip"
+title_outl <- "Outlier women HIPAM_IMO \n bust vs hip"
+
+plotPrototypes(dataHipam, fitmodels, bustSizes$nsizes, bustVariable, 
+               variable, color, xlim, ylim, title, FALSE)
+plotTrimmOutl(dataHipam, outliers, bustSizes$nsizes, bustVariable, 
+              variable, color, xlim, ylim, title_outl)
+@
+
+\begin{figure}[ht]
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c}
+\includegraphics[width=\textwidth]{hipam1.pdf}
+\end{tabular}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=\textwidth]{hipam2.pdf}
+\end{minipage}
+\caption{Bust vs. hip with the medoids (left) and with the outliers (right) obtained using $HIPAM_{IMO}$.}
+\label{hipamExample}
+\end{figure}
+
+%\vspace*{0.16cm}
+%\subsection{Statistical shape analysis}
+{\bf The \emph{kmeansProcrustes} methodology}
+
+To conclude this section, the use of the \emph{kmeansProcrustes} methodology is illustrated. For the sake of simplicity of the computation involved only a small sample (the first 50 individuals) is selected. When there are missing values (na's, not available numbers), they are removed.
+
+<<ssa,eval=FALSE,tidy=FALSE>>=
+landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+numLandmarks <- (dim(landmarksNoNa)[2]) / 3
+landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
+numIndiv <- dim(landmarksNoNa_First50)[1]
+@
+
+We have to define an array with the 3D landmarks of the sample objects.
+
+<<ssa1,eval=FALSE,tidy=FALSE>>=
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
+@
+
+Again, three size groups are calculated (\code{numClust}) and a trimmed proportion is fixed to $0.01$ (\code{alpha}). The \code{trimmedLloydShapes} algorithm is used with only five iterations and five steps per initialization in the interests of a fast execution. A larger number of repetitions is suggested to obtain more optimal results. The default relative stopping criteria is $0.0001$. Using this small value ensures that the algorithm stops when the decrease in the objective function is hardly visible. A larger stopping value could prematurely stop the algorithm (but the decrease in the objective function should have been taken into account). 
+%la diferencia en la función objetivo sea menor que una cierta cantidad.
+
+%To reproduce results, a seed for randomness is fixed.
+
+<<ssa2,eval=FALSE,tidy=FALSE>>=
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+set.seed(2013)
+res_kmProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
+                                     algSteps, niter, stopCr, 
+                                     verbose = FALSE)
+@
+
+The clustering results are obtained in the following way:
+
+<<ssa3,eval=FALSE,tidy=FALSE>>=
+clust_kmProc <- res_kmProc$asig
+table(clust_kmProc)
+#1  2  3 
+#19 18 12
+@
+
+The optimal prototypes and the trimmed individuals of the optimal iteration can be also identified:
+
+<<ssa4,eval=FALSE,tidy=FALSE>>=
+prototypes <- anthrCases(res_kmProc)
+trimmed <- trimmOutl(res_kmProc)
+@
+
+In order to examine the differences between clusters for some key anthropometric dimensions, their boxplots can be represented. To do this, we need to identify the first 50 individuals in \code{sampleSpanishSurvey} and to remove the trimmed ones. Figure~\ref{kmProcExample} (left) displays the boxplots for neck to ground measurement for the three clusters calculated.  
+
+<<ssa5,eval=FALSE,tidy=FALSE>>=
+data_First50 <- sampleSpanishSurvey[1 : 50, ]
+data_First50_notrimm <- data_First50[-trimmed, ]
+boxplot(data_First50_notrimm$necktoground ~ as.factor(clust_kmProc), 
+        main = "Neck to ground")
+@
+
+In addition, Figure~\ref{kmProcExample} (right) displays the projection on the xy plane of the recorded points and mean shape for cluster 1. 
+
+<<ssa6,eval=FALSE,tidy=FALSE>>=
+projShapes(1, array3D, clust_kmProc, prototypes)
+legend("topleft", c("Registrated data", "Mean shape"), 
+                pch = 1, col = 1:2, text.col = 1:2)
+title("Procrustes registrated data for cluster 1 \n 
+                with its mean shape superimposed", sub = "Plane xy")
+@
+
+
+\begin{figure}[ht]
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c}
+\includegraphics[width=\textwidth]{kmProc1.pdf}
+\end{tabular}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=\textwidth]{kmProc2.pdf}
+\end{minipage}
+\caption{Boxplots for the neck to ground measurement for three clusters (left) and projection on the xy plane of the recorded points and mean shape for cluster 1 (right). Results provided by trimmed \emph{kmeansProcrustes}.}
+\label{kmProcExample}
+\end{figure}
+
+\subsection{Archetypal analysis}
+
+We focus on the cockpit design problem. The accommodation of boundaries (our archetypoids) ensures the accommodation of interior points in the cockpit. We use the \code{USAFSurvey} database. Again, as an illustrative example only the first 50 individuals are chosen. From the total variables, the six so-called cockpit dimensions are selected. They are thumb tip reach, buttock-knee length, popliteal height sitting, sitting height, eye height sitting and shoulder height sitting. We convert the variables from mm into inches in order to compare our results with those discussed in \cite{Zehner1983} (see \cite{EpiVinAle}). The procedure followed for each problem is as follows:
+
+Before computing archetypes and archetypoids, the data must be preprocessed. Firstly, depending on the problem, the user must decide whether or not to standardize the data. Secondly, it must be decided whether to use the Mahalanobis distance or a depth procedure to establish the percentage of the population to accommodate \citep[see][section 2.2.2 for more details]{EpiVinAle}. Both actions are done with the following \code{preprocessing} function. In this case, the variables are standardized, as they measure different dimensions. This is indicated with the first \code{TRUE} argument in \code{preprocessing}. On the other hand, when designing a workspace, it has typically been a requirement that 95 percent of the relevant population are accommodated (value 0.95 in the third argument). Finally, the second \code{TRUE} (and fourth and final parameter) indicates that the Mahalanobis distance is used to remove the most extreme 5\% data.
+
+
+<<AA,eval=FALSE,tidy=FALSE>>=
+USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
+variabl_sel <- c(48, 40, 39, 33, 34, 36)
+USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
+USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 
+                                    0.95, TRUE)
+@
+
+Next, archetypes must be calculated. In the \pkg{archetypes} \proglang{R} package \citep{RpaqueteArch,Eugster2009} this is done with the \code{stepArchetypes} function, which executes the archetype algorithm repeatedly. However, this function standardizes the data by default and this option is not always desired. To overcome this, a new \proglang{R} function called \code{stepArchetypesRawData} has been written, which results from modifying and adapting the original \code{stepArchetypes} to apply the archetype algorithm to raw data. In this way, the archetype algorithm is run repeatedly from 1 to \code{numArch} archetypes. The user can decide how many archetypes are to be considered. We chose \code{numArch} equal to 10 because a larger number of boundary cases may overwhelm the designer and therefore be counterproductive. The argument \code{numRep} specifies the number of repetitions of the algorithm. Choosing twenty repetitions ensures that the best possible archetypes are obtained. %To reproduce the results, a seed for randomness is established.
+
+
+<<AA3,eval=FALSE,tidy=FALSE>>=
+set.seed(2010) 
+numArch <- 10 ; numRep <- 20
+lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
+                              numArch=1:numArch, numRep = numRep, 
+                              verbose = FALSE)  
+screeplot(lass)
+@
+
+Once the archetypes are obtained, archetypoids are calculated either with the \code{archetypoids} function or with the \code{stepArchetypoids} function, which is a function  based on \code{stepArchetypes} to execute the archetypoid algorithm repeatedly. According to the screeplot and following the elbow criterion, we compute three archetypoids (beginning from $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ sets of the nearest observations to the archetypes).
+
+<<AA4,eval=FALSE,tidy=FALSE>>=
+numArchoid <- 3 
+res_archoids_ns <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
+                                huge = 200, step = FALSE, ArchObj = lass,
+                                nearest = "cand_ns" , sequ = TRUE)
+res_archoids_alpha <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
+                                   huge = 200, step = FALSE, ArchObj = lass,
+                                   nearest = "cand_alpha", sequ = TRUE)
+res_archoids_beta <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
+                                  huge = 200, step = FALSE, ArchObj = lass,
+                                  nearest = "cand_beta", sequ = TRUE)
+
+boundaries_ns <- anthrCases(res_archoids_ns)
+boundaries_alpha <- anthrCases(res_archoids_alpha)
+boundaries_beta <- anthrCases(res_archoids_beta)
+@
+
+In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids match (although the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypes do not), so it is enough to represent a single percentile plot. To that end, the \code{matPercs} computes the percentils of the archetypoids for every column of the data frame.
+  
+<<AA5,eval=FALSE,tidy=FALSE>>=  
+matPer <- matPercs(boundaries_ns, USAFSurvey_preproc$data)
+@
+
+
+Figure~\ref{AAExample} shows the percentils of three archetypoids.
+
+<<AA6,eval=FALSE,tidy=FALSE>>=
+barplot(matPer, beside = TRUE, main = paste(numArchoid, 
+                                            " archetypoids", sep = ""),
+        ylim = c(0, 100), ylab = "Percentile", 
+        xlab = "Each bar is related to each anthropometric variable selected")
+@
+
+
+\begin{figure}%[H]
+\centering
+\includegraphics[width=0.42\textwidth]{AA.pdf}
+\caption{Percentils of three archetypoids, beginning from the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ sets for \code{USAFSurvey}. In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids coincide. The anthropometric variables selected are thumb tip reach, buttock-knee length, popliteal height sitting, sitting height, eye height sitting and shoulder height sitting.}\label{AAExample}
+\end{figure}
+
+
+\section{Discussion}\label{practApp}
+
+Procedures related to clustering, data depth and shape analysis (\emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{hipamAnthropom}, \emph{TDDclust} and \emph{kmeansProcrustes}) are aimed at defining optimal clothing size groups and both 1D and 3D central cases, which are actually representative statistical models or prototypes (and fit models in the case of \emph{hipamAnthropom}) of the human body of the target population. The five aforementioned methodologies followed the same scheme. Firstly, the selected data matrix was segmented using a primary control dimension (bust or waist) and then a further segmentation was carried out using other secondary control anthropometric variables. The number of size groups generally obtained with these methods was three, because this number is quite well aligned to clothing industry practice for the mass production of clothing, where the objective is to optimize sizes by addressing only the most profitable. This procedure can be translated into practice as shown in Figure \ref{etiq}.
+
+For a given bust size, for example, 86-90 cm, the three t-shirts in Figure \ref{etiq} were designed from the three prototypes obtained by any of the aforementioned methodologies. It can be seen that all three have the same bust size (primary dimension), but different measurements for other secondary dimensions (in this example, waist and neck-to-hip are selected for illustrative purposes). In a commercial situation, a woman in a store would directly select the t-shirts with her bust size and, out of all of them, she would finally choose the one with her same measurements for the other secondary variables. As a result, the customer would have quickly and easily found a t-shirt that fits perfectly. It is believed that the statistical methodologies presented here can speed up the purchasing process, making it more satisfactory. Figure \ref{etiq} also shows a proposal for garment labelling. Clothing fit depends a lot on better garment labelling. Apparel companies should offer consumers truthful information that is not confusing on the garment sizes that they wish to offer for sale, so that people can easily recognise their size. In addition, the prototypes and fit models obtained can also be used to make more realistic store mannequins, thus helping to offer an image of healthy beauty in society, which is another very useful and practical application.
+
+\begin{figure}%[H]
+\centering
+\begin{tabular}{ccc}
+\includegraphics[width=0.3\textwidth]{prendas_1.png} &
+\includegraphics[width=0.3\textwidth]{prendas_2.png} &
+\includegraphics[width=0.32\textwidth]{prendas_3.png} \\
+\end{tabular}
+\vspace*{-0.1cm}
+\caption{Practical implementation of the methodologies presented. These are three t-shirts designed from the prototypes obtained. The three t-shirts have the same bust size (primary dimension), but different measurements for other secondary dimensions. This method of designing and labelling may speed up the purchasing process, making it more satisfactory.}\label{etiq}
+\end{figure}
+
+On the other hand, the two approaches based on archetypal and archetypoid analysis make it possible to identify boundary cases, that is to say, the individuals who present extreme body measurements. The basic idea is that accommodating boundary cases will accommodate the people who fall within the boundaries (less extreme population). This strategy is valuable in all human-computer interaction problems, for example, the design and packaging of plane cockpits or truck cabins. When designing workstations or evaluating manual work, it is common to use only a few human figure models (extreme cases, which would be our archetypoids) as virtual test individuals. These models are capable of representing people with a wide range of body sizes and shapes. Archetypal and archetypoid analysis can be very useful in improving industry practice when using human model tools to design products and work environments.
+
+
+
+
+
+\section{Conclusions}\label{conclusions}
+
+New three-dimensional whole-body scanners have drastically reduced the cost and duration of the measurement process. These types of systems, in which the human body is digitally scanned and the resulting data converted into exact measurements, make it possible to obtain accurate, reproducible and up-to-date anthropometric data. These databases constitute very valuable information to effectively design better-fitting clothing and workstations, to understand the body shape of the population and to reduce the design process cycle. Therefore, rigorous statistical methodologies and software applications must be developed to make the most of them. 
+
+This paper introduces a new \proglang{R} package called \pkg{Anthropometry} that brings together different statistical methodologies concerning clustering, the statistical concept of data depth, statistical shape analysis and archetypal analysis, which have been especially developed to deal with anthropometric data. The data used have been obtained from a 3D anthropometric survey of the Spanish female population and from the USAF survey. Procedures related to clustering, data depth and shape analysis are aimed at defining optimal clothing size groups and both central prototypes and fit models. The two approaches based on archetypal analysis are useful for determining boundary human models which could be useful for improving industry practice in workspace design. 
+
+The  \pkg{Anthropometry} \proglang{R} package is a positive contribution to help tackle some statistical problems related to Ergonomics and Anthropometry. It provides a useful software tool for engineers and researchers in these fields so that they can analyze their anthropometric data in a comprehensive way.
+
+
+\section*{Acknowledgments}
+
+The author gratefully acknowledges the many helpful suggestions of I. Epifanio and G. Ayala. The author would also like to thank the Biomechanics Institute of Valencia for providing us with the Spanish anthropometric data set and the Spanish Ministry of Health and Consumer Affairs for having commissioned and coordinated the ``Anthropometric Study of the Female Population in Spain''. This paper has been partially supported by the following grants: TIN2009-14392-C02-01, TIN2009-14392-C02-02. The author would also like to thank the editors and referee for their very constructive suggestions, which led to a great improvement of both this paper and the \pkg{Anthropometry} package.
+
+\bibliography{Anthropometry}
+
+\newpage
+
+\appendix
+\setcounter{secnumdepth}{0}
+\section{Algorithm listings}\label{appendix}
+
+\begin{algorithm}[H]
 \caption{\emph{trimowa} algorithm.} \label{algtrimmedkmedoids}
 \begin{algorithmic}
 {\footnotesize
@@ -276,35 +822,12 @@ d(x_i,x_{i_j})}.
 \ENDIF
 \ENDIF
 \ENDFOR
-\RETURN $M$ and $F_2$.
+\RETURN $M$ and $F_2$. \\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
 
-Our approach allows us to obtain more realistic prototypes (medoids) because they correspond to real women from the database and the selection of individual discommodities. In addition, the use of OWA operators has resulted in a more realistic dissimilarity measure between individuals and prototypes. We learned from this situation that there is an ongoing search for advanced statistical approaches that can deliver practical solutions to the definition of central people and optimal size groups. Consequently, we have come across two different statistical strategies in the literature and have aimed to discuss their potential usefulness in the definition of an efficient clothing sizing system. These approaches are based on biclustering and data depth and will be summarized below.
-
-\vspace*{0.5cm}
-
-%\subsubsection{CCbiclustAnthropo}
-{\bf The \emph{CCbiclustAnthropo} methodology}
-
-In the analysis of gene expression data, conventional clustering is limited to finding global expression patterns. Gene data are organized in a data matrix where rows correspond to genes and columns to experimental samples (conditions). The goal is to find submatrices, i.e., subgroups of genes and subgroups of conditions, where the genes exhibit a high degree of correlation for every condition \citep{Madeira2004}. Biclustering is a novel clustering approach that accomplishes this goal. This technique consists of simultaneously partitioning the set of rows and the set of columns into subsets. 
-
-In a traditional row cluster, each row is defined using all the columns of the data matrix. Something similar would occur with a column cluster. However, with biclustering, each row in a bicluster is defined using only a subset of columns and vice versa. Therefore, clustering provides a global model but biclustering defines a local one. This interesting property made us think that biclustering could perhaps be useful for obtaining efficient size groups, since they would only be defined for the most relevant anthropometric dimensions that describe a body in the detail necessary to design a well-fitting garment.
-
-Recently, a large number of biclustering methods have been developed. Some of them are implemented in different sources, including \proglang{R}. Currently, the most complete \proglang{R} package for biclustering is \pkg{biclust} \citep{Kaiser2008,biclust}. The usefulness of the approaches included in \pkg{biclust} for dealing with anthropometric data was investigated in \cite{Vinue2012}. Among the conclusions reached, the most important was concerned with the possibility of considering the Cheng \& Church biclustering algorithm \citep{Cheng2000} (referred to below as CC) as a potential statistical approach to be used for defining size groups. Specifically, in \cite{Vinue2012} an algorithm to find size groups (biclusters) and disaccommodated women with CC was set out. This methodology is called \emph{CCbiclustAnthropo} and it is implemented in the \code{CCbiclustAnthropo} function. Next, the mathematical details behind this procedure are briefly described. First of all, the CC algorithm must be introduced (see \cite{Cheng2000,Tesis,Kaiser2008}). The CC algorithm searches for biclusters with constant values (in rows or in columns). To that end, it defines the following score:
-
-
-\begin{equation}\nonumber
-H(I,J) = \displaystyle\frac{1}{|I||J|}\sum_{i \in I, j \in J}\hspace*{-0.26cm}(a_{ij} - a_{iJ} - a_{Ij} + a_{IJ})^2,
-\end{equation}
-
-where $a_{iJ}$ is the mean of the $i$th row of the bicluster, $a_{Ij}$ is the mean of the $j$th column of the bicluster and $a_{IJ}$ is its overall mean. Then, a subgroup is called a bicluster if the score is below a value $\delta \geq 0$ and above an $\alpha$-fraction of the score of the whole data ($\alpha > 1$).
-
-The CC algorithm implemented in the \code{biclust} function of the \pkg{biclust} package requires three arguments. Firstly, the maximum number of biclusters to be found. We propose that this number should be fixed for each waist size according to the number of women it contains: For less than 150, fix 2 biclusters; between 151-300, 3; between 351-450, 4; greater than 415, 5. Secondly, the $\alpha$ value. Its default value ($1.5$) is maintained. Finally, the $\delta$ value. Because CC is nonexhaustive, i.e., it might not group every woman into a bicluster, the value of $\delta$ can be iteratively adapted to the number of disaccommodated women we want to discard in each size. The proportion of the trimmed sample is prefixed to $0.01$ per size. In this way, a number of women between $0$ and the previous fixed proportion will not be assigned to any group. The algorithm associated with the \emph{CCbiclustAnthropo} methodology is summarized in Algorithm \ref{cod}.
-
-
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{\emph{CCbiclustAnthropo} algorithm.}\label{cod}
 \begin{algorithmic}
 {\footnotesize
@@ -313,67 +836,30 @@ The CC algorithm implemented in the \code{biclust} function of the \pkg{biclust}
 \WHILE{$disac > ceiling(0.01 * \emph{number of women belonging to the size})$}
 \STATE biclust(data, method = BCCC(), delta = delta, alpha = 1.5, number = k)
 \STATE disac = number of women not grouped.
-\STATE delta = delta + 1
-\ENDWHILE
+\STATE delta = delta + 1 
+\ENDWHILE \\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
 
-Designing lower body garments depends not only on the waist circumference (the principal dimension in this case), but also on other secondary control dimensions (for upper body garments only the bust circumference is usually needed). Biclustering produces subgroups of objects that are similar in one subgroup of variables and different in the remaining variables. Therefore, it seems more interesting to use a biclustering algorithm with a set of lower body dimensions. For that purpose, all the body variables related to the lower body in the Spanish anthropometric survey were chosen (there were 36). An efficient partition into different biclusters was obtained with promising results. All individuals in the same bicluster can wear a garment designed for the specific body dimensions (waist and other variables) which were the most relevant for defining the group. Each group is represented by the median woman. 
-
-The main interest of this approach was descriptive and exploratory and the important point to note here is that \code{CCbiclustAnthropo} cannot be used with \code{sampleSpanishSurvey}, since this data file does not contain variables related to the lower body in addition to waist and hip. However, this function is included in the package in the hope that it could be helpful or useful for other researchers. All theoretical and practical details are given in \cite{VinueIbanez2013}, \cite{Tesis} and \cite{Vinue2012}.
-
-\vspace*{0.5cm}
-
-%\subsubsection{TDDclust}
-{\bf The \emph{TDDclust} methodology}
-
-
-The statistical concept of data depth is another general framework for descriptive and inferential analysis of numerical data in a certain number of dimensions. In essence, the notion of data depth is a generalization of standard univariate rank methods in higher dimensions. A depth function measures the degree of centrality of a point regarding a probability distribution or a data set. The highest depth values correspond to central points and the lowest depth values correspond to tail points \citep{Liu1999,Zuo2000}. Therefore, the depth paradigm is another very interesting strategy for identifying central prototypes.
-
-The development of clustering and classification methods using data depth measures has received increasing attention  in recent years \citep{Duttaetal12,Langeetal12,Lopez2010,Ding2007}. The most relevant contribution to this field has been made by Rebecka J\"ornsten in \cite{Jornsten2004} \citep[see][for more details]{Jornsten2002,Pan2004}. She introduced two clustering and classification methods (\emph{DDclust} and \emph{DDclass}, respectively) based on $L_1$ data depth (see \cite{Vardi2000}).  The \emph{DDclust} method is proposed to solve the problem of minimizing the sum of $L_1$-distances from the observations to the nearest cluster representatives.  In clustering terms, the $L_1$ data depth is the amount of probability mass needed at a point $z$ to make $z$ the multivariate $L_1$-median (a robust representative) of the data cluster.
-
-An extension of \emph{DDclust} is introduced which incorporates a trimmed procedure, aimed at segmenting the data into efficient size groups using central (the deepest) people. This methodology will be referred to below as \emph{TDDclust} and it can be used within \pkg{Anthropometry} by using a function with the same name. Next, the mathematical details behind this procedure are briefly described. A thorough explanation is given in \cite{VinueIbanez2013,Tesis}. First, the $L_1$ multivariate median (from now on, $L_1$-MM) is defined as the solution of the  Weiszfeld problem \citep{Vardi2000}. Vardi et al. \citep{Vardi2000} proved that the depth function associated with the $L_1$-MM, called $L_1$ data depth, is:
-
-\begin{equation}\label{Dy}
-%\begin{displaymath}
-D(y)=
-\left \{ \begin{array}{lr}
-1 - ||\bar{e}(y)|| \;\;\;\;\;\;\;\;\;\;\; \;\;\;\hspace*{0.17cm}  if \;\; y \notin \{x_1,\ldots,x_m\}, \\
-\\
-1 - (||\bar{e}(y)|| - f_k) \;\;\;\;\; if \;\; y=x_k.\\ 
-\end{array} \right.
-%\end{displaymath}
-\end{equation}
-
-where $e_i(y) = (y - x_i) / ||y - x_i||$ (unit vector from $y$ to $x_i$) and $\bar{e}(y) = \sum_{x_k \neq y} e_i(y)f_i$ (average of the unit vectors from $y$ to all observations), with $f_i = \eta_i \hspace*{0.1cm}/ \sum_{j=1}^k \eta_j$ ($\eta_i$ is a weight for $x_i$) and $||\bar{e}(y)||$ is close to 1 if $y$ is close to the edge of the data, and close to 0 if $y$ is close to the center.
-
-The \emph{DDclust} method is proposed to solve the problem of minimizing the sum of $L_1$-distances from the observations to the nearest cluster representatives. Specifically, \emph{DDclust} iterates between median computations via the modified Weiszfeld algorithm \citep{Weiszfeld1937} and a Nearest-Neighbor allocation scheme with simulation annealing. The clustering criterion function used in \emph{DDclust} is the maximization of:
-
-\begin{eqnarray} \label{TDDevaluationfunction}
-C(I_{1}^K) = \displaystyle \frac{1}{N} \sum_{k=1}^K \hspace*{0.1cm} \sum_{i \in I(k)} (1 - \lambda)sil_i + \lambda ReD_i
-\end{eqnarray}
-
-with respect to a partition $I_{1}^K = \{I(1),\ldots,I(K)\}$. For each point $i$, $sil_i$ is the silhouette width, $ReD_i$ is the difference between the within cluster $L_1$ data depth and the between cluster $L_1$ data depth, and  $\lambda \in [0,1]$ is a parameter that controls the influence the data depth has over the clustering. Following \cite{Zuo06}, for any $0 < \alpha < \alpha^{*} = sup_{x} (D(x))\leq1$, the $\alpha$-th trimmed depth region is:
-
-\begin{eqnarray}
-D^{\alpha}=\{x:D(x)\geq \alpha \}.
-\end{eqnarray}
-
-The idea behind \emph{TDDclust} is to define trimmed regions at each step of the iterative algorithm and to apply the \emph{DDclust} algorithm to the remaining set of observations. The algorithm associated with the \emph{TDDclust} methodology is summarized in Algorithm \ref{TDDclust_Alg}. 
 
 \begin{algorithm}
 \caption{\emph{TDDclust} algorithm.} \label{TDDclust_Alg}
-\begin{algorithmic}
+\vspace*{-0.1cm}\begin{algorithmic}
 {\footnotesize
 \STATE 1. Start with an initial partition $I_1^K = \{I(1),\ldots,I(K)\}$ obtained with PAM. Set $\beta=\beta_{init}$.
 \STATE 2. Compute:
 \begin{itemize}
 \item The $L_1$-MM of the $K$ clusters, $y_0(1),\ldots,y_0(K)$.
+\vspace*{-0.1cm}
 \item The silhouette widths, $sil_i$ $\forall i=1,\ldots,n$.
+\vspace*{-0.1cm}
 \item The within cluster $L_1$ data depth of $x_i:i \in I(k)$, $D_i^w = D(x_i|k)$.
+\vspace*{-0.1cm}
 \item The between cluster $L_1$ data depth of $x_i$, $D_i^b = D(x_i|l)$ (for $I(l)$ the nearest cluster of $x_i:i \in I(k)$).
+\vspace*{-0.1cm}
 \item The relative data depths, $ReD_i = D_i^w - D_i^b$ $\forall i=1,\ldots,n$.
+\vspace*{-0.1cm}
 \item The total value of the partition, $C(I_{1}^K)$.
 \end{itemize}
 \STATE 3. Compute $c_i= (1 - \lambda)sil_i + \lambda ReD_i$  $\forall i=1,\ldots,n$. {\bf Remove $R=\{i: c_i\leq \alpha\}$, being $\alpha$ the trimming size. Let $R$ be the set of $\lceil n (1 - \alpha) \rceil$ non-trimmed points.}
@@ -388,44 +874,17 @@ The idea behind \emph{TDDclust} is to define trimmed regions at each step of the
 \STATE Set $S=S_{-E}$ removing the subset $E$ form $S$.
 \STATE 7. Iterate 5-6 until set $S$ is empty.
 \STATE 8. $\forall{j\in\{1,\ldots,n:x_j \in R\}}$ compute $k_j=argmax\{c_j^k\}$ being $c_j^k$ the value of $c_j$ as in  Equation~\ref{TDDevaluationfunction}, assuming that the $j$-th point belongs to cluster $k$. Assign $x_j$ to the $k_j$-th cluster.
-\STATE 9. If no moves were accepted for the last $M$ iterations and $\beta < \infty$, set $\beta=\infty$ and iterate 2-8. If no moves were accepted for the last $M$ iterations and $\beta=\infty$. Otherwise, set $\beta=2\beta$ and iterate 2-8.
+\STATE 9. If no moves were accepted for the last $M$ iterations and $\beta < \infty$, set $\beta=\infty$ and iterate 2-8. If no moves were accepted for the last $M$ iterations and $\beta=\infty$. Otherwise, set $\beta=2\beta$ and iterate 2-8. \\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
 
 
-
-
-
-
-
-\vspace*{0.5cm}
-
-%\subsubsection{hipamAnthropom}
-{\bf The \emph{hipamAnthropom} methodology}
-
-Representative fit models are important for defining a meaningful sizing system. However, there is no agreement among apparel manufacturers and almost every company employs a different fit model. Companies try to improve the quality of garment fit by scanning their fit models and deriving dress forms from the scans \citep{libroAshdown,Song2010}. A fit model's measurements correspond to the commercial specifications established by each company to achieve the company's fit \citep{Loker2005,Workman2000,Workman1991}. Beyond merely wearing the garment for inspection, a fit model provides objective feedback about the fit, movement or comfort of a garment in place of the consumer. 
-
-The \emph{hipamAnthropom} methodology is proposed in order to provide new insights about this problem. This methodology is available in the \code{hipamAnthropom} function. It consists of two classification algorithms based on the hierarchical partitioning around medoids (HIPAM) clustering method presented in \cite{Wit2004}, which has been modified to deal with anthropometric data. HIPAM is a divisive hierarchical clustering algorithm using PAM. This procedure was published in \cite{Vinue2013}. The outputs of the two algorithms include a set of central representative subjects or medoids taken from the original data set, which constitute our fit models. They can also detect outliers. The first one, called $HIPAM_{MO}$, is a slightly modification of the HIPAM that uses the dissimilarity defined in Equation ~\ref{eq:our_metrica}. $HIPAM_{MO}$ uses the average silhouette width (asw) as a measure of cluster structure and the maximization of the asw as the rule to subdivide each already accepted cluster. The use of asw could be too restrictive. That's why a second algorithm, $HIPAM_{IMO}$, is proposed, where the differences regarding the original HIPAM are even deeper. It incorporates a different criterion: the INCA statistic criterion (\cite{Irigoien2008,Arenas2002,ICGE}) to decide the number of child clusters and as a stopping rule. In short, INCA is defined as the probability of properly classified individuals and it is estimated with the following expression:
-
-\begin{equation}
-INCA_k =  \frac{1}{k} \sum_{j=1}^k \frac{N_j}{n_j}
-\end{equation}
-
-where $N_j$ is the total number of units in a cluster $C_j$ which are well classified and $n_j$ is the size of cluster $C_j$. Next, a briefly exposure about the details behind $HIPAM_{MO}$ and $HIPAM_{IMO}$ is given. Let's start with $HIPAM_{MO}$: The output of a HIPAM algorithm is represented by a classification tree where each node corresponds to a cluster. The end nodes give us the final partition. The highest or top node, $T$, corresponds to the whole database. For a given node $P$, the algorithm must decide if it is convenient to split this (parent) cluster into new (child) clusters, or stop. If $|P| \leq 2$, then it is an end (or terminal) node. If not, a PAM is applied to $P$ with $k_1$ groups, where $k_1$ is chosen by maximizing the asw of the new partition. After a post-processing step, a partition $C=\{C_1,\ldots,C_k\}$ is finally obtained from $P$ ($k$ is not necessarily equal to $k_1$). Next, the mean silhouette width of $C$ (or $asw_C$) is obtained, and then the same steps used to generate $C$ are applied to each $C_i$ to obtain a new partition. If we denote by $SS_i$ the asw of the new partition with $i = 1, \ldots, k$ (if $|C_i| \leq 2$ then $SS_i=0$), then the Mean Split Silhouette (MSS) is defined as the mean of the $SS_i$'s. If $MSS(k) < asw_C$, then these new $k$ child clusters of the partition $C$ are included in the classification tree. Otherwise, $P$ is a terminal node. On the other hand, the algorithm $HIPAM_{IMO}$ is summarized in Algorithm \ref{hipam_imo}. The main difference between $HIPAM_{MO}$ and $HIPAM_{IMO}$ is in the use of the INCA criterion:
-
-\begin{enumerate}
-\item At each node $P$, if there is $k$ such that $INCA_k > 0.2$, then we select the $k$ prior to the first largest slope decrease.
-\item On the other hand, if  $INCA_k < 0.2$ for all $k$, then $P$ is a terminal node.
-\end{enumerate}
-  
-However, this procedure does not apply either to the top node $T$, or to the generation of the new partitions from which the MSS is calculated. In this case, even when all $INCA_k < 0.2$, we fix $k=3$ as the number of groups to divide and proceed.
-	
-\begin{algorithm}
+\begin{algorithm}%[H]
 \caption{The $HIPAM_{IMO}$ method of the \emph{hipamAnthropom} algorithm.} \label{hipam_imo}
 \begin{algorithmic}
 {\footnotesize
-\STATE 1. {\bf Initialization of the tree}: %\emph{PHASE I FOR $HIPAM_{IMO}$}		
+\STATE 1. {\bf Initialization of the tree}: %\emph{PHASE I FOR $HIPAM_{IMO}$}    
 {\footnotesize \STATE Let the top cluster with all the elements be $T$.
 \STATE 1.1. {\bf Initial clustering:} Apply a PAM to $T$ with the number of clusters, $k_1$, provided by the INCA statistic with the following rule: \IF {$INCA_{k_1} < 0.2 \; \forall k_1$} \STATE $k_1=3$ \ELSE
 \STATE $k_1$ as the value preceding the first biggest slope decrease.
@@ -436,10 +895,11 @@ However, this procedure does not apply either to the top node $T$, or to the gen
 \STATE 2. {\bf Local HIPAM}: \WHILE{there are active clusters}
 \STATE Generation of the candidate clustering partition: \emph{PHASE I FOR $HIPAM_{IMO}$}
 \STATE Evaluation of the candidate clustering partition: \emph{PHASE II FOR $HIPAM_{IMO}$}
-\ENDWHILE
+\ENDWHILE \\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
+
 
 \begin{algorithm}%[H]
 \caption{PHASE I FOR $HIPAM_{IMO}$.} \label{gener_imo}
@@ -450,15 +910,15 @@ However, this procedure does not apply either to the top node $T$, or to the gen
 \ELSE \IF {$INCA_{k_1} < 0.2 \; \forall k_1$} \STATE  STOP (P is a terminal node).
 \ELSE \STATE 2. {\bf Initial clustering:} Apply a PAM to $P$ with the number of clusters, $k_1$, provided by the INCA statistic as the value preceding the first biggest slope decrease. An initial partition with $k_1$ clusters is obtained.
 \STATE 3. {\bf Post-processing:} Apply several partitioning or collapsing procedures to the $k_1$ clusters to try to improve the asw. 
-\STATE The candidate partition, $C=\{C_1, \ldots, C_k\}$, from $P$ is obtained.
+\STATE The candidate partition, $C=\{C_1, \ldots, C_k\}$, from $P$ is obtained.\\ \hspace*{0.1cm}
 \ENDIF
 \ENDIF
 }
 \end{algorithmic}
 \end{algorithm}
-	
-	
-\begin{algorithm}
+  
+  
+\begin{algorithm}%[H]
 \caption{PHASE II FOR $HIPAM_{IMO}$.} \label{eval_imo}
 \begin{algorithmic}
 {\footnotesize
@@ -466,24 +926,11 @@ However, this procedure does not apply either to the top node $T$, or to the gen
 \STATE 1. Calculate the asw of $C$, $asw_C$.
 \STATE 2. For each $C_i$, generate a new partition using the steps {\bf 1.1.} and {\bf 1.2.} of the initialization of the tree and calculate its $SS_i$.
 \STATE 3. \IF {$MSS(k)=\displaystyle\frac{1}{k}\sum_{i=1}^k SS_i < asw_C$} \STATE C is accepted.
-\ELSE \STATE C is rejected. STOP (P is a terminal node).
+\ELSE \STATE C is rejected. STOP (P is a terminal node).\\ \hspace*{0.1cm}
 \ENDIF
 }
 \end{algorithmic}
 \end{algorithm} 
-
-
-
-
-\subsection{Statistical shape analysis}\label{ssa}
-
-\vspace*{0.2cm}
-
-{\bf The \emph{kmeansProcrustes} methodology}
-
-The clustering methodologies explained in Section \ref{clust} use a set of control anthropometric variables as the basis for a different type of sizing system in which people are grouped in a size group based on a full range of measurements. Consequently, clustering is done in the Euclidean space. The shape of the women recruited into the Spanish anthropometric survey is represented by a a configuration matrix of correspondence points called landmarks. Taking advantage of this fact, we have adapted the $k$-means clustering algorithm to the field of statistical shape analysis, to define size groups of women according to their body shapes. The representative of each size group is the average woman. This approach was published in \cite{Vinue2013ssa}. We have adapted both the original Lloyd and Hartigan-Wong (H-W) versions of $k$-means to the field of shape analysis and we have demonstrated, by means of a simulation study, that the Lloyd version is more efficient for clustering shapes than the H-W version. The function that uses the Lloyd version of $k$-means adapted to shape analysis (what we called \emph{kmeansProcrustes}) is \code{LloydShapes}. The function that uses the H-W version of $k$-means adapted to shape analysis is \code{HartiganShapes}. A trimmed version of \emph{kmeansProcrustes} can be also executed with \code{trimmedLloydShapes}.
-
-To adapt $k$-means to the context of shape analysis, we integrated the Procrustes distance and Procrustes mean into it. A glossary of the concepts of shape analysis used is provided below. The following general notation will be used: $n$ refers to the number of objects, $h$ to the number of landmarks and $m$ to the number of dimensions (in our case, $m=3$). Then, each object is described by an $h \times m$ configuration matrix $X$ containing the $m$ Cartesian coordinates of its $h$ landmarks. The pre-shape of an object is what is left after allowing for the effects of translation and scale. The shape of an object is what is left after allowing for the effects of translation, scale and rotation. The shape space $\Sigma^h_m$ (named Kendall shape space) is the set of all possible shapes. The Procrustes distance is the square root of the sum of squared differences between the positions of the landmarks in two optimally (by least-squares) superimposed configurations at centroid size (the centroid size is the most commonly used measure of size for a configuration). The Procrustes mean is the shape that has the least summed squared Procrustes distance to all the configurations of a sample. Algorithms \ref{Lloyd_sa}, \ref{trimmed_Lloyd_sa} and \ref{Hart_sa} show the algorithms behind \code{LloydShapes}, \code{trimmedLloydShapes} and \code{HartiganShapes}, respectively. 
 
 
 %Lloyd
@@ -493,10 +940,11 @@ To adapt $k$-means to the context of shape analysis, we integrated the Procruste
 {\footnotesize
 \STATE 1. Given a vector of shapes $Z=([Z_1], \ldots, [Z_k]) \ \ [Z_i] \in \Sigma^h_m \ \ i=1,\ldots, k$, we minimize with respect to a $k$-partition $\mathcal{C}=(C_1,\ldots,C_k)$, assigning each shape $([X_1], \ldots, [X_n])$ to the class whose centroid has the Procrustes minimum distance to it.
 \STATE 2. Given $\mathcal{C}$, we minimize with respect to $Z$, taking $Z=([\widehat{\mu_1}], \ldots, [\widehat{\mu_k}])$, and $[\widehat{\mu_i}] \ i=1,\ldots, k$, the Procrustes mean of shapes in cluster $C_i$.
-\STATE 3. Steps 1. and 2. are repeated until convergence of the algorithm.
+\STATE 3. Steps 1. and 2. are repeated until convergence of the algorithm.\\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
+
 
 %Trimmed Lloyd Shape:
 \begin{algorithm}
@@ -505,15 +953,14 @@ To adapt $k$-means to the context of shape analysis, we integrated the Procruste
 {\footnotesize
 \STATE 1. Given a centroid vector $Z=([Z_1], \ldots, [Z_k]) \ \ [Z_i] \in \Sigma^h_m \ \ i=1,\ldots, k $, we calculate the  Procrustes distances of each shape $([X_1], \ldots, [X_n])$ to its closest centroid. The $n \alpha$ shapes with largest distances are removed, the $n(1-\alpha)$ left are assigned to the class whose centroid has the minimum full Procrustes distance to it.
 \STATE 2. Given $\mathcal{C}$, we minimize with respect to $Z$, taking $Z=([\widehat{\mu_1}], \ldots, [\widehat{\mu_k}])$, and $[\widehat{\mu_i}] \ i=1,\ldots, k$, the Procrustes mean of shapes in cluster $C_i$.
-\STATE 3. Steps 1. and 2. are repeated until convergence of the algorithm.
+\STATE 3. Steps 1. and 2. are repeated until convergence of the algorithm.\\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
 
 
-
-%Hartigan (mirar el paper de Amaral)
-\begin{algorithm} \label{Hartigan}
+%Hartigan:
+\begin{algorithm} 
 \caption{\emph{HartiganShapes} algorithm.}\label{Hart_sa}
 \begin{algorithmic}
 {\footnotesize
@@ -528,456 +975,48 @@ $l$ ($l\neq l_i$, $l= 1,2, ..., k$). Let $l_2$ be the cluster with the smallest 
 \end{itemize}
 \STATE 5. Stop if the live set is empty. Otherwise, go to Step 6. after one pass through the data set. 
 \STATE 6. This is the \textit{quick-transfer stage}: Consider each shape $[X_j]$ ($j = 1, 2, ..., n$) in turn. Let $l_1 = C1(j)$ and $l_2 = C2(j)$. It is not necessary to check shape $[X_j]$ if both clusters $l_1$ and $l_2$ have not changed in the last $n$ steps. Compute the values $R1 = \frac{n_{l_1} \|x_j-z_{l_1}\|^2}{n_{l_1} + 1}$ and $R2 =\frac{n_{l_2} \|x_j-z_{l_2}\|^2}{n_{l_2} + 1}$. If $R1$ is less than $R2$, shape $[X_j]$ remains in cluster $l_1$. Otherwise, switch $C1(j)$ and $C2(j)$ and update the mean shapes of clusters $l_1$ and $l_2$. The two clusters are also noteworthy for their involvement in a transfer at this step. 
-\STATE 7. If no transfer took place in the last $n$ steps, go to Step 4. Otherwise, go to Step 6.
+\STATE 7. If no transfer took place in the last $n$ steps, go to Step 4. Otherwise, go to Step 6.\\ \hspace*{0.1cm}
 }
 \end{algorithmic}
 \end{algorithm}
 
 
-
-
-\subsection{Archetypal analysis}\label{Arch}
-
-In ergonomic-related problems, where the goal is to create more efficient people-machine interfaces, a small set of extreme cases (boundary cases), called human models, is sought. Designing for extreme individuals is appropriate where some limiting factor can define either a minimum or maximum value which will accommodate the population. The basic principle is that accommodating boundary cases will be sufficient to accommodate the whole population.
-
-For too long, the conventional solution for selecting this small group of boundary models was based on the use of percentils. However, percentils are a kind of univariate descriptive statistic, so they are suitable only for univariate accommodation and should not be used in designs that involve two or more dimensions. Furthermore, they are not additive \citep{Zehner1983,Robinette1981,Moroney1972}. Today, the alternative commonly used for the multivariate accommodation problem is based on PCA \citep{Friess2003,Hudson1998,Robinson1992,Bittner1987}. However, it is known that the PCA approach presents some drawbacks \citep{Friess2005}. In \cite{EpiVinAle}, a different statistical approach for determining multivariate limits was put forward: archetypal analysis \citep{Cutler1994}, and its advantages regarding over PCA were demonstrated. 
-
-The theoretical basis of archetype analysis is as follows. Let $\bold{X}$ be an $n \times m$ matrix that represents a multivariate dataset with $n$ observations and $m$ variables. The goal of archetype analysis is to find a $k \times m$ matrix $\bold{Z}$ that characterizes the archetypal patterns in the data, such that data can be represented as mixtures of those archetypes. Specifically, archetype analysis is aimed at obtaining the two $n \times k$ coefficient matrices $\bold{\alpha}$ and $\bold{\beta}$ which minimize the residual sum of squares that arises from combining the equation that shows $\bold{x}_i$ as being approximated by a linear combination of $\bold{z}_j$'s (archetypes) and the equation that shows $\bold{z}_j$'s as linear combinations of the data:
-
-\begin{displaymath}
-\left. \begin{array}{l}
-\hspace{0.2cm} \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2\\
-\\
-\hspace{0.2cm} \bold{z}_j = \displaystyle \sum_{l=1}^n \beta_{jl} \bold{x}_l\\
-\end{array} \right\}
-\Rightarrow RSS = \displaystyle \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2 = \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \sum_{l=1}^n \beta_{jl} \bold{x}_l\|^2{,}
-\end{displaymath}
-
-under the constraints
-
-\begin{enumerate}
-\item[1)] $\displaystyle \sum_{j=1}^k \alpha_{ij} = 1$ with $\alpha_{ij} \geq 0$ and $i=1,\ldots,n$ {and}
-\item[2)] $\displaystyle \sum_{l=1}^n \beta_{jl} = 1$ with $\beta_{jl} \geq 0$ and $j=1,\ldots,k${.}
-\end{enumerate}
-
-On the one hand, constraint 1) tells us that the predictors of $\bold{x}_i$ are finite mixtures of archetypes, $\bold{\hat{x}}_i = \displaystyle \sum_{j=1}^k \alpha_{ij} \bold{z}_j$. Each $\alpha_{ij}$ is the weight of the archetype $j$ for the individual $i$, that is to say, the $\alpha$ coefficients represent how much each archetype contributes to the approximation of each individual. On the other hand, constraint 2) implies that archetypes $\bold{z}_j$ are convex combinations of the data points, $\bold{z}_j = \displaystyle \sum_{l=1}^n \beta_{jl} \bold{x}_l$.
-
-The function that allows us to reproduce the results discussed in \cite{EpiVinAle} is \code{archetypesBoundary} (use \code{set.seed(2010)} to obtain the same results). 
-
-According to the previous definition, archetypes computed by archetypal analysis are a convex combination of the sampled individuals, but they are not necessarily real observations. The archetypes would correspond to specific individuals when $\bold{z}_j$ is an observation of the sample, that is to say, when only one $\beta_{jl}$ is equal to $1$ in constraint 2) for each $j$. As $\beta_{jl} \geq 0$ and the sum of constraint 2) is 1, this implies that $\beta_{jl}$ should only take on the value 0 or 1. In some problems, it is crucial that the archetypes are real subjects, observations of the sample, and not fictitious. To that end, we have proposed a new archetypal concept: the archetypoid, which corresponds to specific individuals and each observation of the data set can be represented as a mixture of these archetypoids. In the analysis of archetypoids, the original continuos optimization problem therefore becomes:
-
-\begin{equation}\label{arche_adapt}
-RSS = \displaystyle \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \bold{z}_j\|^2 = \sum_{i=1}^n \| \bold{x}_i - \sum_{j=1}^k \alpha_{ij} \sum_{l=1}^n \beta_{jl} \bold{x}_l\|^2 {,}
-\end{equation}
-
-under the constraints
-
-\begin{enumerate}
-\item[1)] $\displaystyle \sum_{j=1}^k \alpha_{ij} = 1$ with $\alpha_{ij} \geq 0$ and $i=1,\ldots,n$ {and}
-\item[2)] $\displaystyle \sum_{l=1}^n \beta_{jl} = 1$ with $\beta_{jl} \in \{0,1\}$ and $j=1,\ldots,k$ i.e. $\beta_{jl}=1$ \mbox{for one and only one $l$} and $\beta_{jl}=0$ otherwise.
-  
-\end{enumerate}
-
-This new concept archetypoids is introduced in a paper published in \cite{Vinue2013Arch}. We have developed an efficient computational algorithm based on PAM to compute archetypoids (called archetypoid algorithm), we have analyzed some of their theoretical properties, we have explained how they can be obtained when only dissimilarities between observations are known (features are unavailable) and we have demonstrated some of their advantages regarding over classical archetypes. 
-
-The archetypoid algorithm has two phases: a BUILD phase and a SWAP phase, like PAM.  In the BUILD step, an initial set of archetypoids is determined, made up of the nearest individuals to the archetypes returned by the \pkg{archetypes} R package \citep{RpaqueteArch,Eugster2009}. This set can be defined in three different ways: The first possibility consists in computing the Euclidean distance between the $k$ archetypes and the individuals and choosing the nearest ones, as mentioned in \cite{EpiVinAle} (set $cand_{ns}$). The second choice identifies the individuals with the maximum $\alpha$ value for each archetype, i.e. the individuals with the largest relative share for the respective archetype (set $cand_{\alpha}$, used in \cite{Eugster2012} and \cite{Seiler2013}). The third choice identifies the individuals with the maximum $\beta$ value for each archetype, i.e., the major contributors in the generation of the archetypes (set $cand_{\beta}$). Accordingly, the initial set of archetypoids is $cand_{ns}$, $cand_{\alpha}$ or $cand_{\beta}$. The aim of the SWAP phase of the archetypoid algorithm is the same as that of the SWAP phase of PAM, but the objective function is now given by Equation~\ref{arche_adapt} (see \cite{Vinue2013Arch, Tesis}).
-
-The \code{stepArchetypoids} function calls the \code{archetypoids} function to run the archetypoid algorithm repeatedly.
-
-
-
-
-\section{Examples}\label{examples}
-
-This section presents a detailed explanation of the numerical and graphical outcome provided by each method by means of several examples. In addition, some relevant comments are given about the consequences of choosing different argument values in each case.
-
-First of all, \pkg{Anthropometry} must be loaded into \proglang{R}:
-
-<<paquete,eval=FALSE>>=
-library("Anthropometry")
-@
-
-\subsection[Clustering]{Anthropometric dimensions-based clustering}
-
-The following code executes the \emph{trimowa} methodology. A similar code was used to obtain the results described in \cite{Ibanez2012}. We use \code{sampleSpanishSurvey} and its five anthropometric variables. The bust circumference is used as the primary control dimension. Twelve bust sizes (from $74$ cm to $131$ cm) are defined according to the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals \citep{NormaUNE3}).
-
-<<trimowa1,eval=FALSE,tidy=FALSE>>=
-dataTrimowa <- sampleSpanishSurvey
-numVar <- dim(dataTrimowa)[2]
-bust <- dataTrimowa$bust
-bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
-@
-
-The aggregation weights of the OWA operator are computed. They are used to calculate the global dissimilarity between the individuals and the prototypes. We give orness a value of $0.7$ in order to highlight the largest aggregated values, that is to say, the largest discrepancies between the women's body measurements and those of the prototype. An orness value close to 1 gives more importance to the worst fit, whilst an orness value close to 0 gives more importance to the best fit (see \citet[p.~27-31]{Tesis} for details). 
-
-<<trimowa2,eval=FALSE,tidy=FALSE>>=
-orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness, numVar)
-@
-
-Next the \code{trimowa} algorithm is used within each bust class. Three size groups (clusters, argument \code{numClust}) are calculated per bust segment. This number of groups is quite well aligned with the strategy used by companies to design sizes. A larger \code{numClust} will result in many sizes being designed, increasing the production a lot. A smaller \code{numClust} corresponds to too few sizes being designed and having a poor accommodation index. 
-
-The trimmed proportion, \code{alpha}, is prefixed to $0.01$ per segment (therefore, the accommodation rate in each bust size will be $99\%$). This selection allows us to accommodate a very large percentage of the population in the sizing system. A larger trimmed proportion would result in a smaller amount of accommodated people. The number of random initializations is 10 (\code{niter}), with seven steps per initialization (\code{algSteps}). These values are small in the interests of a fast execution. The more random repetitions, the more accurate the prototypes and the more representative of the size group. In \cite{Ibanez2012}, the number of random initializations was 600. 
-
-In addition, a vector of five constants (one per variable) is needed to define the dissimilarity. The numbers collected in the \code{ah} argument are related to the particular five variables selected in \code{sampleSpanishSurvey}. Different body variables would require different constants \citep[see][for further details]{McCullochPaalAshdown98,Tesis}. 
-
-To reproduce results, a seed for randomness is fixed.
-
-<<trimowa3,eval=FALSE,tidy=FALSE>>=
-numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
-ah <- c(23, 28, 20, 25, 25)
-
-set.seed(2014)
-res_trimowa <- list()
-for (i in 1 : (bustSizes$nsizes - 1)){ 
- data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & 
-                    (bust < bustSizes$bustCirc[i + 1]), ]   
- res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
-                             algSteps, ah, verbose = FALSE)
+\begin{algorithm}%[h]
+\caption{Archetypal algorithm.} \label{archeAlg}
+\begin{algorithmic}
+{\footnotesize
+\STATE Given the number of archetypes $k$:
+\STATE 1. Data preparation and initialization: scale data, add a dummy row and initialize $\beta$ in such a way that the constraints are fulfilled to calculate the starting archetypes $\mathbf{Z}$.
+\STATE 2. Loop until RSS reduction is enough small or the number of iterations is reached (see Equation~\ref{arche}):
+\begin{itemize}
+\item[2.1.] Find best $\alpha$ for the given set of archetypes $\mathbf{Z}$.
+\item[2.2.] Recompute archetypes $\mathbf{\tilde{Z}}$.
+\item[2.3.] Find best $\beta$ for the given set of archetypes $\mathbf{\tilde{Z}}$.
+\item[2.4.] Recalculate archetypes $\mathbf{Z}$.
+\item[2.5.] Compute residual sum of squares RSS.
+\end{itemize}
+\STATE 3. Post-processing step: remove dummy row and rescale archetypes.\\ \hspace*{0.1cm}
 }
-@
-
-The prototypes are the clustering medoids. The \code{anthrCases} function allows us to obtain the estimated cases by each method.
-
-<<trimowa4,eval=FALSE,tidy=FALSE>>=
-prototypes <- anthrCases("anthropometry", "trimowa", res_trimowa, 
-                         oneSize = FALSE, bustSizes$nsizes)
-@
-
-Figure~\ref{trimowaExample} shows the scatter plots of bust circumference against neck to ground with the three prototypes obtained for each bust class without (left) and with (right) the prototypes defined by the European standard. The prototypes color and the plot title must be provided.
-
-<<trimowa5,eval=FALSE,tidy=FALSE>>=
-bustVariable <- "bust"
-xlim <- c(70, 150)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
-           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-
-variable <- "necktoground"
-ylim <- c(110, 160)
-title <- "Prototypes \n bust vs neck to ground"
-
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, TRUE)
-@
-
-\begin{figure}[ht]
-\begin{minipage}{0.5\textwidth}
-\centering
-\begin{tabular}{c}
-\includegraphics[width=\textwidth]{trimowa1.pdf}
-\end{tabular}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=\textwidth]{trimowa2.pdf}
-\end{minipage}
-\caption{Bust vs. neck to ground, jointly with our medoids (left) and the prototypes defined by the European standard (right).}
-\label{trimowaExample}
-\end{figure}
-
-The following sentences illustrate how to use the \emph{hipamAnthropom} methodology. The same twelve bust segments as in \code{trimowa} are used.
-
-<<hipam,eval=FALSE,tidy=FALSE>>=
-dataHipam <- sampleSpanishSurvey
-bust <- dataHipam$bust
-bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
-@
-
-The $HIPAM_{IMO}$ algorithm is used. It was verified in \cite{Vinue2013} that $HIPAM_{IMO}$ showed better performance for finding representative prototypes. The maximum number of clusters that any cluster can be divided into is fixed to five (\code{maxsplit}). In the HIPAM algorithm the number of sub-clusters that any cluster is potentially divided into is between 2 and \code{maxsplit}. A larger \code{maxsplit} than five could result in too many clusters, which is not interesting from the point of view of the strategy used by companies to design sizes.
-
-The same orness and vector of constants as in \code{trimowa} are used. To reproduce results, a seed for randomness is fixed.
-
-<<hipam2,eval=FALSE,tidy=FALSE>>=
-type <- "IMO"
-maxsplit <- 5 ; orness <- 0.7 
-ah <- c(23, 28, 20, 25, 25)
-
-set.seed(2013)
-res_hipam <- list()
-for(i in 1 : (bustSizes$nsizes - 1)){
- data =  dataHipam[(bust >= bustSizes$bustCirc[i]) & 
-                  (bust < bustSizes$bustCirc[i + 1]), ]   
- dataMat <- as.matrix(data)
- res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, 
-                                 orness = orness, type = type, 
-                                 ah = ah, verbose = FALSE)
-}   
-@
-
-The fit models are the clustering medoids. The \code{trimmOutl} function allows us to obtain the trimmed or outlier observations identified by each method.
-
-<<hipam3,eval=FALSE,tidy=FALSE>>= 
-fitmodels <- anthrCases("anthropometry", "HipamAnthropom", res_hipam, 
-                        oneSize = FALSE, bustSizes$nsizes)
-outliers <- trimmOutl("HipamAnthropom", res_hipam, oneSize = FALSE, 
-                      bustSizes$nsizes)
-@
-
-Figure~\ref{hipamExample} displays the fit models (left) and the outliers (right) corresponding to each bust size. The fit models color and the plot title must be provided. The important point to note here is the fact that each bust segment has a small sample size. This might explain the fact that this algorithm (and also $HIPAM_{MO}$) does not find large homogeneous clusters and therefore identifies a lot of women as outliers in each class for this database. One of the features of the HIPAM algorithm is that it is a very sensitive algorithm for identifying outliers. A broad discussion, analysis and thoughts on the anthropometric meaning of these outliers is given in \cite{Vinue2013} (including the supplementary material).
-
-<<hipam4,eval=FALSE,tidy=FALSE>>=
-bustVariable <- "bust"
-xlim <- c(70, 150)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
-           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-
-variable <- "hip"
-ylim <- c(80, 160)
-title <- "Fit models HIPAM_IMO \n bust vs hip"
-title_outl <- "Outlier women HIPAM_IMO \n bust vs hip"
-
-plotPrototypes(dataHipam, fitmodels, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-plotTrimmOutl(dataHipam, outliers, bustSizes$nsizes, bustVariable, 
-              variable, color, xlim, ylim, title_outl)
-@
-
-\begin{figure}[ht]
-\begin{minipage}{0.5\textwidth}
-\centering
-\begin{tabular}{c}
-\includegraphics[width=\textwidth]{hipam1.pdf}
-\end{tabular}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=\textwidth]{hipam2.pdf}
-\end{minipage}
-\caption{Bust vs. hip with the medoids (left) and with the outliers (right) obtained using $HIPAM_{IMO}$.}
-\label{hipamExample}
-\end{figure}
-
-To conclude this section a basic example of the \emph{TDDclust} methodology is shown. Computing data depth is very demanding. As an illustration, only 25 individuals are selected. In addition, the neck to ground, waist and bust variables are selected.
-
-<<TDDclust,eval=FALSE,tidy=FALSE>>=
-dataTDDcl <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)] 
-dataTDDcl_aux <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]
-@
-
-
-In line with \code{trimowa}, three size groups are calculated (\code{numClust}) and a trimmed proportion is fixed to $0.01$ (\code{alpha}). The \code{lambda} controls the influence the data depth has over the clustering. If \code{lambda} is 1, the clustering criterion is equivalent to the average silhouette width. On the contrary, if \code{lambda} is 0, it is given by the average relative data depth. Fixing \code{lambda} to $0.5$ is an intermediate and suggested scenario. A detailed explanation of the consequences of different \code{lambda} values is given in \cite{Jornsten2004}. Because the depth computation is costly, we only run the algorithm for five iterations (\code{niter}). 
-
-The other arguments are given by default. A different value for \code{Th} may result in the optimum clustering not being found \citep[see][page 75]{Jornsten2004}. A different simulated annealing parameter (\code{T0} and \code{simAnn}) may change the clustering results obtained. To reproduce results, a seed for randomness is fixed.
-
-
-<<TDDclust2,eval=FALSE,tidy=FALSE>>=
-numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5 
-Th <- 0 ; T0 <- 0 ; simAnn <- 0.9  
-
-set.seed(2014)
-res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
-                      alpha, dataTDDcl_aux, verbose = FALSE) 
-@
-
-The following sentences allow us to analyze the clustering results, the final value of the optimal partition and the iteration in which the optimal partition was found, respectively.
-
-<<TDDclust3,eval=FALSE,tidy=FALSE>>=
-table(res_TDDcl$NN[1,]) 
-#1  2  3 
-#5 10  9 
-res_TDDcl$Cost
-#[1] 0.3717631
-res_TDDcl$klBest
-#[1] 3
-@
-
-The prototypes and trimmed observations are obtained with the functions created to that end:
-
-<<TDDclust4,eval=FALSE,tidy=FALSE>>=
-prototypes <- anthrCases("anthropometry", "TDDclust", res_TDDcl)
-trimmed <- trimmOutl("TDDclust", res_TDDcl, oneSize = FALSE)
-@
-
-
-\subsection{Statistical shape analysis}
-
-In this section, the use of the \emph{kmeansProcrustes} methodology is illustrated. For the sake of simplicity of the computation involved only a small sample (the first 50 individuals) is selected. When there are missing values (na's, not available numbers), they are removed.
-
-<<ssa,eval=FALSE,tidy=FALSE>>=
-landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
-numLandmarks <- (dim(landmarksNoNa)[2]) / 3
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
-numIndiv <- dim(landmarksNoNa_First50)[1]
-@
-
-We have to define an array with the 3D landmarks of the sample objects.
-
-<<ssa1,eval=FALSE,tidy=FALSE>>=
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
-@
-
-Again, three size groups are calculated (\code{numClust}) and a trimmed proportion is fixed to $0.01$ (\code{alpha}). The \code{trimmedLloydShapes} algorithm is used with only five iterations and five steps per initialization in the interests of a fast execution. A larger number of repetitions is suggested to obtain more optimal results. The default relative stopping criteria is $0.0001$. Using this small value ensures that the algorithm stops when the decrease in the objective function is hardly visible. A larger stopping value could prematurely stop the algorithm (but the decrease in the objective function should have been taken into account). 
-%la diferencia en la función objetivo sea menor que una cierta cantidad.
-
-To reproduce results, a seed for randomness is fixed.
-
-<<ssa2,eval=FALSE,tidy=FALSE>>=
-numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-set.seed(2013)
-res_kmeansProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
-                                     algSteps, niter, stopCr, 
-                                     verbose = FALSE)
-@
-
-The clustering results and the optimal prototypes are obtained in the following way:
-
-<<ssa3,eval=FALSE,tidy=FALSE>>=
-clust_kmeansProc <- res_kmeansProc$asig
-table(clust_kmeansProc)
-#1  2  3 
-#19 18 12
-prototypes <- anthrCases("anthropometry", "kmeansProcrustes", res_kmeansProc)
-@
-
-The trimmed individuals of the optimal iteration can be also identified:
-
-<<ssa4,eval=FALSE,tidy=FALSE>>=
-trimmed <- trimmOutl("kmeansProcrustes", res_kmeansProc, oneSize = FALSE)
-@
-
-In order to examine the differences between clusters for some key anthropometric dimensions, their boxplots can be represented. To do this, we need to identify the first 50 individuals in \code{sampleSpanishSurvey} and to remove the trimmed ones. Figure~\ref{kmProcExample} (left) displays the boxplots for neck to ground measurement for the three clusters calculated.  
-
-<<ssa5,eval=FALSE,tidy=FALSE>>=
-data_First50 <- sampleSpanishSurvey[1 : 50, ]
-data_First50_notrimm <- data_First50[-trimmed, ]
-boxplot(data_First50_notrimm$necktoground ~ as.factor(clust_kmeansProc), 
-        main = "Neck to ground")
-@
-
-In addition, Figure~\ref{kmProcExample} (right) displays the projection on the xy plane of the recorded points and mean shape for cluster 1. 
-
-<<ssa6,eval=FALSE,tidy=FALSE>>=
-projShapes(1, array3D, clust_kmeansProc, prototypes)
-legend("topleft", c("Registrated data", "Mean shape"), 
-                pch = 1, col = 1:2, text.col = 1:2)
-title("Procrustes registrated data for cluster 1 \n 
-                with its mean shape superimposed", sub = "Plane xy")
-@
-
-
-\begin{figure}[ht]
-\begin{minipage}{0.5\textwidth}
-\centering
-\begin{tabular}{c}
-\includegraphics[width=\textwidth]{kmProc1.pdf}
-\end{tabular}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\centering
-\includegraphics[width=\textwidth]{kmProc2.pdf}
-\end{minipage}
-\caption{Boxplots for the neck to ground measurement for three clusters (left) and projection on the xy plane of the recorded points and mean shape for cluster 1 (right). Results provided by trimmed \emph{kmeansProcrustes}.}
-\label{kmProcExample}
-\end{figure}
-
-\subsection{Archetypal analysis}
-
-We focus on the cockpit design problem. The accommodation of boundaries (our archetypoids) ensures the accommodation of interior points in the cockpit. We use the \code{USAFSurvey} database. Again, as an illustrative example only the first 50 individuals are chosen. From the total variables, the six so-called cockpit dimensions are selected. We convert the variables from mm into inches in order to compare our results with those discussed in \cite{Zehner1983} (see \cite{EpiVinAle}). The procedure followed for each problem is as follows:
-
-Before computing archetypes and archetypoids, the data must be preprocessed. Firstly, depending on the problem, the user must decide whether or not to standardize the data. Secondly, it must be decided whether to use the Mahalanobis distance or a depth procedure to establish the percentage of the population to accommodate \citep[see][section 2.2.2 for more details]{EpiVinAle}. Both actions are done with the following \code{preprocessing} function. In this case, the variables are standardized, as they measure different dimensions. This is indicated with the first \code{TRUE} argument in \code{preprocessing}. On the other hand, when designing a workspace, it has typically been a requirement that 95 percent of the relevant population are accommodated (value 0.95 in the third argument). Finally, the second \code{TRUE} (and fourth and final parameter) indicates that the Mahalanobis distance is used to remove the most extreme 5\% data.
-
-
-<<AA,eval=FALSE,tidy=FALSE>>=
-USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
-variabl_sel <- c(48, 40, 39, 33, 34, 36)
-USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
-USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 
-                                    0.95, TRUE)
-@
-
-Next, archetypes must be calculated. In the \pkg{archetypes} \proglang{R} package this is done with the \code{stepArchetypes} function, which executes the archetype algorithm repeatedly. However, this function standardizes the data by default and this option is not always desired. To overcome this, a new \proglang{R} function called \code{stepArchetypesMod} has been written, which results from modifying and adapting the original \code{stepArchetypes} to apply the archetype algorithm to raw data. In this way, the archetype algorithm is run repeatedly from 1 to \code{numArch} archetypes. The user can decide how many archetypes are to be considered. We chose \code{numArch} equal to 10 because a larger number of boundary cases may overwhelm the designer and therefore be counterproductive. The argument \code{numRep} specifies the number of repetitions of the algorithm. Choosing twenty repetitions ensures that the best possible archetypes are obtained. To reproduce the results, a seed for randomness is established.
-
-
-<<AA3,eval=FALSE,tidy=FALSE>>=
-set.seed(2010) 
-numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesMod(data = USAFSurvey_preproc$data, numArch=1:numArch,
-                          numRep = numRep, verbose = FALSE)  
-screeplot(lass)
-@
-
-Once the archetypes are obtained, archetypoids are calculated either with the \code{archetypoids} function or with the \code{stepArchetypoids} function, which is a function  based on \code{stepArchetypes} to execute the archetypoid algorithm repeatedly. According to the screeplot and following the elbow criterion, we compute three archetypoids (beginning from $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ sets of the nearest observations to the archetypes).
-
-<<AA4,eval=FALSE,tidy=FALSE>>=
-numArchoid <- 3 
-res_archoids_ns <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
-                                huge = 200, step = FALSE, ArchObj = lass,
-                                nearest = "cand_ns" , sequ = TRUE)
-res_archoids_alpha <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
-                                   huge = 200, step = FALSE, ArchObj = lass,
-                                   nearest = "cand_alpha", sequ = TRUE)
-res_archoids_beta <- archetypoids(numArchoid, USAFSurvey_preproc$data, 
-                                  huge = 200, step = FALSE, ArchObj = lass,
-                                  nearest = "cand_beta", sequ = TRUE)
-
-
-boundaries_ns <- anthrCases("ergonomics", resMethod = res_archoids_ns)
-boundaries_alpha <- anthrCases("ergonomics", resMethod = res_archoids_alpha)
-boundaries_beta <- anthrCases("ergonomics", resMethod = res_archoids_beta)
-@
-
-In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids match (although the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypes do not), so it is enough to represent a single percentile plot. To that end, the \code{matPercs} computes the percentils of the archetypoids for every column of the data frame.
-  
-<<AA5,eval=FALSE,tidy=FALSE>>=  
-matPer <- matPercs(boundaries_ns, USAFSurvey_preproc$data)
-@
-
-
-Figure~\ref{AAExample} shows the percentils of three archetypoids, beginning from \emph{nearest} (left) and with \emph{which} (right).
-
-<<AA6,eval=FALSE,tidy=FALSE>>=
-barplot(matPer, beside = TRUE, main = paste(numArchoid, 
-                                            " archetypoids", sep = ""),
-        ylim = c(0, 100), ylab = "Percentile")
-@
-
-
-\begin{figure}%[H]
-\centering
-\includegraphics[width=0.42\textwidth]{AA.pdf}
-\caption{Percentils of three archetypoids, beginning from the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ sets for \code{USAFSurvey}. In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids coincide.}\label{AAExample}
-\end{figure}
-
-
-\section{Practical application}\label{practApp}
-
-Procedures related to clustering, data depth and shape analysis (\emph{trimowa}, \emph{CCbiclustAnthropo}, \emph{TDDclust}, \emph{hipamAnthropom} and \emph{kmeansProcrustes}) are aimed at defining optimal clothing size groups and both 1D and 3D central cases, which are actually representative statistical models or prototypes (and fit models in the case of \emph{hipamAnthropom}) of the human body of the target population. The five aforementioned methodologies followed the same scheme. Firstly, the selected data matrix was segmented using a primary control dimension (bust or waist) and then a further segmentation was carried out using other secondary control anthropometric variables. The number of size groups generally obtained with these methods was three, because this number is quite well aligned to clothing industry practice for the mass production of clothing, where the objective is to optimize sizes by addressing only the most profitable. This procedure can be translated into practice as shown in Figure \ref{etiq}.
-
-For a given bust size, for example, 86-90 cm, the three t-shirts in Figure \ref{etiq} were designed from the three prototypes obtained by any of the aforementioned methodologies. It can be seen that all three have the same bust size (primary dimension), but different measurements for other secondary dimensions (in this example, waist and neck-to-hip are selected for illustrative purposes). In a commercial situation, a woman in a store would directly select the t-shirts with her bust size and, out of all of them, she would finally choose the one with her same measurements for the other secondary variables. As a result, the customer would have quickly and easily found a t-shirt that fits perfectly. It is believed that the statistical methodologies presented here can speed up the purchasing process, making it more satisfactory. Figure \ref{etiq} also shows a proposal for garment labelling. Clothing fit depends a lot on better garment labelling. Apparel companies should offer consumers truthful information that is not confusing on the garment sizes that they wish to offer for sale, so that people can easily recognise their size. In addition, the prototypes and fit models obtained can also be used to make more realistic store mannequins, thus helping to offer an image of healthy beauty in society, which is another very useful and practical application.
-
-\begin{figure}%[H]
-\centering
-\begin{tabular}{cc}
-\hspace*{-2.6cm}\includegraphics[width=0.4\textwidth]{prendas_1.png} &
-\hspace*{-3cm}\includegraphics[width=0.4\textwidth]{prendas_2.png} \\
-\hspace*{3cm}\includegraphics[width=0.5\textwidth]{prendas_3.png} \\
-\end{tabular}
-\vspace*{-1.2cm}
-\caption{Practical implementation of the methodologies presented. These are three t-shirts designed from the prototypes obtained. The three t-shirts have the same bust size (primary dimension), but different measurements for other secondary dimensions. This method of designing and labelling may speed up the purchasing process, making it more satisfactory.}\label{etiq}
-\end{figure}
-
-On the other hand, the two approaches based on archetypal and archetypoid analysis make it possible to identify boundary cases, that is to say, the individuals who present extreme body measurements. The basic idea is that accommodating boundary cases will accommodate the people who fall within the boundaries (less extreme population). This strategy is valuable in all human-computer interaction problems, for example, the design and packaging of plane cockpits or truck cabins. When designing workstations or evaluating manual work, it is common to use only a few human figure models (extreme cases, which would be our archetypoids) as virtual test individuals. These models are capable of representing people with a wide range of body sizes and shapes. Archetypal and archetypoid analysis can be very useful in improving industry practice when using human model tools to design products and work environments.
-
-
-
-
-
-\section{Conclusions}\label{conclusions}
-
-New three-dimensional whole-body scanners have drastically reduced the cost and duration of the measurement process. These types of systems, in which the human body is digitally scanned and the resulting data converted into exact measurements, make it possible to obtain accurate, reproducible and up-to-date anthropometric data. These databases constitute very valuable information to effectively design better-fitting clothing and workstations, to understand the body shape of the population and to reduce the design process cycle. Therefore, rigorous statistical methodologies and software applications must be developed to make the most of them. 
-
-This paper introduces a new \proglang{R} package called \pkg{Anthropometry} that brings together different statistical methodologies concerning clustering, the statistical concept of data depth, statistical shape analysis and archetypal analysis, which have been especially developed to deal with anthropometric data. The data used have been obtained from a 3D anthropometric survey of the Spanish female population and from the USAF survey. Procedures related to clustering, data depth and shape analysis are aimed at defining optimal clothing size groups and both central prototypes and fit models. The two approaches based on archetypal analysis are useful for determining boundary human models which could be useful for improving industry practice in workspace design. 
-
-The  \pkg{Anthropometry} \proglang{R} package is a positive contribution to help tackle some statistical problems related to Ergonomics and Anthropometry. It provides a useful software tool for engineers and researchers in these fields so that they can analyze their anthropometric data in a comprehensive way.
-
-
-\section*{Acknowledgments}
-
-The author gratefully acknowledges the many helpful suggestions of I. Epifanio and G. Ayala. The author would also like to thank the Biomechanics Institute of Valencia for providing us with the Spanish anthropometric data set and the Spanish Ministry of Health and Consumer Affairs for having commissioned and coordinated the ``Anthropometric Study of the Female Population in Spain''. This paper has been partially supported by the following grants: TIN2009-14392-C02-01, TIN2009-14392-C02-02. The author would also like to thank the referees for their very constructive suggestions, which led to a great improvement of both this paper and the \pkg{Anthropometry} package.
-
-\bibliography{Anthropometry}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}%[h]
+\caption{Archetypoid algorithm.} \label{archoidAlg}
+\begin{algorithmic}
+{\footnotesize
+\STATE 1. BUILD phase: look for a good initial set of $k$ archetypoids from the $n$ data points.
+\STATE 2. SWAP phase: for each archetypoid $a$
+\begin{itemize}
+\item[(a)] For each non-archetypoid data point $o$.
+\begin{itemize}
+\item[i.] Swap $a$ and $o$ and compute the RSS of the configuration (see Equation~\ref{arche_adapt}, $\alpha$ coefficients \\ must be calculated).
+\end{itemize}
+\end{itemize}
+\STATE 3. Select the configuration with the lowest RSS.
+\STATE 4. Repeat steps 2 to 4 until there is no change in the archetypoids.\\ \hspace*{0.1cm}
+}
+\end{algorithmic}
+\end{algorithm}
 
 \end{document} 
 

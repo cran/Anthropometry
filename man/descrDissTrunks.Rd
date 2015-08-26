@@ -28,7 +28,7 @@ X <- as.matrix(X)
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 numArch <- 10 ; nrep <- 20
-lass <- stepArchetypesMod(data=X,numArch=1:numArch,numRep=nrep,verbose=FALSE)
+lass <- stepArchetypesRawData(data=X,numArch=1:numArch,numRep=nrep,verbose=FALSE)
 screeplot(lass)
 
 numArchoid <- 3

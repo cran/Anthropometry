@@ -11,13 +11,13 @@ Anthropometry brings together some statistical methodologies especially develope
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.2\cr
-Date: 2015-05-14\cr
+Version: 1.3\cr
+Date: 2015-08-26\cr
 License: GPL-2\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
 }
-anthrCases: Helper function for obtaining the anthropometric cases.\cr
+anthrCases: Helper generic function for obtaining the anthropometric cases.\cr
 Anthropometry-internalArchetypoids: Several internal functions to compute and represent archetypes and archetypoids.\cr
 Anthropometry-internalHipamAnthropom: Several internal functions used by both $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms.\cr
 Anthropometry-internalPlotTree: Several internal functions used to build the HIPAM plot tree.\cr
@@ -58,12 +58,12 @@ sampleSpanishSurvey: Sample database of the Spanish anthropometric survey.\cr
 screeArchetypal: Screeplot of archetypal individuals.\cr
 shapes3dShapes: 3D shapes plot.\cr
 skeletonsArchetypal: Skeleton plot of archetypal individuals.\cr
-stepArchetypesMod: Archetype algorithm to raw data.\cr
+stepArchetypesRawData: Archetype algorithm to raw data.\cr
 stepArchetypoids: Run the archetypoid algorithm several times.\cr
 TDDclust: Trimmed clustering based on L1 data depth.\cr
 trimmedLloydShapes: Trimmed Lloyd k-means for 3D shapes.\cr
 trimmedoid: Trimmed k-medoids algorithm.\cr
-trimmOutl: Helper function for obtaining the trimmed and outlier observations.\cr
+trimmOutl: Helper generic function for obtaining the trimmed and outlier observations.\cr
 trimowa: Trimmed PAM with OWA operators.\cr
 USAFSurvey: USAF 1967 survey.\cr
 weightsMixtureUB: Calculation of the weights for the OWA operators.\cr

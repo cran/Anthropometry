@@ -64,7 +64,8 @@ TDDclust <- function(data,numClust,lambda,Th,niter,T0,simAnn,alpha,data1,verbose
          if(verbose){
           cat("The optimal partition is provided by PAM")
          }
-         return(list(NN=NN$NN,Y=Y,Cost=NN$Cost,indivTrimmed="None",klBest=0))
+         Y <- as.integer(rownames(Y))
+         return(list(NN=NN$NN,cases=Y,Cost=NN$Cost,discarded="None",klBest=0))
         }
         
       }
@@ -80,7 +81,8 @@ TDDclust <- function(data,numClust,lambda,Th,niter,T0,simAnn,alpha,data1,verbose
           if(verbose){
            cat("The optimal partition is provided by PAM")
           }
-          return(list(NN=NN$NN,Y=Y,Cost=NN$Cost,indivTrimmed="None",klBest=0))
+          Y <- as.integer(rownames(Y))
+          return(list(NN=NN$NN,cases=Y,Cost=NN$Cost,discarded="None",klBest=0))
         }
         
         T0 <-NN$T0 * simAnn 
@@ -209,5 +211,7 @@ TDDclust <- function(data,numClust,lambda,Th,niter,T0,simAnn,alpha,data1,verbose
     NN <- NNa$NN 
   }
   
-  return(list(NN=NN,Y=Y,DD=DD,Cost=Cost,indivTrimmed=indiv_trimmed1,klBest=ma))
+  Y <- as.integer(rownames(Y))
+
+  return(list(NN=NN,cases=Y,DD=DD,Cost=Cost,discarded=indiv_trimmed1,klBest=ma))
 } 

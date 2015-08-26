@@ -1,33 +1,32 @@
 \name{anthrCases}
 \alias{anthrCases}
+\alias{anthrCases.default}
+\alias{anthrCases.trimowa}
+\alias{anthrCases.hipamAnthropom}
 \title{
-Helper function for obtaining the anthropometric cases
+Helper generic function for obtaining the anthropometric cases
 }
 \description{
-Because the goal of the methodologies included in this package is always to estimate a number of anthropometric cases given a data set (both central (prototypes) and boundaries (archetypoids)), this auxiliary function allows the user to identify the cases computed by each method in an easy way.
+Because the goal of the methodologies included in this package is always to estimate a number of anthropometric cases given a data set (both central (prototypes) and boundaries (archetypoids)), this auxiliary generic function allows the user to identify the cases computed by each method in an easy way.
 }
 \usage{
-anthrCases(field, method, resMethod, oneSize, nsizes)
+anthrCases(resMethod, oneSize, nsizes)
+\method{anthrCases}{trimowa} (resMethod, oneSize, nsizes)
+\method{anthrCases}{hipamAnthropom} (resMethod, oneSize, nsizes)
 }
 \arguments{
-\item{field}{
-Character vector with two possible values. If "anthropometry", the prototypes computed by \code{\link{trimowa}}, \code{\link{TDDclust}}, \code{\link{hipamAnthropom}}, \code{\link{LloydShapes}}, \code{\link{HartiganShapes}} or \code{\link{trimmedLloydShapes}} are returned. If "ergonomics", the archetypoids provided by the archetypoid algorithm are provided. 
-}
-\item{method}{
-This argument is needed if \code{field}="anthropometry". It is a character vector with four possible values: "trimowa" for \code{\link{trimowa}}, "TDDclust" for \code{\link{TDDclust}}, "HipamAnthropom" for \code{\link{hipamAnthropom}} and "kmeansProcrustes" for \code{\link{LloydShapes}}, \code{\link{HartiganShapes}} and \code{\link{trimmedLloydShapes}}.
-}
 \item{resMethod}{
-This is the object which saves the results obtained by the aforementioned methodologies and which contains the anthropometric cases to return.
+This is the object which saves the results obtained by the methodologies and which contains the anthropometric cases to return.
 }
 \item{oneSize}{
-A logical specifying whether to obtain prototypes for a single size. This argument is needed if \code{method}="trimowa" of \code{method}="HipamAnthropom" because these methodologies can compute the prototypes for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
+A logical specifying whether to obtain prototypes for a single size. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
 }
 \item{nsizes}{
-Number of bust sizes. This argument is needed if \code{method}="trimowa" of \code{method}="HipamAnthropom" because these methodologies compute the prototypes for each bust size defined by the European Normative.
+Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for each bust size defined by the European Normative.
 }
 }
 \value{
-Vector with the central or boundary anthropometric cases.
+A vector of class \code{anthrCases} with the anthropometric cases.
 }
 \references{
 Vinue, G., Epifanio, I., and Alemany, S., (2015). Archetypoids: a new approach to define representative archetypal data, \emph{Computational Statistics and Data Analysis} \bold{87}, 102--115.
@@ -48,23 +47,21 @@ Guillermo Vinue
 }
 \examples{
 \dontrun{
-#TRIMOWA ALGORITHM FOR ONE SIZE:
-set.seed(1900)
-rand <- sample(1:600,20)
-dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
+#kmeansProcrustes:
+landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+numLandmarks <- (dim(landmarksNoNa)[2]) / 3
+landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
+numIndiv <- dim(landmarksNoNa_First50)[1]
 
-numVar <- dim(dataComp)[2] 
-orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness, numVar)
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
 
-numClust <- 3 ; alpha <- 0.01 ; niter <- 5 
-ahVect <- c(28, 25, 25) ;  algSteps <- 7
-
-set.seed(1900)
-Trimowa <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
-                   algSteps, ahVect, verbose = FALSE)
-prototypes_Trimowa <- anthrCases("anthropometry", "trimowa", 
-                                 Trimowa, oneSize = TRUE)
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+set.seed(2013)
+res_kmeansProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
+                                     algSteps, niter, stopCr, 
+                                     verbose = FALSE)
+                                     
+prototypes <- anthrCases(res_kmeansProc)                                     
 }
 }
 \keyword{math}

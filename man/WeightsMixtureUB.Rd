@@ -34,11 +34,9 @@ Guillermo Ayala
 \code{\link{dbinom}}, \code{\link{getDistMatrix}}, \code{\link{trimowa}}, \code{\link{hipamAnthropom}}
 }
 \examples{
-\dontrun{
 numVar <- dim(sampleSpanishSurvey)[2]
 orness <- 0.7
 w <- weightsMixtureUB(orness,numVar)
-}
 }
 
 \keyword{math}

@@ -46,7 +46,7 @@ A list with the following elements:
 
 \emph{asig}: Optimal clustering.
 
-\emph{copt}: Optimal centers.
+\emph{cases}: Anthropometric cases (optimal centers).
 
 \emph{vopt}: Optimal objective function.
 
@@ -54,9 +54,11 @@ A list with the following elements:
 
 \emph{trimmsIter}: Vector with the number of iterations where the optimum was reached. The last number different from NA refers to the last iteration where the final optimum was reached.
 
-\emph{betterNstep}: Nstep of the iteration where the optimum has reached.
+\emph{bestNstep}: Nstep of the iteration where the optimum has reached.
 
 \emph{initials}: Random initial values used in each iteration. These values can be used by \code{\link{HartiganShapes}}.
+
+\emph{discarded}: Discarded (trimmed) observations.
 }
 \references{
 Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
@@ -100,10 +102,10 @@ res <- trimmedLloydShapes(array3D,numIndiv,alpha,numClust,algSteps,niter,stopCr,
 #Optimal partition and prototypes:
 clust <- res$asig 
 table(clust)
-prototypes <- anthrCases("anthropometry", "kmeansProcrustes", res)
+prototypes <- anthrCases(res)
 
 #Trimmed individuals:
-trimmed <- trimmOutl("kmeansProcrustes", res)
+trimmed <- trimmOutl(res)
 }
 }
 \keyword{array}

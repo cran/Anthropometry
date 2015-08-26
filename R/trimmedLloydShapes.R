@@ -192,6 +192,9 @@ trimmedLloydShapes <- function(array3D,n,alpha,numClust,algSteps=10,niter=10,sto
 
  }#The niter loop ends here.
 
- return(list(asig=asig_opt,copt=copt,vopt=vopt,trimmWomen=trimms,trimmsIter=trimms_iter,
-             betterNstep=betterNstep,initials=initials))
+ opt_iter <- trimms_iter[length(trimms_iter)]
+ trimmed <- trimms[[opt_iter]][[betterNstep]]
+ 
+ return(list(asig=asig_opt,cases=copt,vopt=vopt,trimmWomen=trimms,trimmsIter=trimms_iter,
+             betterNstep=betterNstep,initials=initials,discarded=trimmed))
 }

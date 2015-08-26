@@ -45,5 +45,5 @@ stepArchetypoids <- function(numArchoid,nearest="cand_ns",data,ArchObj){
   
   res <- archetypoids(numArchoid,data,huge=200,step=TRUE,init=ini_arch)
   cat("Done!") 
-  return(list(archet = res[[1]], rss = res[[2]], archet_ini = ini_arch, alphas = res[[4]]))
+  return(list(cases = res[[1]], rss = res[[2]], archet_ini = ini_arch, alphas = res[[4]]))
 }

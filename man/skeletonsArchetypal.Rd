@@ -63,7 +63,7 @@ USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
 
 set.seed(2010)
 numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesMod(data = USAFSurvey_preproc$data, 
+lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
                           numArch=1:numArch, numRep = numRep, 
                           verbose = FALSE)
 screeplot(lass)

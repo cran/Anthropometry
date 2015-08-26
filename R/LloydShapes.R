@@ -192,9 +192,9 @@ LloydShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,simu
 
  if(simul){
   dimnames(copt) <- NULL 
-  return(list(asig=asig_opt,copt=copt,vopt=vopt,compTime=comp_time,
+  return(list(asig=asig_opt,cases=copt,vopt=vopt,compTime=comp_time,
               AllRate=vect_all_rate,initials=initials))
  }else{
-   return(list(asig=asig_opt,copt=copt,vopt=vopt,initials=initials))
+   return(list(asig=asig_opt,cases=copt,vopt=vopt,initials=initials))
   }
 }  

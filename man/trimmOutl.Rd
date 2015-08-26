@@ -1,30 +1,34 @@
 \name{trimmOutl}
 \alias{trimmOutl}
+\alias{trimmOutl.default}
+\alias{trimmOutl.trimowa}
+\alias{trimmOutl.hipamAnthropom}
 \title{
-Helper function for obtaining the trimmed and outlier observations
+Helper generic function for obtaining the trimmed and outlier observations
 }
 \description{
-The methodologies included in this package that are developed to the clothing design problem take into account that a clothing sizing system is intended to cover only what we could call standard population, leaving out those individuals who are extreme respect to a set of measurements. For \code{\link{trimowa}}, \code{\link{TDDclust}} and \code{\link{LloydShapes}}, \code{\link{HartiganShapes}} and \code{\link{trimmedLloydShapes}} these individuals are called trimmed individuals and for \code{\link{hipamAnthropom}} these individuals are called outlier individuals.
+The methodologies included in this package which are developed to the clothing design problem take into account that a clothing sizing system is intended to cover only what we could call standard population, leaving out those individuals who are extreme respect to a set of measurements. For "trimowa", "TDDclust and "kmeansProcrustes" (which refers to as \code{\link{trimmedLloydShapes}} in this case) these individuals are called trimmed individuals. For the "hipamAnthropom" methodology these individuals are called outlier individuals.
+
+This auxiliary generic function allows the user to identify the discarded individuals computed by each method in an easy way.
 }
 \usage{
-trimmOutl(method, resMethod, oneSize, nsizes)
+trimmOutl(resMethod, oneSize, nsizes)
+\method{trimmOutl}{trimowa} (resMethod, oneSize, nsizes)
+\method{trimmOutl}{hipamAnthropom} (resMethod, oneSize, nsizes)
 }
 \arguments{
-\item{method}{
-It is a character vector with four possible values: "trimowa" for \code{\link{trimowa}}, "TDDclust" for \code{\link{TDDclust}}, "HipamAnthropom" for \code{\link{hipamAnthropom}} and "kmeansProcrustes" for \code{\link{LloydShapes}}, \code{\link{HartiganShapes}} and \code{\link{trimmedLloydShapes}}.
-}
 \item{resMethod}{
 This is the object which saves the results obtained by the aforementioned methodologies and which contains the discarded individuals to return.
 }
 \item{oneSize}{
-A logical specifying whether to obtain trimmed or outliers for a single size. This argument is needed if \code{method}="trimowa" of \code{method}="HipamAnthropom" because these methodologies can compute the trimmed or outliers for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
+A logical specifying whether to obtain discarded observations for a single size. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the discarded individuals for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
 }
 \item{nsizes}{
-Number of bust sizes. This argument is needed if \code{method}="trimowa" of \code{method}="HipamAnthropom" because these methodologies compute the trimmed or outliers for each bust size defined by the European Normative.
+Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the discarded individuals for each bust size defined by the European Normative.
 }
 }
 \value{
-Vector with the trimmed or outlier observations.
+A vector of class \code{trimmOutl} with the discarded observations.
 }
 \references{
 Ibanez, M. V., Vinue, G., Alemany, S., Simo, A., Epifanio, I., Domingo, J., and Ayala, G., (2012). Apparel sizing using trimmed PAM and OWA operators, \emph{Expert Systems with Applications} \bold{39}, 10512--10520.
@@ -43,27 +47,20 @@ Guillermo Vinue
 }
 \examples{
 \dontrun{
-#TRIMOWA ALGORITHM:
-dataTrimowa <- sampleSpanishSurvey
-numVar <- dim(dataTrimowa)[2]
-bust <- dataTrimowa$bust
-bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
+#kmeansProcrustes:
+landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+numLandmarks <- (dim(landmarksNoNa)[2]) / 3
+landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
+numIndiv <- dim(landmarksNoNa_First50)[1]
 
-orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness,numVar)
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
 
-numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
-ah <- c(23, 28, 20, 25, 25)
-
-set.seed(2014)
-res_trimowa <- list()
-for (i in 1 : (bustSizes$nsizes - 1)){ 
- data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
- res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
-                             algSteps,ah,verbose=FALSE)
-}
-
-trimmed <- trimmOutl("trimowa", res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+set.seed(2013)
+res_kmeansProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
+                                     algSteps, niter, stopCr, 
+                                     verbose = FALSE)
+trimmed <- trimmOutl(res_kmeansProc)
 }
 }
 \keyword{math}

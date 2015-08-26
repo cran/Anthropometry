@@ -28,7 +28,7 @@ export(qtranShapes)
 export(screeArchetypal)
 export(shapes3dShapes)
 export(skeletonsArchetypal)
-export(stepArchetypesMod)
+export(stepArchetypesRawData)
 export(stepArchetypoids)
 export(TDDclust)
 export(trimmedLloydShapes)
@@ -60,5 +60,19 @@ importFrom(biclust,biclust)
 importFrom(biclust,BCCC)
 importFrom(biclust,writeclust)
 importFrom(biclust,biclusternumber)
+importFrom("grDevices", "gray")
+importFrom("graphics", "arrows", "axis", "legend", "lines", "par",
+           "plot", "points", "polygon", "segments", "symbols", "text",
+            "title")
+importFrom("stats", "as.dist", "coef", "cor", "cov", "dbinom", "dist",
+           "ecdf", "fitted", "mahalanobis", "qchisq", "quantile",
+           "runif", "sd", "var")
+
+S3method(anthrCases,default)
+S3method(anthrCases,trimowa)
+S3method(anthrCases,hipamAnthropom)
+S3method(trimmOutl,default)
+S3method(trimmOutl,trimowa)
+S3method(trimmOutl,hipamAnthropom)
 
 useDynLib(Anthropometry)

@@ -20,13 +20,13 @@ Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm.
 Data matrix. Each row corresponds to an observation and each column corresponds to an anthropometric variable. All variables are numeric.
 }
 \item{ArchObj}{
-The list object returned by the \code{\link{stepArchetypesMod}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. 
+The list object returned by the \code{\link{stepArchetypesRawData}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. 
 }
 }
 \value{
 A list with the following elements:
 
-\emph{archet}: Final vector of \code{numArchoid} archetypoids.
+\emph{cases}: Anthropometric cases (final vector of \code{numArchoid} archetypoids).
 
 \emph{rss}: Residual sum of squares corresponding to the final vector of \code{numArchoid} archetypoids.
 
@@ -70,7 +70,7 @@ USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesMod(data = USAFSurvey_preproc$data, 
+lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
                           numArch=1:numArch, numRep = numRep, 
                           verbose = FALSE)
 
