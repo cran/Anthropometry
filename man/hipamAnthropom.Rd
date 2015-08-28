@@ -100,6 +100,7 @@ Guillermo Vinue
 \code{\link{getBestPamsamMO}}, \code{\link{getBestPamsamIMO}}, \code{\link{checkBranchLocalMO}}, \code{\link{checkBranchLocalIMO}}, \code{\link{plotTreeHipamAnthropom}}, 
 }
 \examples{
+\dontrun{
 dataHipam <- sampleSpanishSurvey
 bust <- dataHipam$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
@@ -144,5 +145,6 @@ class(res_hipam_One) <- "hipamAnthropom"
 
 fitmodels_One <- anthrCases(res_hipam_One, oneSize = TRUE)
 outliers_One <- trimmOutl(res_hipam_One, oneSize = TRUE)
+}
 }
 \keyword{array}

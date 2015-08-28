@@ -58,6 +58,7 @@ Irene Epifanio
 \code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimowa}}, \code{\link{trimmedLloydShapes}}
 }
 \examples{
+\dontrun{
 #Data loading:
 dataTrimowa <- sampleSpanishSurvey
 bust <- dataTrimowa$bust
@@ -88,5 +89,6 @@ dim(datat) <- c(1,num.persons*num.variables)
 D <- getDistMatrix(datat,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,TRUE)
 
 res_trimm <- trimmedoid(D,numClust,0.01,6,7,FALSE)
+}
 }
 \keyword{math}

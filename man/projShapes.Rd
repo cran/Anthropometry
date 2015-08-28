@@ -60,7 +60,6 @@ projShapes(1, array3D, clust_kmeansProc, prototypes)
 legend("topleft", c("Registrated data", "Mean shape"), pch = 1, col = 1:2, text.col = 1:2)
 title("Procrustes registrated data for cluster 1 \n with its mean shape superimposed", 
       sub = "Plane xy")
-
 }
 }
 \keyword{math}
