@@ -13,7 +13,8 @@ This function is proposed to incorporate a modification to \code{\link{LloydShap
 Note that in the generic name of the k-means algorithm, k refers to the number of clusters to search for. To be more specific in the R code, k is referred to as \code{numClust}, see next section \emph{arguments}.
 }
 \usage{
-trimmedLloydShapes(array3D,n,alpha,numClust,algSteps=10,niter=10,stopCr=0.0001,verbose)
+trimmedLloydShapes(array3D,n,alpha,numClust,algSteps=10,niter=10,
+                   stopCr=0.0001,verbose)
 }
 \arguments{
 \item{array3D}{
@@ -81,23 +82,23 @@ Amelia Simo
 \code{\link{LloydShapes}}, \code{\link{trimmedoid}}
 }
 \examples{
-\dontrun{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
 dim(landmarksNoNa) 
 #[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-#In the interests of simplicity of the computation involved:
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
-(numIndiv <- dim(landmarksNoNa_First50)[1])
-#[1] 50         
+#As a toy example, only the first 25 individuals are used.
+landmarksNoNa_First15 <- landmarksNoNa[1:15, ] 
+(numIndiv <- dim(landmarksNoNa_First15)[1])
+#[1] 15         
     
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First15)
 
-numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
 set.seed(2013)
-res <- trimmedLloydShapes(array3D,numIndiv,alpha,numClust,algSteps,niter,stopCr,TRUE)
+res <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
+                          algSteps, niter, stopCr, FALSE)
 
 #Optimal partition and prototypes:
 clust <- res$asig 
@@ -106,6 +107,5 @@ prototypes <- anthrCases(res)
 
 #Trimmed individuals:
 trimmed <- trimmOutl(res)
-}
 }
 \keyword{array}

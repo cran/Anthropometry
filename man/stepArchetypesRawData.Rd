@@ -38,25 +38,25 @@ Guillermo Vinue based on the the original \code{\link{stepArchetypes}} function 
 \code{\link{stepArchetypes}}
 }
 \examples{
-\dontrun{
-#Cockpit design problem:
-#First, the database USAF 1967 is read and preprocessed (Zehner et al (1993).).
-USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
+#COCKPIT DESIGN PROBLEM:
+#As a toy example, only the first 25 individuals are used.
+USAFSurvey_First25 <- USAFSurvey[1:25, ]
 #Variable selection:
 variabl_sel <- c(48, 40, 39, 33, 34, 36)
 #Changing to inches: 
-USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
+USAFSurvey_First25_inch <- USAFSurvey_First25[,variabl_sel] / (10 * 2.54)
 
 #Data preprocessing:
-USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
+USAFSurvey_preproc <- preprocessing(USAFSurvey_First25_inch, TRUE, 0.95, TRUE)
 
 #For reproducing results, seed for randomness:
 set.seed(2010) 
-#Run archetypes algorithm repeatedly from 1 to numArch archetypes:
-numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
-                          numArch=1:numArch, numRep = numRep, 
-                          verbose = FALSE)
-}
+#Run archetype algorithm repeatedly from 1 to numArch archetypes:
+#This is a toy example. In other situation, choose numArch=10 and numRep=20.
+numArch <- 5 ; numRep <- 2
+lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, numArch = 1:numArch,
+                              numRep = numRep, verbose = FALSE) 
+#To understand the warning messages, see the vignette of the
+#archetypes package.                                
 }
 \keyword{array}

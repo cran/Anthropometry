@@ -56,7 +56,6 @@ Juan Domingo
 \code{\link{trimowa}}, \code{\link{hipamAnthropom}}
 }
 \examples{
-\dontrun{
 #Data loading:
 dataTrimowa <- sampleSpanishSurvey
 bust <- dataTrimowa$bust
@@ -81,10 +80,9 @@ num.persons <- dim(data)[1]
 num.variables <- dim(data)[2]
 datam <- as.matrix(data)
 datat <- aperm(datam, c(2,1))                     
-dim(datat) <- c(1,num.persons*num.variables)   
+dim(datat) <- c(1,num.persons * num.variables)   
 
 #Dissimilarity matrix:
-D <- getDistMatrix(datat,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,FALSE)
-}
+D <- getDistMatrix(datat, num.persons, numVar, weightsTrimowa, bl, bh, al, ah, FALSE)
 }
 \keyword{array}

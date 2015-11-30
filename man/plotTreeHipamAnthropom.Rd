@@ -41,31 +41,21 @@ This function was originally created by E. Wit et al., and it is available freel
 \code{\link{hipamAnthropom}}
 }
 \examples{
-\dontrun{
 dataHipam <- sampleSpanishSurvey
 bust <- dataHipam$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
-interv <- c("74-78","78-82","82-86","86-90","90-94","94-98","98-102",
-            "102-107","107-113","113-119","119-125","125-131")
-
-maxsplit <- 5 ; orness <- 0.7 ; alpha <- 0.01 ; type <- "IMO" #type <- "MO" for $HIPAM_{MO}$
+type <- "IMO"
+maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2013)
-res_hipam <- list()
-for(i in 1 : (bustSizes$nsizes - 1)){
- data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
- dataMat <- as.matrix(data)
- res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
-                                  ah = ah, verbose = FALSE)
-}  
-str(res_hipam) 
+numSizes <- 1
+res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc, numSizes,
+                                       maxsplit, orness, type, ah, FALSE)
 
-#Dendogram for the first bust class:
 plotTreeHipamAnthropom(res_hipam[[1]],
                        main=paste("Proposed Hierarchical PAM Clustering \n",
-                       interv[1]))
-}
+                       "74-78"))
 }
 \keyword{array}

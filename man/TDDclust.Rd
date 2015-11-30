@@ -66,17 +66,16 @@ This function has been defined from the original functions developed by Rebecka 
 \url{http://www.stat.rutgers.edu/home/rebecka/DDcl/}. However, the link to this page doesn't currently exist as a result of a website redesign. 
 }
 \examples{
-\dontrun{
-#In the interests of simplicity of the computation involved, only 25 points are selected:
-dataTDDcl <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]  
-dataTDDcl_aux <- sampleSpanishSurvey[1 : 25, c(2, 3, 5)]
+#In the interests of simplicity of the computation involved, only 15 points are selected:
+dataTDDcl <- sampleSpanishSurvey[1 : 15, c(2, 3, 5)]  
+dataTDDcl_aux <- sampleSpanishSurvey[1 : 15, c(2, 3, 5)]
 
-numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5 
+numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 2
 Th <- 0 ; T0 <- 0 ; simAnn <- 0.9  
 
 set.seed(2014)
 res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
-                      alpha, dataTDDcl_aux,TRUE) 
+                      alpha, dataTDDcl_aux,FALSE) 
 
 prototypes <- anthrCases(res_TDDcl)
 
@@ -85,7 +84,6 @@ res_TDDcl$Cost
 res_TDDcl$klBest
 
 trimmed <- trimmOutl(res_TDDcl)
-}
 }
 \keyword{array}
 

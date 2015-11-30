@@ -10,19 +10,16 @@ Helper generic function for obtaining the anthropometric cases
 Because the goal of the methodologies included in this package is always to estimate a number of anthropometric cases given a data set (both central (prototypes) and boundaries (archetypoids)), this auxiliary generic function allows the user to identify the cases computed by each method in an easy way.
 }
 \usage{
-anthrCases(resMethod, oneSize, nsizes)
-\method{anthrCases}{trimowa} (resMethod, oneSize, nsizes)
-\method{anthrCases}{hipamAnthropom} (resMethod, oneSize, nsizes)
+anthrCases(resMethod, nsizes)
+\method{anthrCases}{trimowa} (resMethod, nsizes)
+\method{anthrCases}{hipamAnthropom} (resMethod, nsizes)
 }
 \arguments{
 \item{resMethod}{
 This is the object which saves the results obtained by the methodologies and which contains the anthropometric cases to return.
 }
-\item{oneSize}{
-A logical specifying whether to obtain prototypes for a single size. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
-}
 \item{nsizes}{
-Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for each bust size defined by the European Normative.
+Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for any given number of bust sizes.
 }
 }
 \value{
@@ -46,22 +43,24 @@ Guillermo Vinue
 \code{\link{trimowa}}, \code{\link{TDDclust}}, \code{\link{hipamAnthropom}}, \code{\link{LloydShapes}}, \code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{archetypoids}}, \code{\link{stepArchetypoids}}
 }
 \examples{
-\dontrun{
 #kmeansProcrustes:
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+dim(landmarksNoNa) 
+#[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
-numIndiv <- dim(landmarksNoNa_First50)[1]
+#[1] 66
+#As a toy example, only the first 15 individuals are used.
+landmarksNoNa_First15 <- landmarksNoNa[1:15, ] 
+(numIndiv <- dim(landmarksNoNa_First15)[1])
+#[1] 15         
+    
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First15)
+#shapes::plotshapes(array3D[,,1]) 
+#calibrate::textxy(array3D[,1,1], array3D[,2,1], labs = 1:numLandmarks, cex = 0.7) 
 
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
+numClust <- 3 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
+resLL <- LloydShapes(array3D, numClust, algSteps, niter, stopCr, FALSE, FALSE)
 
-numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-set.seed(2013)
-res_kmeansProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
-                                     algSteps, niter, stopCr, 
-                                     verbose = FALSE)
-                                     
-prototypes <- anthrCases(res_kmeansProc)                                     
-}
+prototypes <- anthrCases(resLL)                                  
 }
 \keyword{math}

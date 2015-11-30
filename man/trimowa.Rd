@@ -64,23 +64,41 @@ Guillermo Vinue
 \code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimmedoid}}
 }
 \examples{
+#FOR THE SIZES DEFINED BY THE EUROPEAN NORMATIVE:
 dataTrimowa <- sampleSpanishSurvey
 numVar <- dim(dataTrimowa)[2]
 bust <- dataTrimowa$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
 orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness,numVar)
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
 
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-res_trimowa <- list()
-for (i in 1 : (bustSizes$nsizes - 1)){ 
- data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
- res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
-                             algSteps,ah,verbose=FALSE)
-}
+numSizes <- 1
+res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
+                                  weightsTrimowa, numClust, alpha, niter, algSteps, 
+                                  ah, FALSE)
+prototypes <- anthrCases(res_trimowa, numSizes)
+
+#FOR ANY OTHER DEFINED SIZE:
+set.seed(1900)
+rand <- sample(1:600,20)
+dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
+numVar <- dim(dataComp)[2]
+
+orness <- 0.7
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
+numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
+ah <- c(28, 25, 25) 
+
+set.seed(2014)
+res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
+res_trimowa[[1]] <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
+                            algSteps, ah, verbose = FALSE)
+
+prototypes <- anthrCases(res_trimowa, 1)
 }
 \keyword{array}

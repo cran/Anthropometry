@@ -11,8 +11,8 @@ Anthropometry brings together some statistical methodologies especially develope
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.5\cr
-Date: 2015-08-27\cr
+Version: 1.6\cr
+Date: 2015-11-30\cr
 License: GPL-2\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
@@ -30,6 +30,8 @@ CCbiclustAnthropo: Cheng and Church biclustering algorithm applied to anthropome
 cdfDissWomenPrototypes: CDF for the dissimilarities between women and computed medoids and standard prototypes.\cr
 checkBranchLocalIMO: Evaluation of the candidate clustering partition in $HIPAM_{IMO}$.\cr
 checkBranchLocalMO: Evaluation of the candidate clustering partition in $HIPAM_{MO}$.\cr
+computSizesTrimowa: Computation of the trimowa elements for a given number of sizes defined by the EN.\cr
+computSizesHipamAnthropom: Computation of the hipamAnthropom elements for a given number of sizes defined by the EN.\cr
 cube8landm: Cube of 8 landmarks.\cr 
 cube34landm: Cube of 34 landmarks.\cr
 descrDissTrunks: Description of the dissimilarities between women's trunks.\cr

@@ -6,7 +6,7 @@ plotTrimmOutl <- function(data,trimmOutl,nsizes,bustVariable,variable,col,xlim,y
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(trimmOutl[[i]]), bustVariable], data[as.character(trimmOutl[[i]]), variable], pch = i, 
           col = col[i])
   }
@@ -18,7 +18,7 @@ plotTrimmOutl <- function(data,trimmOutl,nsizes,bustVariable,variable,col,xlim,y
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(trimmOutl[[i]]), bustVariable], data[as.character(trimmOutl[[i]]), variable], pch = i, 
           col = col[i])
   }
@@ -30,7 +30,7 @@ plotTrimmOutl <- function(data,trimmOutl,nsizes,bustVariable,variable,col,xlim,y
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(trimmOutl[[i]]), bustVariable], data[as.character(trimmOutl[[i]]), variable], pch = i, 
           col = col[i])
   }
@@ -42,7 +42,7 @@ plotTrimmOutl <- function(data,trimmOutl,nsizes,bustVariable,variable,col,xlim,y
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(trimmOutl[[i]]), bustVariable], data[as.character(trimmOutl[[i]]), variable], pch = i, 
           col = col[i])
   }

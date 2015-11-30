@@ -11,7 +11,8 @@ In this version of HIPAM, called $HIPAM_{IMO}$, there are three different stoppi
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
 \usage{
-checkBranchLocalIMO(tree,data,i,maxsplit,asw.tol,local.const,orness,type,ah,verbose,...)
+checkBranchLocalIMO(tree,data,i,maxsplit,asw.tol,local.const,orness,type,ah,
+                    verbose,...)
 }
 \arguments{
 \item{tree}{

@@ -48,10 +48,11 @@ Genest, M., Masse, J.-C., and Plante, J.-F., (2012). \pkg{depth}: Depth function
 Irene Epifanio and Guillermo Vinue
 }
 \examples{
+#As a toy example, only the first 25 individuals are used.
 #Variable selection:
 variabl_sel <- c(48, 40, 39, 33, 34, 36)
 #Changing to inches: 
-USAFSurvey_inch <- USAFSurvey[1:15,variabl_sel] / (10 * 2.54)
+USAFSurvey_inch <- USAFSurvey[1:25, variabl_sel] / (10 * 2.54)
 
 #Data preprocessing:
 preproc <- preprocessing(USAFSurvey_inch, TRUE, 0.95, TRUE)

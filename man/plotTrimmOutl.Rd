@@ -53,7 +53,6 @@ Guillermo Vinue
 \code{\link{sampleSpanishSurvey}}, \code{\link{hipamAnthropom}}, \code{\link{trimowa}}
 }
 \examples{
-\dontrun{
 #TRIMOWA ALGORITHM:
 dataTrimowa <- sampleSpanishSurvey
 numVar <- dim(dataTrimowa)[2]
@@ -61,25 +60,24 @@ bust <- dataTrimowa$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
 orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness,numVar)
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
 
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
-for (i in 1 : (bustSizes$nsizes - 1)){ 
- data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
- res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
-                             algSteps, ah, verbose = FALSE)
-}
+numSizes <- 1
+res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
+                                  weightsTrimowa, numClust, alpha, niter, algSteps, 
+                                  ah, FALSE)
 
-trimmed <- trimmOutl(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+prototypes <- anthrCases(res_trimowa, numSizes)
+trimmed <- trimmOutl(res_trimowa, numSizes)
 
 bustVariable <- "bust"
-xlim <- c(72,132)
-col <- c("black","red","green","blue","cyan","brown","gray","deeppink3",
-           "orange","springgreen4","khaki3","steelblue1")
+xlim <- c(72, 132)
+color <- c("black", "red", "green", "blue", "cyan", "brown", "gray",
+           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
 
 variable <- "chest"
 range(dataTrimowa[,variable])
@@ -87,62 +85,10 @@ range(dataTrimowa[,variable])
 ylim <- c(70,140)
 main <- "Trimmed women \n bust vs chest"
 
-plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
+plotTrimmOutl(dataTrimowa, trimmed, numSizes, bustVariable, variable, color, 
+              xlim, ylim, main)
 
-variable <- "hip"
-range(dataTrimowa[,variable])
-#[1] 83.6 152.1
-ylim <- c(80,160)
-main <- "Trimmed women \n bust vs hip"
-
-plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
-
-variable <- "necktoground"
-range(dataTrimowa[,variable])
-#[1] 117.6 154.9
-ylim = c(110,160)
-main <- "Trimmed women \n bust vs neck to ground"
-
-plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
-
-variable <- "waist"
-range(dataTrimowa[,variable])
-#[1]  58.6 133.0
-ylim <- c(50,140)
-main <- "Trimmed women \n bust vs waist"
-
-plotTrimmOutl(dataTrimowa,trimmed,bustSizes$nsizes,bustVariable,variable,col,xlim,ylim,main)
-
-
-#AN EXAMPLE FOR HIPAM ALGORITHM:
-dataHipam <- sampleSpanishSurvey
-bust <- dataHipam$bust
-bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
-
-type <- "IMO"
-maxsplit <- 5 ; orness <- 0.7
-ah <- c(23, 28, 20, 25, 25)
-
-set.seed(2013)
-res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
-for(i in 1 : (bustSizes$nsizes - 1)){
- data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
- dataMat <- as.matrix(data)
- res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
-                                  ah = ah, verbose = FALSE)
-}
-outliers <- trimmOutl(res_hipam, oneSize = FALSE, bustSizes$nsizes)
-
-bustVariable <- "bust"
-xlim <- c(72, 132)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", "deeppink3", "orange", 
-            "springgreen4", "khaki3", "steelblue1")
-variable <- "hip"
-ylim <- c(80, 160)
-title_outl <- "Outlier women HIPAM_IMO \n bust vs hip"
-
-plotTrimmOutl(dataHipam, outliers, bustSizes$nsizes, bustVariable, variable, color, 
-              xlim, ylim, title_outl)
-}
+#For other plots and an example for the hipam algorithm, 
+#see www.uv.es/vivigui/softw/more_examples.R 
 }
 \keyword{dplot}

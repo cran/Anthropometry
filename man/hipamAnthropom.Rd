@@ -100,7 +100,7 @@ Guillermo Vinue
 \code{\link{getBestPamsamMO}}, \code{\link{getBestPamsamIMO}}, \code{\link{checkBranchLocalMO}}, \code{\link{checkBranchLocalIMO}}, \code{\link{plotTreeHipamAnthropom}}, 
 }
 \examples{
-\dontrun{
+#FOR THE SIZES DEFINED BY THE EUROPEAN NORMATIVE:
 dataHipam <- sampleSpanishSurvey
 bust <- dataHipam$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
@@ -110,41 +110,33 @@ maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2013)
-res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
-for(i in 1 : (bustSizes$nsizes - 1)){
- data = dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]
- dataMat <- as.matrix(data)
- res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
-                                  ah = ah, verbose = FALSE)
-}
-#res_hipam #clustering results in each bust size.
+numSizes <- 1
+res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc, numSizes,
+                                       maxsplit, orness, type, ah, FALSE)
 
-fitmodels <- anthrCases(res_hipam, oneSize = FALSE, bustSizes$nsizes)
-outliers <- trimmOutl(res_hipam, oneSize = FALSE, bustSizes$nsizes)
+fitmodels <- anthrCases(res_hipam, numSizes)
+outliers <- trimmOutl(res_hipam, numSizes)
 
-#ONLY FOR ONE SIZE:
+#FOR ANY OTHER DEFINED SIZE:
 set.seed(1900)
 rand <- sample(1:600,20)
 dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
 numVar <- dim(dataComp)[2]
 
-orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness, numVar)
-
-maxsplit <- 5
 type <- "IMO"
+maxsplit <- 5 ; orness <- 0.7
 ah <- c(28, 25, 25) 
 
 dataMat <- as.matrix(dataComp)
 set.seed(2013)
-res_hipam_One <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
-                             ah = ah, verbose = FALSE)
-class(res_hipam_One) <- "hipamAnthropom"                             
+res_hipam_One <- list() ; class(res_hipam_One) <- "hipamAnthropom" 
+res_hipam_One[[1]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, 
+                                     type = type, ah = ah, verbose = FALSE)
+                            
 
 #plotTreeHipamAnthropom(res_hipam_One, main="Proposed Hierarchical PAM Clustering \n")
 
-fitmodels_One <- anthrCases(res_hipam_One, oneSize = TRUE)
-outliers_One <- trimmOutl(res_hipam_One, oneSize = TRUE)
-}
+fitmodels_One <- anthrCases(res_hipam_One,1)
+outliers_One <- trimmOutl(res_hipam_One,1)
 }
 \keyword{array}

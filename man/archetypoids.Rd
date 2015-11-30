@@ -75,92 +75,33 @@ Irene Epifanio and Guillermo Vinue
 \code{\link{stepArchetypesRawData}}, \code{\link{archetypes}}, \code{\link{stepArchetypoids}}
 }
 \examples{
-\dontrun{
-#SPORTIVE EXAMPLE:
-#Database:
-if(nzchar(system.file(package = "SportsAnalytics"))){
- data("NBAPlayerStatistics0910", package = "SportsAnalytics")
-}      
-mat <- NBAPlayerStatistics0910[,c("TotalMinutesPlayed","FieldGoalsMade")]
-rownames(mat) <- NULL
-
-#Calculating archetypes by using the archetype algorithm:
-#Data preprocessing:
-preproc <- preprocessing(mat,stand=TRUE,percAccomm=1)
-
-#For reproducing results, seed for randomness:
-set.seed(4321)
-#Run archetype algorithm repeatedly from 1 to 15 archetypes:
-numArch <- 15
-lass15 <- stepArchetypesRawData(data=preproc$data,numArch=1:numArch,numRep=20,verbose=FALSE)
-screeplot(lass15) 
-
-#Calculating real archetypes:
-numArchoid <- 3 #number of archetypoids.
-res_ns <- archetypoids(numArchoid,preproc$data,huge=200,step=FALSE,ArchObj=lass15,
-                      nearest="cand_ns",sequ=TRUE)
-arquets_ns <- NBAPlayerStatistics0910[res_ns[[1]],c("Name","TotalMinutesPlayed","FieldGoalsMade")]
-
-res_alpha <- archetypoids(numArchoid,preproc$data,huge=200,step=FALSE,ArchObj=lass15,
-                          nearest="cand_alpha",sequ=TRUE)
-arquets_alpha <- NBAPlayerStatistics0910[res_alpha[[1]],
-                  c("Name","TotalMinutesPlayed","FieldGoalsMade")]
-                  
-res_beta <- archetypoids(numArchoid,preproc$data,huge=200,step=FALSE,ArchObj=lass15,
-                          nearest="cand_beta",sequ=TRUE)
-arquets_beta <- NBAPlayerStatistics0910[res_beta[[1]],
-                  c("Name","TotalMinutesPlayed","FieldGoalsMade")]
-
-col_pal <- RColorBrewer::brewer.pal(7, "Set1")
-col_black <- rgb(0, 0, 0, 0.2)
-
-plot(mat, pch = 1, col = col_black, xlim = c(0,3500), main = "NBA archetypal basketball         
-     players \n obtained in Eugster (2012) \n and with our proposal", 
-     xlab = "Total minutes played", ylab = "Field goals made")
-points(mat[as.numeric(rownames(arquets_ns)),], pch = 4, col = col_pal[1]) 
-points(mat[as.numeric(rownames(arquets_alpha)),], pch = 4, col = col_pal[1]) 
-points(mat[as.numeric(rownames(arquets_beta)),], pch = 4, col = col_pal[1]) 
-plotrix::textbox(c(50,800), 50, "Travis Diener") 
-plotrix::textbox(c(2800,3500), 780, "Kevin Durant", col = "blue")
-plotrix::textbox(c(2800,3500), 270, "Jason Kidd", col = "blue")
-legend("topleft",c("archetypes of Eugster","archetypes of our proposal"), 
-       lty= c(1,NA), pch = c(NA,22), col = c("blue","black"))
-
-
-#If a specific number of archetypes is computed only:
-numArchoid <- 3
-set.seed(4321)
-lass3 <- stepArchetypesRawData(data=preproc$data,numArch=numArchoid,numRep=3,verbose=FALSE)
-res3 <- archetypoids(numArchoid,preproc$data,huge=200,step=FALSE,ArchObj=lass3,nearest="cand_ns",
-                     sequ=FALSE,aux=2)
-arquets3 <- NBAPlayerStatistics0910[res3[[1]],c("Name","TotalMinutesPlayed","FieldGoalsMade")]
-
+#Note: For a sportive example, see www.uv.es/vivigui/softw/more_examples.R 
 
 #COCKPIT DESIGN PROBLEM:
-USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
+#As a toy example, only the first 25 individuals are used.
+USAFSurvey_First25 <- USAFSurvey[1:25, ]
 #Variable selection:
 variabl_sel <- c(48, 40, 39, 33, 34, 36)
 #Changing to inches: 
-USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
+USAFSurvey_First25_inch <- USAFSurvey_First25[,variabl_sel] / (10 * 2.54)
 
 #Data preprocessing:
-USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
+USAFSurvey_preproc <- preprocessing(USAFSurvey_First25_inch, TRUE, 0.95, TRUE)
 
 #For reproducing results, seed for randomness:
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
-numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesRawData(data=USAFSurvey_preproc$data,numArch=1:numArch,
-                          numRep=numRep,verbose=FALSE)  
-screeplot(lass)
+#This is a toy example. In other situation, choose numArch=10 and numRep=20.
+numArch <- 5 ; numRep <- 2
+lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, numArch = 1:numArch,
+                              numRep = numRep, verbose = FALSE)  
+#To understand the warning messages, see the vignette of the
+#archetypes package.                              
+
+#screeplot(lass)
 
 numArchoid <- 3 #number of archetypoids.
-res_ns <- archetypoids(numArchoid,USAFSurvey_preproc$data,huge=200,step=FALSE,
-                       ArchObj=lass,nearest="cand_ns",sequ=TRUE)
-res_alpha <- archetypoids(numArchoid,USAFSurvey_preproc$data,huge=200,step=FALSE,
-                          ArchObj=lass,nearest="cand_alpha",sequ=TRUE)
-res_beta <- archetypoids(numArchoid,USAFSurvey_preproc$data,huge=200,step=FALSE,
-                         ArchObj=lass,nearest="cand_beta",sequ=TRUE)
-}
+res_ns <- archetypoids(numArchoid, USAFSurvey_preproc$data, huge = 200, step = FALSE,
+                       ArchObj = lass, nearest = "cand_ns",sequ = TRUE)
 }
 \keyword{array}

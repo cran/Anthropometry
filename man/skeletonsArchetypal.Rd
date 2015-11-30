@@ -33,7 +33,6 @@ Guillermo Vinue
 \code{\link{archetypesBoundary}}, \code{\link{USAFSurvey}}
 }
 \examples{
-\dontrun{
 #List with the measurements of each archetype (Table 7 of Epifanio et al (2013)):
 lista_arch <- list()
 lista_arch[[1]] <- c(34.18, 25.85, 18.65, 39.66, 35.05, 26.73)
@@ -49,35 +48,6 @@ for(i in 1:length(lista_arch)){
  skeletonsArchetypal(lista_arch[[i]],titlePlot)
 }
 
-
-#AN EXAMPLE FOR THE ARCHETYPOIDS:
-#COCKPIT DESIGN PROBLEM:
-USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
-#Variable selection:
-variabl_sel <- c(48, 40, 39, 33, 34, 36)
-#Changing to inches: 
-USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
-
-#Data preprocessing:
-USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE, 0.95, TRUE)
-
-set.seed(2010)
-numArch <- 10 ; numRep <- 20
-lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
-                          numArch=1:numArch, numRep = numRep, 
-                          verbose = FALSE)
-screeplot(lass)
-
-numArchoid <- 3
-res_ns <- archetypoids(numArchoid, USAFSurvey_preproc$data, huge = 200, step = FALSE, 
-                                ArchObj = lass, nearest = "cand_ns" , sequ = TRUE)
-
-#Looking for the individuals in the non standardized database: 
-aux <- USAFSurvey_First50_inch[setdiff(1:dim(USAFSurvey_First50_inch)[1],
-                               USAFSurvey_preproc$indivNo),]
-rownames(aux) <- 1:dim(USAFSurvey_preproc$data)[1]
-
-skeletonsArchetypal(aux[res_ns[[1]][1],], "Archetypoid 1")
-}
+#Note: For an example for archetypoids, see www.uv.es/vivigui/softw/more_examples.R 
 }
 \keyword{array}

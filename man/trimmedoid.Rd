@@ -58,7 +58,6 @@ Irene Epifanio
 \code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{getDistMatrix}}, \code{\link{trimowa}}, \code{\link{trimmedLloydShapes}}
 }
 \examples{
-\dontrun{
 #Data loading:
 dataTrimowa <- sampleSpanishSurvey
 bust <- dataTrimowa$bust
@@ -83,12 +82,11 @@ num.persons <- dim(data)[1]
 num.variables <- dim(data)[2]
 datam <- as.matrix(data)
 datat <- aperm(datam, c(2,1))                     
-dim(datat) <- c(1,num.persons*num.variables)   
+dim(datat) <- c(1,num.persons * num.variables)   
 
 #Dissimilarity matrix:
-D <- getDistMatrix(datat,num.persons,numVar,weightsTrimowa,bl,bh,al,ah,TRUE)
+D <- getDistMatrix(datat, num.persons, numVar, weightsTrimowa, bl, bh, al, ah, FALSE)
 
-res_trimm <- trimmedoid(D,numClust,0.01,6,7,FALSE)
-}
+res_trimm <- trimmedoid(D, numClust, 0.01, 6, 7, FALSE)
 }
 \keyword{math}

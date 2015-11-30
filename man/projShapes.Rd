@@ -36,30 +36,29 @@ Guillermo Vinue
 \code{\link{LloydShapes}}, \code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}
 }
 \examples{
-\dontrun{
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
 dim(landmarksNoNa) 
 #[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-#In the interests of simplicity of the computation involved:
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
-(numIndiv <- dim(landmarksNoNa_First50)[1])
-#[1] 50         
+#As a toy example, only the first 15 individuals are used.
+landmarksNoNa_First15 <- landmarksNoNa[1:15, ] 
+(numIndiv <- dim(landmarksNoNa_First15)[1])
+#[1] 15         
     
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
- 
-numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-set.seed(2013)
-res <- trimmedLloydShapes(array3D,numIndiv,alpha,numClust,algSteps,niter,stopCr,TRUE) 
-clust_kmeansProc <- res$asig
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First15)
+#shapes::plotshapes(array3D[,,1]) 
+#calibrate::textxy(array3D[,1,1], array3D[,2,1], labs = 1:numLandmarks, cex = 0.7) 
 
-prototypes <- anthrCases(res)
+numClust <- 3 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
+resLL <- LloydShapes(array3D, numClust, algSteps, niter, stopCr, FALSE, FALSE)
+clust_kmeansProc <- resLL$asig
+
+prototypes <- anthrCases(resLL)
 
 projShapes(1, array3D, clust_kmeansProc, prototypes)
-legend("topleft", c("Registrated data", "Mean shape"), pch = 1, col = 1:2, text.col = 1:2)
-title("Procrustes registrated data for cluster 1 \n with its mean shape superimposed", 
-      sub = "Plane xy")
-}
+#legend("topleft", c("Registrated data", "Mean shape"), pch = 1, col = 1:2, text.col = 1:2)
+#title("Procrustes registrated data for cluster 1 \n with its mean shape superimposed", 
+#      sub = "Plane xy")
 }
 \keyword{math}

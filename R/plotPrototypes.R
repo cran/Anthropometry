@@ -9,7 +9,7 @@ plotPrototypes <- function(data,prototypes,nsizes,bustVariable,variable,col,xlim
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
   #To locate correctly the rows of the prototypes in the whole database, the prototypes labels must be 
   #converted into a character.
    points(data[as.character(prototypes[[i]]), bustVariable], data[as.character(prototypes[[i]]), variable], pch = i, 
@@ -41,7 +41,7 @@ plotPrototypes <- function(data,prototypes,nsizes,bustVariable,variable,col,xlim
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(prototypes[[i]]), bustVariable], data[as.character(prototypes[[i]]), variable], pch = i, 
           col = col[i])
   }
@@ -70,7 +70,7 @@ plotPrototypes <- function(data,prototypes,nsizes,bustVariable,variable,col,xlim
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(prototypes[[i]]), bustVariable], data[as.character(prototypes[[i]]), variable], pch = i, 
           col = col[i])
   }
@@ -99,7 +99,7 @@ plotPrototypes <- function(data,prototypes,nsizes,bustVariable,variable,col,xlim
   axis(1, at = seq(xlim[1], xlim[2], 10), labels = seq(xlim[1], xlim[2], 10))
   axis(2, at = seq(ylim[1], ylim[2], 10), labels = seq(ylim[1], ylim[2], 10))
 
-  for(i in 1 : (nsizes-1)){
+  for(i in 1 : nsizes){
    points(data[as.character(prototypes[[i]]), bustVariable], data[as.character(prototypes[[i]]), variable], pch = i, 
           col = col[i])
   }

@@ -66,7 +66,7 @@ Amaral, G. J. A., Dore, L. H., Lessa, R. P., and Stosic, B., (2010). k-Means Alg
 Dryden, I. L., and Mardia, K. V., (1998). \emph{Statistical Shape Analysis}, Wiley, Chichester.
 }
 \note{
-This function is based on the optra.m file available from \url{http://people.sc.fsu.edu/~jburkardt/m_src/asa136/asa136.html}.
+This function is based on the qtran.m file available from \url{https://github.com/johannesgerer/jburkardt-m/tree/master/asa136}.
 }
 \author{
 Guillermo Vinue

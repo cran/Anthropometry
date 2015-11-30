@@ -81,7 +81,7 @@ Georgescu, V., (2009). Clustering of Fuzzy Shapes by Integrating Procrustean Met
 Dryden, I. L., and Mardia, K. V., (1998). \emph{Statistical Shape Analysis}, Wiley, Chichester.
 }
 \note{
-This function is based on the kmns.m file available from \url{http://people.sc.fsu.edu/~jburkardt/m_src/asa136/asa136.html}
+This function is based on the kmns.m file available from \url{https://github.com/johannesgerer/jburkardt-m/tree/master/asa136}
 }
 \author{
 Guillermo Vinue
@@ -90,118 +90,29 @@ Guillermo Vinue
 \code{\link{LloydShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{procGPA}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
 }
 \examples{
-\dontrun{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
 dim(landmarksNoNa) 
 #[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-#In the interests of simplicity of the computation involved:
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
-(numIndiv <- dim(landmarksNoNa_First50)[1])
-#[1] 50         
+#As a toy example, only the first 20 individuals are used.
+landmarksNoNa_First20 <- landmarksNoNa[1:20, ] 
+(numIndiv <- dim(landmarksNoNa_First20)[1])
+#[1] 20         
     
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
-shapes::plotshapes(array3D[,,1]) 
-calibrate::textxy(array3D[,1,1],array3D[,2,1],labs=1:numLandmarks,cex=0.7) 
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First20)
+array3D <- array3D[1:10,,] #to reduce computational times.
+#shapes::plotshapes(array3D[,,1]) 
+#calibrate::textxy(array3D[,1,1], array3D[,2,1], labs = 1:numLandmarks, cex = 0.7) 
  
-numClust <- 3 ; algSteps <- 5 ; niter <- 3 ; stopCr <- 0.0001
+numClust <- 3 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
 set.seed(2013)
-resHA <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,FALSE,c(),TRUE)
+resHA <- HartiganShapes(array3D, numClust, algSteps, niter, stopCr, FALSE, FALSE, c(), FALSE)
 
-#Numerical and graphical results:
 asig <- resHA$ic1  #table(asig) shows the clustering results.
 prototypes <- anthrCases(resHA)
 
-data_First50 <- sampleSpanishSurvey[1 : 50, ]
-boxplot(data_First50$necktoground ~ as.factor(asig), main = "Neck to ground")
-
-projShapes(1, array3D, asig, prototypes)
-legend("topleft", c("Registrated data", "Mean shape"),
-       pch = 1, col = 1:2, text.col = 1:2)
-title("Procrustes registrated data for cluster 1 \n
-       with its mean shape superimposed", sub = "Plane xy")
-
-
-#SIMULATION STUDY:
-#Definition of the cluster of cubes:
-Ms_cube <- cube8landm
-#Ms_cube <- cube34landm #for the case of 34 landmarks.
-colMeans(Ms_cube)
-dim(Ms_cube) 
-shapes::plotshapes(Ms_cube[,,1])
-
-#Number of landmarks and variables:
-k_cube <- dim(Ms_cube)[1]
-vars_cube <- k_cube * dim(Ms_cube)[2] 
-
-#Covariance matrix (0.01, 9, 36):
-sigma_cube <- 0.01
-Sigma_cube <- diag(sigma_cube,vars_cube)
-
-#Sample size of each cluster (25, 250, 450):
-n_cube <- 25
-
-#Cluster of cubes:
-simu1_cube <- mvtnorm::rmvt(n_cube,Sigma_cube,df=99)[,c(1 : k_cube * dim(Ms_cube)[2] 
-        - 2, 1 : k_cube * dim(Ms_cube)[2] - 1, 1 : k_cube * dim(Ms_cube)[2])]
-Simu1_cube <- as.vector(Ms_cube) + t(simu1_cube) 
-dim(Simu1_cube) 
-
-#Labels vector to identify the elements in the cluster of cubes:
-etiqs_cl1 <- paste("cube_", 1:n_cube, sep = "")
-
-#First cluster:
-cl1 <- array(Simu1_cube, dim = c(k_cube, dim(Ms_cube)[2], n_cube), 
-             dimnames = list(NULL, NULL, etiqs_cl1))
-colMeans(cl1) 
-dim(cl1) 
-
-#Definition of the cluster of parallelepipeds:
-Ms_paral <- parallelep8landm
-#Ms_paral <- parallelep34landm #for the case of 34 landmarks.
-colMeans(Ms_paral)
-dim(Ms_paral) 
-
-#Number of landmarks and variables:
-k_paral <- dim(Ms_paral)[1] 
-vars_paral <- k_paral * dim(Ms_paral)[2] 
-
-#Covariance matrix (0.01, 9, 36):
-sigma_paral <- 0.01
-Sigma_paral <- diag(sigma_paral,vars_paral)
-
-#Sample size of each cluster (25, 250, 450):
-n_paral <- 25
-
-#Cluster of parallelepipeds:
-simu1_paral <- mvtnorm::rmvt(n_paral, Sigma_paral, df = 99)[,c(1 : k_paral * 
-                    dim(Ms_paral)[2] - 2, 1 : k_paral * dim(Ms_paral)[2] - 
-                    1, 1 : k_paral * dim(Ms_paral)[2])]
-Simu1_paral <- as.vector(Ms_paral) + t(simu1_paral) 
-dim(Simu1_paral) 
-
-#Labels vector to identify the elements in the cluster of parallelepipeds:
-etiqs_cl2 <- paste("Parallelepiped_", 1:n_paral, sep = "")
-
-#Second cluster:
-cl2 <- array(Simu1_paral, dim = c(k_paral, dim(Ms_paral)[2], n_paral), 
-             dimnames = list(NULL, NULL, etiqs_cl2))
-colMeans(cl2) 
-dim(cl2) 
-
-#Combine both clusters: 
-array3D <- abind::abind(cl1,cl2)
-str(array3D)
-shapes3dShapes(array3D[,,1], loop = 0, type = "p", color = 2, joinline = c(1:1), 
-            axes3 = TRUE, rglopen = TRUE, main = "First figure")
-
-#First, the Lloyd algorithm is executed and then the Hartigan algorithm with 
-#the same initial values used by the Lloy algorithm is executed:
-numClust <- 2 ; algSteps <- 3 ; niter <- 3 ; stopCr <- 0.0001
-resLLSim <- LloydShapes(array3D,numClust,algSteps,niter,stopCr,TRUE,TRUE)
-resHASim <- HartiganShapes(array3D,numClust,algSteps,niter,stopCr,TRUE,TRUE,resLLSim$initials,TRUE)
-}
+#Note: For a simulation study, see www.uv.es/vivigui/softw/more_examples.R 
 }
 \keyword{array}

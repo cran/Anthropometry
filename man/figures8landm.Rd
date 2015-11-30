@@ -27,9 +27,7 @@ Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shape
 Guillermo Vinue
 }
 \examples{
-\dontrun{
-figures8landm("cube",cube8landm)
-figures8landm("paral",parallelep8landm)
-}
+figures8landm("cube", cube8landm)
+figures8landm("paral", parallelep8landm)
 }
 \keyword{array}

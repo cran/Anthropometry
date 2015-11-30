@@ -16,30 +16,25 @@
 #  ah <- c(23, 28, 20, 25, 25)
 #  
 #  set.seed(2014)
-#  res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
-#  for (i in 1 : (bustSizes$nsizes - 1)){
-#   data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) &
-#                      (bust < bustSizes$bustCirc[i + 1]), ]
-#   res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter,
-#                               algSteps, ah, verbose = FALSE)
-#  }
+#  numSizes <- bustSizes$nsizes - 1
+#  res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc,
+#                                    numSizes, weightsTrimowa, numClust,
+#                                    alpha, niter, algSteps, ah, FALSE)
 
 ## ----trimowa4,eval=FALSE,tidy=FALSE--------------------------------------
-#  prototypes <- anthrCases(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+#  prototypes <- anthrCases(res_trimowa, numSizes)
 
 ## ----trimowa5,eval=FALSE,tidy=FALSE--------------------------------------
 #  bustVariable <- "bust"
 #  xlim <- c(72, 132)
 #  color <- c("black", "red", "green", "blue", "cyan", "brown", "gray",
 #             "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-#  
 #  variable <- "necktoground"
 #  ylim <- c(116, 156)
 #  title <- "Prototypes \n bust vs neck to ground"
-#  
-#  plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable,
+#  plotPrototypes(dataTrimowa, prototypes, numSizes, bustVariable,
 #                 variable, color, xlim, ylim, title, FALSE)
-#  plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable,
+#  plotPrototypes(dataTrimowa, prototypes, numSizes, bustVariable,
 #                 variable, color, xlim, ylim, title, TRUE)
 
 ## ----TDDclust,eval=FALSE,tidy=FALSE--------------------------------------
@@ -78,34 +73,27 @@
 #  ah <- c(23, 28, 20, 25, 25)
 #  
 #  set.seed(2013)
-#  res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
-#  for(i in 1 : (bustSizes$nsizes - 1)){
-#   data =  dataHipam[(bust >= bustSizes$bustCirc[i]) &
-#                    (bust < bustSizes$bustCirc[i + 1]), ]
-#   dataMat <- as.matrix(data)
-#   res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit,
-#                                   orness = orness, type = type,
-#                                   ah = ah, verbose = FALSE)
-#  }
+#  numSizes <- bustSizes$nsizes - 1
+#  res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc,
+#                                         numSizes, maxsplit, orness, type,
+#                                         ah, FALSE)
 
 ## ----hipam3,eval=FALSE,tidy=FALSE----------------------------------------
-#  fitmodels <- anthrCases(res_hipam, oneSize = FALSE, bustSizes$nsizes)
-#  outliers <- trimmOutl(res_hipam, oneSize = FALSE, bustSizes$nsizes)
+#  fitmodels <- anthrCases(res_hipam, numSizes)
+#  outliers <- trimmOutl(res_hipam, numSizes)
 
 ## ----hipam4,eval=FALSE,tidy=FALSE----------------------------------------
 #  bustVariable <- "bust"
 #  xlim <- c(72, 132)
 #  color <- c("black", "red", "green", "blue", "cyan", "brown", "gray",
 #             "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-#  
 #  variable <- "hip"
 #  ylim <- c(83, 153)
 #  title <- "Fit models HIPAM_IMO \n bust vs hip"
 #  title_outl <- "Outlier women HIPAM_IMO \n bust vs hip"
-#  
-#  plotPrototypes(dataHipam, fitmodels, bustSizes$nsizes, bustVariable,
+#  plotPrototypes(dataHipam, fitmodels, numSizes, bustVariable,
 #                 variable, color, xlim, ylim, title, FALSE)
-#  plotTrimmOutl(dataHipam, outliers, bustSizes$nsizes, bustVariable,
+#  plotTrimmOutl(dataHipam, outliers, numSizes, bustVariable,
 #                variable, color, xlim, ylim, title_outl)
 
 ## ----ssa,eval=FALSE,tidy=FALSE-------------------------------------------
@@ -118,7 +106,10 @@
 #  array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
 
 ## ----ssa2,eval=FALSE,tidy=FALSE------------------------------------------
-#  numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+#  numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5
+#  niter <- 5 ; stopCr <- 0.0001
+
+## ----ssa22,eval=FALSE,tidy=FALSE-----------------------------------------
 #  set.seed(2013)
 #  res_kmProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust,
 #                                       algSteps, niter, stopCr,
@@ -151,8 +142,9 @@
 #  USAFSurvey_First50 <- USAFSurvey[1 : 50, ]
 #  variabl_sel <- c(48, 40, 39, 33, 34, 36)
 #  USAFSurvey_First50_inch <- USAFSurvey_First50[,variabl_sel] / (10 * 2.54)
-#  USAFSurvey_preproc <- preprocessing(USAFSurvey_First50_inch, TRUE,
-#                                      0.95, TRUE)
+#  USAFSurvey_preproc <- preprocessing(data = USAFSurvey_First50_inch,
+#                                      stand = TRUE, percAccomm = 0.95,
+#                                      mahal= TRUE)
 
 ## ----AA3,eval=FALSE,tidy=FALSE-------------------------------------------
 #  set.seed(2010)
@@ -185,5 +177,6 @@
 #  barplot(matPer, beside = TRUE, main = paste(numArchoid,
 #                                              " archetypoids", sep = ""),
 #          ylim = c(0, 100), ylab = "Percentile",
-#          xlab = "Each bar is related to each anthropometric variable selected")
+#          xlab = "Each bar is related to each anthropometric
+#                 variable selected")
 

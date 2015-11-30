@@ -7,7 +7,8 @@ Prototypes representation
 This function represents the scatter plots of bust circumference against other selected variable (chest, hip, neck to ground or waist) jointly with the prototypes obtained for each bust class provided by either \code{\link{trimowa}} or \code{\link{hipamAnthropom}}. In addition, the prototypes defined by the European standard on sizing systems. Size designation of clothes. Part 3: Measurements and intervals can be also displayed.
 }
 \usage{
-plotPrototypes(data,prototypes,nsizes,bustVariable,variable,col,xlim,ylim,main,EN)
+plotPrototypes(data,prototypes,nsizes,bustVariable,variable,col,xlim,ylim,
+               main,EN)
 }
 \arguments{
 \item{data}{
@@ -64,7 +65,6 @@ Guillermo Vinue
 \code{\link{sampleSpanishSurvey}}, \code{\link{weightsMixtureUB}}, \code{\link{trimowa}}, \code{\link{getDistMatrix}}, \code{\link{trimmedoid}}, \code{\link{hipamAnthropom}}
 }
 \examples{
-\dontrun{
 #TRIMOWA ALGORITHM:
 dataTrimowa <- sampleSpanishSurvey
 numVar <- dim(dataTrimowa)[2]
@@ -72,24 +72,22 @@ bust <- dataTrimowa$bust
 bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
 
 orness <- 0.7
-weightsTrimowa <- weightsMixtureUB(orness,numVar)
+weightsTrimowa <- weightsMixtureUB(orness, numVar)
 
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
-for (i in 1 : (bustSizes$nsizes - 1)){ 
- data = dataTrimowa[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
- res_trimowa[[i]] <- trimowa(data, weightsTrimowa, numClust, alpha, niter, 
-                             algSteps,ah,verbose=FALSE)
-}
+numSizes <- 1
+res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
+                                  weightsTrimowa, numClust, alpha, niter, algSteps, 
+                                  ah, FALSE)
 
-prototypes <- anthrCases(res_trimowa, oneSize = FALSE, bustSizes$nsizes)
+prototypes <- anthrCases(res_trimowa, numSizes)
 
 bustVariable <- "bust"
 xlim <- c(72, 132)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
+color <- c("black", "red", "green", "blue", "cyan", "brown", "gray",
            "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
 
 variable <- "chest"
@@ -98,82 +96,12 @@ range(dataTrimowa[,variable])
 ylim <- c(70,140)
 title <- "Prototypes \n bust vs chest"
 
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
+plotPrototypes(dataTrimowa, prototypes, numSizes, bustVariable, 
                variable, color, xlim, ylim, title, FALSE)
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
+plotPrototypes(dataTrimowa, prototypes, numSizes, bustVariable, 
                variable, color, xlim, ylim, title, TRUE)
 
-variable <- "hip"
-range(dataTrimowa[,variable])
-#[1] 83.6 152.1
-ylim <- c(80,160)
-title <- "Prototypes \n bust vs hip"
-
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, TRUE)
-
-bustVariable <- "bust"
-xlim <- c(72, 132)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
-           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-
-variable <- "necktoground"
-range(dataTrimowa[,variable])
-#[1] 117.6 154.9
-ylim <- c(116, 156)
-title <- "Prototypes \n bust vs neck to ground"
-
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, TRUE)
-
-variable <- "waist"
-range(dataTrimowa[,variable])
-#[1]  58.6 133.0
-ylim <- c(56,136)
-title <- "Prototypes \n bust vs waist"
-
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-plotPrototypes(dataTrimowa, prototypes, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, TRUE)
-
-
-#AN EXAMPLE FOR HIPAM ALGORITHM:
-dataHipam <- sampleSpanishSurvey
-bust <- dataHipam$bust
-bustSizes <- bustSizesStandard(seq(74, 102, 4), seq(107, 131, 6))
-
-type <- "IMO" #type <- "MO" for $HIPAM_{MO}$
-maxsplit <- 5 ; orness <- 0.7 
-ah <- c(23, 28, 20, 25, 25)
-
-set.seed(2013)
-res_hipam <- list() ; class(res_hipam) <- "hipamAnthropom"
-for(i in 1 : (bustSizes$nsizes - 1)){
- data =  dataHipam[(bust >= bustSizes$bustCirc[i]) & (bust < bustSizes$bustCirc[i + 1]), ]   
- dataMat <- as.matrix(data)
- res_hipam[[i]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, type = type,
-                                   ah = ah, verbose = FALSE) 
-}  
-str(res_hipam)
-
-fitmodels <- anthrCases(res_hipam, oneSize = FALSE, bustSizes$nsizes)
-
-bustVariable <- "bust"
-xlim <- c(72, 132)
-color <- c("black", "red", "green", "blue", "cyan", "brown", "gray", 
-           "deeppink3", "orange", "springgreen4", "khaki3", "steelblue1")
-
-variable <- "hip"
-ylim <- c(80, 160)
-title <- "Fit models HIPAM_IMO \n bust vs hip"
-
-plotPrototypes(dataHipam, fitmodels, bustSizes$nsizes, bustVariable, 
-               variable, color, xlim, ylim, title, FALSE)
-}
+#For other plots and an example for the hipam algorithm, 
+#see www.uv.es/vivigui/softw/more_examples.R 
 }
 \keyword{dplot}

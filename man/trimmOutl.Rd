@@ -12,19 +12,16 @@ The methodologies included in this package which are developed to the clothing d
 This auxiliary generic function allows the user to identify the discarded individuals computed by each method in an easy way.
 }
 \usage{
-trimmOutl(resMethod, oneSize, nsizes)
-\method{trimmOutl}{trimowa} (resMethod, oneSize, nsizes)
-\method{trimmOutl}{hipamAnthropom} (resMethod, oneSize, nsizes)
+trimmOutl(resMethod, nsizes)
+\method{trimmOutl}{trimowa} (resMethod, nsizes)
+\method{trimmOutl}{hipamAnthropom} (resMethod, nsizes)
 }
 \arguments{
 \item{resMethod}{
 This is the object which saves the results obtained by the aforementioned methodologies and which contains the discarded individuals to return.
 }
-\item{oneSize}{
-A logical specifying whether to obtain discarded observations for a single size. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the discarded individuals for a single bust size or for the bust sizes defined by the European Normative. If FALSE, the following argument \code{nsizes} is needed.
-}
 \item{nsizes}{
-Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the discarded individuals for each bust size defined by the European Normative.
+Number of bust sizes. This argument is needed for the "trimowa" and "hipamAnthropom" methodologies because they can compute the prototypes for any given number of bust sizes.
 }
 }
 \value{
@@ -46,21 +43,24 @@ Guillermo Vinue
 \code{\link{trimowa}}, \code{\link{TDDclust}}, \code{\link{hipamAnthropom}}, \code{\link{LloydShapes}}, \code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}
 }
 \examples{
-\dontrun{
-#kmeansProcrustes:
+#CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
+dim(landmarksNoNa) 
+#[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ]
-numIndiv <- dim(landmarksNoNa_First50)[1]
+#[1] 66
+#As a toy example, only the first 25 individuals are used.
+landmarksNoNa_First15 <- landmarksNoNa[1:15, ] 
+(numIndiv <- dim(landmarksNoNa_First15)[1])
+#[1] 15         
+    
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First15)
 
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
-
-numClust <- 3 ; alpha <- 0.01 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
+numClust <- 3 ; alpha <- 0.01 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
 set.seed(2013)
 res_kmeansProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
-                                     algSteps, niter, stopCr, 
-                                     verbose = FALSE)
+                                     algSteps, niter, stopCr, FALSE)
+
 trimmed <- trimmOutl(res_kmeansProc)
-}
 }
 \keyword{math}

@@ -78,104 +78,28 @@ Amelia Simo
 \code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{procGPA}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
 }
 \examples{
-\dontrun{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
 dim(landmarksNoNa) 
 #[1] 574 198 
 numLandmarks <- (dim(landmarksNoNa)[2]) / 3
 #[1] 66
-#In the interests of simplicity of the computation involved:
-landmarksNoNa_First50 <- landmarksNoNa[1 : 50, ] 
-(numIndiv <- dim(landmarksNoNa_First50)[1])
-#[1] 50         
+#As a toy example, only the first 25 individuals are used.
+landmarksNoNa_First15 <- landmarksNoNa[1:15, ] 
+(numIndiv <- dim(landmarksNoNa_First15)[1])
+#[1] 15         
     
-array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First50)
-shapes::plotshapes(array3D[,,1]) 
-calibrate::textxy(array3D[,1,1],array3D[,2,1],labs=1:numLandmarks,cex=0.7) 
+array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First15)
+#shapes::plotshapes(array3D[,,1]) 
+#calibrate::textxy(array3D[,1,1], array3D[,2,1], labs = 1:numLandmarks, cex = 0.7) 
 
-numClust <- 3 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-resLL <- LloydShapes(array3D,numClust,algSteps,niter,stopCr,FALSE,TRUE)
+numClust <- 3 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
+resLL <- LloydShapes(array3D, numClust, algSteps, niter, stopCr, FALSE, FALSE)
+
 asig <- resLL$asig 
 table(resLL$asig) 
 prototypes <- anthrCases(resLL)
 
-
-#SIMULATION STUDY:
-#Definition of the cluster of cubes:
-Ms_cube <- cube8landm
-#Ms_cube <- cube34landm #for the case of 34 landmarks.
-colMeans(Ms_cube)
-dim(Ms_cube) 
-shapes::plotshapes(Ms_cube[,,1])
-
-#Number of landmarks and variables:
-k_cube <- dim(Ms_cube)[1]
-vars_cube <- k_cube * dim(Ms_cube)[2] 
-
-#Covariance matrix (0.01, 9, 36):
-sigma_cube <- 0.01
-Sigma_cube <- diag(sigma_cube,vars_cube)
-
-#Sample size of each cluster (25, 250, 450):
-n_cube <- 25
-
-#Cluster of cubes:
-simu1_cube <- mvtnorm::rmvt(n_cube,Sigma_cube,df=99)[,c(1 : k_cube * dim(Ms_cube)[2] 
-        - 2, 1 : k_cube * dim(Ms_cube)[2] - 1, 1 : k_cube * dim(Ms_cube)[2])]
-Simu1_cube <- as.vector(Ms_cube) + t(simu1_cube) 
-dim(Simu1_cube) 
-
-#Labels vector to identify the elements in the cluster of cubes:
-etiqs_cl1 <- paste("cube_", 1:n_cube, sep = "")
-
-#First cluster:
-cl1 <- array(Simu1_cube, dim = c(k_cube, dim(Ms_cube)[2], n_cube), 
-             dimnames = list(NULL, NULL, etiqs_cl1))
-colMeans(cl1) 
-dim(cl1) 
-
-#Definition of the cluster of parallelepipeds:
-Ms_paral <- parallelep8landm
-#Ms_paral <- parallelep34landm #for the case of 34 landmarks.
-colMeans(Ms_paral)
-dim(Ms_paral) 
-
-#Number of landmarks and variables:
-k_paral <- dim(Ms_paral)[1] 
-vars_paral <- k_paral * dim(Ms_paral)[2] 
-
-#Covariance matrix (0.01, 9, 36):
-sigma_paral <- 0.01
-Sigma_paral <- diag(sigma_paral,vars_paral)
-
-#Sample size of each cluster (25, 250, 450):
-n_paral <- 25
-
-#Cluster of parallelepipeds:
-simu1_paral <- mvtnorm::rmvt(n_paral, Sigma_paral, df = 99)[,c(1 : k_paral * 
-           dim(Ms_paral)[2] - 2, 1 : k_paral * dim(Ms_paral)[2] - 1, 
-           1 : k_paral * dim(Ms_paral)[2])]
-Simu1_paral <- as.vector(Ms_paral) + t(simu1_paral) 
-dim(Simu1_paral) 
-
-#Labels vector to identify the elements in the cluster of parallelepipeds:
-etiqs_cl2 <- paste("Parallelepiped_", 1:n_paral, sep = "")
-
-#Second cluster:
-cl2 <- array(Simu1_paral, dim = c(k_paral, dim(Ms_paral)[2], n_paral), 
-             dimnames = list(NULL, NULL, etiqs_cl2))
-colMeans(cl2) 
-dim(cl2) 
-
-#Combine both clusters: 
-array3D <- abind::abind(cl1,cl2)
-str(array3D)
-shapes3dShapes(array3D[,,1], loop=0, type="p", color=2, joinline=c(1:1),
-            axes3=TRUE, rglopen=TRUE, main="First figure")
-
-numClust <- 2 ; algSteps <- 5 ; niter <- 5 ; stopCr <- 0.0001
-resLLSim <- LloydShapes(array3D,numClust,algSteps,niter,stopCr,TRUE,TRUE)
-}
+#Note: For a simulation study, see www.uv.es/vivigui/softw/more_examples.R 
 }
 \keyword{array}

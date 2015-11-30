@@ -11,7 +11,8 @@ In this version of HIPAM, called $HIPAM_{MO}$, there are two different stopping 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
 \usage{
-checkBranchLocalMO(tree,data,i,maxsplit,asw.tol,local.const,orness,type,ah,verbose,...)
+checkBranchLocalMO(tree,data,i,maxsplit,asw.tol,local.const,orness,type,ah,
+                   verbose,...)
 }
 \arguments{
 \item{tree}{

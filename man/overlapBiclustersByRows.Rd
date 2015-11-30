@@ -32,6 +32,8 @@ In order to know how this function works, it is necessary to understand the foll
 In short, this function puts a 1 in those rows belonging to bicluster 1, a 2 in those ones of bicluster 2, and so on.
 
 The fact that certain columns of the matrix returned by this function have a value different from 0 at the same row, will indicate that that row belong to both biclusters.
+
+This function cannot be used with the data of the package. This function is included in the package in the hope that it could be helpful or useful for other researchers. 
 }
 \references{
 Vinue, G., and Ibanez, M. V., (2014), \emph{Data depth and Biclustering applied to anthropometric data. Exploring their utility in apparel design}. Technical report.
