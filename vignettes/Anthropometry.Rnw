@@ -243,8 +243,8 @@ Designing lower body garments depends not only on the waist circumference (the p
 The main interest of this approach was descriptive and exploratory and the important point to note here is that \code{CCbiclustAnthropo} cannot be used with \code{sampleSpanishSurvey}, since this data file does not contain variables related to the lower body in addition to waist and hip. However, this function is included in the package in the hope that it could be helpful or useful for other researchers. All theoretical and practical details are given in \cite{VinueIbanez2013}, \cite{Tesis} and \cite{Vinue2012}.
 
 
-\vspace*{0.5cm}
-
+%\vspace*{0.5cm}
+\newpage
 %\subsubsection{TDDclust}
 {\bf The \emph{TDDclust} methodology}
 
@@ -468,8 +468,8 @@ plotPrototypes(dataTrimowa, prototypes, numSizes, bustVariable,
 \label{trimowaExample}
 \end{figure}
 
-%\newpage
-\vspace*{0.1cm}
+\newpage
+%\vspace*{0.1cm}
 %\subsubsection{TDDclust}
 {\bf The \emph{TDDclust} methodology}
 
@@ -581,8 +581,8 @@ plotTrimmOutl(dataHipam, outliers, numSizes, bustVariable,
 \label{hipamExample}
 \end{figure}
 
-%\vspace*{0.3cm}
-\newpage
+\vspace*{0.3cm}
+%\newpage
 %\vspace*{0.16cm}
 %\subsection{Statistical shape analysis}
 {\bf The \emph{kmeansProcrustes} methodology}

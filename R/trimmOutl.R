@@ -21,10 +21,10 @@ trimmOutl.trimowa <- function(resMethod, nsizes){
 trimmOutl.hipamAnthropom <- function(resMethod, nsizes){
  discarded <- list()
  for (i in 1 : nsizes){ 
-  cl_1_2 <- attr(which(unlist(table(resMethod[[i]]$clustering)) == 1 | unlist(table(resMethod[[i]]$clustering)) == 2),"names") 
-  cl_1_2 <- as.numeric(cl_1_2)
-  pos <- which(unlist(resMethod[[i]]$clustering) %in% cl_1_2)
-  discarded[[i]] <- attr(unlist(resMethod[[i]]$clustering)[pos],"names")
+  aux <- table(resMethod[[i]]$clustering)
+  aux <- as.numeric(aux)
+  auxNoBig <- which(aux == 1 | aux == 2)
+  discarded[[i]] <- rownames(unique(resMethod[[i]]$cases))[auxNoBig]
  }
   
  class(discarded) <- "trimmOutl"

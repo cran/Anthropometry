@@ -11,8 +11,8 @@ Anthropometry brings together some statistical methodologies especially develope
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.6\cr
-Date: 2015-11-30\cr
+Version: 1.7\cr
+Date: 2015-12-11\cr
 License: GPL-2\cr
 LazyLoad: yes\cr
 LazyData: yes\cr

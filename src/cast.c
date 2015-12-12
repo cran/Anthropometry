@@ -3,7 +3,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-int filled=0;
+int compareDouble(const void* a, const void* b)
+{
+    double aa = *(double *)a; 
+    double bb = *(double *)b; 
+    if (aa < bb) return 1;
+    if (aa > bb) return -1;
+    return 0;
+}
+
+static int filled=0;
 
 struct simmat
 {
@@ -48,34 +57,6 @@ SEXP GetRowAndFree(SEXP erow)
  free(d.dv[row]);
  d.dv[row]=NULL;
  return(ret);
-}
-
-void quicksort(double *v,int izq,int der)
-{
- double pivot=v[izq];
- double ult=der;
- int pri=izq;
- double temp;
-
- if (der<izq)
-  return;
- while (izq<der)
- {
-  while (v[izq]>=pivot && izq<der+1) izq++;
-  while (v[der]<pivot && der>izq-1) der--;
-  if (izq<der)
-  {
-   temp=v[izq];
-   v[izq]=v[der];
-   v[der]=temp;
-  }
- }
- temp=v[pri];
- v[pri]=v[der];
- v[der]=temp;
-
- quicksort(v,pri,der-1);
- quicksort(v,der+1,ult);
 }
    
 SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SEXP ebl,SEXP ebh,SEXP verbose)
@@ -174,7 +155,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
      adist[k]=(l-bh[k])*ah[k];
    }
 
-   quicksort(adist,0,nvars-1);
+   qsort(adist, nvars-1, sizeof(double), compareDouble);
 
    dist=0.0;
    for (k=0;k<nvars && adist[k]!=0.0;k++)

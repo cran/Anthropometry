@@ -1,6 +1,12 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.7 [2015-12-11]
+* The internal C code cast.c has been slighly modified to use the R function qsort instead the user-defined function quicksort. This has been done with the aim of correcting the remaining memory-access errors in CRAN.
+* Submitted to CRAN.
+
+
+
 Version: 1.6 [2015-11-30]
 * A new helper function called "computSizesTrimowa" has been created for computing the trimowa elements provided by the trimowa algorithm for a number of bust sizes defined by the European Normative. 
 * A new helper function called "computSizesHipamAnthropom" has been created for computing the hipamAnthropom elements provided by the hipamAnthropom algorithm for a number of bust sizes defined by the European Normative. 

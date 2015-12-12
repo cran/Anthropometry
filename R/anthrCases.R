@@ -24,7 +24,8 @@ anthrCases.hipamAnthropom <- function(resMethod, nsizes){
   aux <- table(resMethod[[i]]$clustering)
   aux <- as.numeric(aux)
   auxBig <- which(aux > 2)
-  cases[[i]] <- rownames(resMethod[[i]]$cases)[auxBig]
+  #length(unique(rownames(resMethod[[i]]$cases))) must match with length(attr(table(resMethod[[i]]$clustering), "names"))
+  cases[[i]] <- rownames(unique(resMethod[[i]]$cases))[auxBig]
  }   
   
  class(cases) <- "anthrCases"
