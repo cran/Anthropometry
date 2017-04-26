@@ -63,7 +63,7 @@ Vinue, G., and Ibanez, M. V., (2014). \emph{Data depth and Biclustering applied 
 }
 \author{
 This function has been defined from the original functions developed by Rebecka Jornsten, which were available freely on
-\url{http://www.stat.rutgers.edu/home/rebecka/DDcl/}. However, the link to this page doesn't currently exist as a result of a website redesign. 
+http://www.stat.rutgers.edu/home/rebecka/DDcl/. However, the link to this page doesn't currently exist as a result of a website redesign. 
 }
 \examples{
 #In the interests of simplicity of the computation involved, only 15 points are selected:

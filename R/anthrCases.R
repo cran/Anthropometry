@@ -9,10 +9,16 @@ anthrCases.default <- function(resMethod, nsizes){
 } 
 
 anthrCases.trimowa <- function(resMethod, nsizes){
- cases <- list()
- for (i in 1 : nsizes){
-  cases[[i]] <- resMethod[[i]]$cases
- }
+  
+ if (nsizes == 1){
+   cases <- c()
+   cases <- resMethod$cases
+ }else{
+   cases <- list()
+   for (i in 1 : nsizes){
+     cases[[i]] <- resMethod[[i]]$cases
+   }
+ }  
 
  class(cases) <- "anthrCases"
  return(cases)

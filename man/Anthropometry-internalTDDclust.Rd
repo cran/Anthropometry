@@ -32,7 +32,7 @@ Vinue, G., and Ibanez, M. V., (2014). \emph{Data depth and Biclustering applied 
 }
 \author{
 All these functions were originally created by R. Jornsten and they were available freely on
-\url{http://www.stat.rutgers.edu/home/rebecka/DDcl/}. However, the link to this page doesn't currently exist as a result of a website redesign. 
+http://www.stat.rutgers.edu/home/rebecka/DDcl/. However, the link to this page doesn't currently exist as a result of a website redesign. 
 }
 \seealso{
 \code{\link{TDDclust}}

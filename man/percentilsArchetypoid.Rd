@@ -1,10 +1,10 @@
 \name{percentilsArchetypoid}
 \alias{percentilsArchetypoid}
 \title{
-Computing percentiles of a certain archetypoid
+Helper function for computing percentiles of a certain archetypoid
 }
 \description{
-This function computes the percentiles of an archetypoid for a given variable. Once these percentile values have been calculated, they can be represented by means of a barplot. This function is used inside \code{\link{matPercs}}.
+This helper function computes the percentiles of an archetypoid for a given variable. Once these percentile values have been calculated, they can be represented by means of a barplot. 
 }
 \usage{
 percentilsArchetypoid(column,indiv,data,digits)
@@ -35,7 +35,7 @@ Epifanio, I., Vinue, G., and Alemany, S., (2013). Archetypal analysis: contribut
 Guillermo Vinue
 }
 \seealso{
-\code{\link{archetypoids}}, \code{\link{matPercs}}
+\code{\link{archetypoids}}
 }
 \examples{
 #COCKPIT DESIGN PROBLEM:

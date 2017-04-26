@@ -11,7 +11,7 @@ preprocessing(data,stand,percAccomm,mahal=TRUE)
 }
 \arguments{
 \item{data}{
-Raw data. Each row corresponds to an observation and each column corresponds to an anthropometric variable. All variables are numeric.
+Raw data. It must be a data frame. Each row corresponds to an observation and each column corresponds to an anthropometric variable. All variables are numeric.
 }
 \item{stand}{
 A logical value. If TRUE (FALSE) the data are (not) standardized. This option will depend on the problem.

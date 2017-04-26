@@ -11,8 +11,8 @@ Anthropometry brings together some statistical methodologies especially develope
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.7\cr
-Date: 2015-12-11\cr
+Version: 1.8\cr
+Date: 2017-04-26\cr
 License: GPL-2\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
@@ -43,13 +43,12 @@ HartiganShapes: Hartigan-Wong k-means for 3D shapes.\cr
 hipamAnthropom: HIPAM algorithm for anthropometric data.\cr
 landmarksSampleSpaSurv: Landmarks of the sampled women of the Spanish Survey.\cr
 LloydShapes: Lloyd k-means for 3D shapes.\cr
-matPercs: Helper function for the percentils of the archetypoids.\cr
 nearestToArchetypes: Nearest individuals to archetypes.\cr
 optraShapes: Auxiliary optra subroutine of the Hartigan-Wong k-means for 3D shapes.\cr
 overlapBiclustersByRows: Overlapped biclusters by rows.\cr
 parallelep8landm: Parallelepiped of 8 landmarks.\cr
 parallelep34landm: Parallelepiped of 34 landmarks.\cr
-percentilsArchetypoid: Computing percentiles of a certain archetypoid.\cr
+percentilsArchetypoid: Helper function for computing percentiles of a certain archetypoid.\cr
 plotPrototypes: Prototypes representation.\cr
 plotTreeHipamAnthropom: HIPAM dendogram.\cr
 plotTrimmOutl: Trimmed or outlier observations representation.\cr
@@ -70,6 +69,9 @@ trimowa: Trimmed PAM with OWA operators.\cr
 USAFSurvey: USAF 1967 survey.\cr
 weightsMixtureUB: Calculation of the weights for the OWA operators.\cr
 xyplotPCArchetypes: PC scores for archetypes.\cr
+}
+\references{
+Vinue, G., (2017). Anthropometry: An R Package for Analysis of Anthropometric Data, \emph{Journal of Statistical Software} \bold{77(6)}, 1--40, doi:10.18637/jss.v077.i06
 }
 \author{
 Guillermo Vinue <Guillermo.Vinue@uv.es>, Irene Epifanio, Amelia Simo, M. Victoria Ibanez, Juan Domingo, Guillermo Ayala

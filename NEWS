@@ -1,6 +1,13 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.8 [2017-04-26]
+* The function matPercs was removed because it did the same as percentilesArchetypoid. The vignette has modified accordingly. Of course, Figure 6 remains the same.
+* A minor update has been added to anthrCases.trimowa inside anthrCases.R and trimmOutl.trimowa inside trimmOutl.R to adapt them to the case when the trimowa algorithm is applied to a single size.
+* Submitted to CRAN. 
+
+
+
 Version: 1.7 [2015-12-11]
 * The internal C code cast.c has been slighly modified to use the R function qsort instead the user-defined function quicksort. This has been done with the aim of correcting the remaining memory-access errors in CRAN.
 * Submitted to CRAN.

@@ -149,9 +149,12 @@
 ## ----AA3,eval=FALSE,tidy=FALSE-------------------------------------------
 #  set.seed(2010)
 #  numArch <- 10 ; numRep <- 20
+#  oldw <- getOption("warn")
+#  options(warn = -1)
 #  lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data,
 #                                numArch=1:numArch, numRep = numRep,
 #                                verbose = FALSE)
+#  options(warn = oldw)
 #  screeplot(lass)
 
 ## ----AA4,eval=FALSE,tidy=FALSE-------------------------------------------
@@ -171,7 +174,8 @@
 #  boundaries_beta <- anthrCases(res_archoids_beta)
 
 ## ----AA5,eval=FALSE,tidy=FALSE-------------------------------------------
-#  matPer <- matPercs(boundaries_ns, USAFSurvey_preproc$data)
+#  df <- USAFSurvey_preproc$data
+#  matPer <- t(sapply(1:dim(df)[2], percentilsArchetypoid, boundaries_ns, df, 0))
 
 ## ----AA6,eval=FALSE,tidy=FALSE-------------------------------------------
 #  barplot(matPer, beside = TRUE, main = paste(numArchoid,

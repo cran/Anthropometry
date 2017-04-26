@@ -9,10 +9,16 @@ trimmOutl.default <- function(resMethod, nsizes){
 }
 
 trimmOutl.trimowa <- function(resMethod, nsizes){
- discarded <- list()
- for (i in 1 : nsizes){
-  discarded[[i]] <- resMethod[[i]]$discarded
- } 
+  
+  if (nsizes == 1){
+    discarded <- c()
+    discarded <- resMethod$discarded
+  }else{
+    discarded <- list()
+    for (i in 1 : nsizes){
+      discarded[[i]] <- resMethod[[i]]$discarded
+    } 
+  } 
     
  class(discarded) <- "trimmOutl"
  return(discarded)

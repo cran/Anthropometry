@@ -4,7 +4,8 @@
 Computation of the trimowa elements for a given number of sizes defined by the EN
 }
 \description{
-This is a helper function for computing the trimowa elements provided by the \code{\link{trimowa}} algorithm for a number of bust sizes defined by the European Normative (EN). Therefore, the \code{\link{trimowa}} is used inside this function.
+This is a helper function for computing the trimowa elements provided by the \code{\link{trimowa}} algorithm for a number of bust sizes defined by the European Normative (EN). Therefore, the \code{\link{trimowa}} is used inside this function. The number of sizes
+must be bigger than one. For a single size use directly \code{\link{trimowa}}. 
 }
 \usage{
 computSizesTrimowa(dataTrim, bust, bustMeasur, nsizes, w, numClust, alpha, 
@@ -54,7 +55,7 @@ numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-numSizes <- 1
+numSizes <- 2
 res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
                                   weightsTrimowa, numClust, alpha, niter,
                                   algSteps, ah, verbose = FALSE)

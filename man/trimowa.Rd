@@ -77,7 +77,7 @@ numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
 set.seed(2014)
-numSizes <- 1
+numSizes <- 2
 res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
                                   weightsTrimowa, numClust, alpha, niter, algSteps, 
                                   ah, FALSE)
@@ -95,10 +95,9 @@ numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(28, 25, 25) 
 
 set.seed(2014)
-res_trimowa <- list() ; class(res_trimowa) <- "trimowa"
-res_trimowa[[1]] <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
+res_trimowa <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
                             algSteps, ah, verbose = FALSE)
-
+class(res_trimowa) <- "trimowa"
 prototypes <- anthrCases(res_trimowa, 1)
 }
 \keyword{array}

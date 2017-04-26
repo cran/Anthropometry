@@ -1,21 +1,20 @@
-citHeader("To cite the 'Anthropometry' package in publications use:")
+bibentry(bibtype = "Article",
+  title        = "{Anthropometry}: An {R} Package for Analysis of Anthropometric Data",
+  author       = person(given = "Guillermo",
+                        family = "Vinu\\'e",
+                        email = "Guillermo.Vinue@uv.es"),
+  journal      = "Journal of Statistical Software",
+  year         = "2017",
+  volume       = "77",
+  number       = "6",
+  pages        = "1--40",
+  doi          = "10.18637/jss.v077.i06",
 
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
-vers <- paste("R package version", meta$Version)
+  header       = "To cite Anthropometry in publications use:",
+  textVersion  =
+  paste("Guillermo Vinue (2017).",
+        "Anthropometry: An R Package for Analysis of Anthropometric Data.",
+        "Journal of Statistical Software, 77(6), 1-40.",
+        "doi:10.18637/jss.v077.i06")
+)
 
-citEntry(entry="Manual",
-         title = "Anthropometry: An R Package for Analysis of Anthropometric Data",
-         author = personList(as.person("Guillermo Vinue"),
-                             as.person("Irene Epifanio"),
-                             as.person("Amelia Simo"), 
-                             as.person("M. Victoria Ibanez"),
-                             as.person("Juan Domingo"),  
-                             as.person("Guillermo Ayala")),
-         year = year,
-         note = vers,
-
-         textVersion =
-         paste(
-	 "Vinue, G., Epifanio, I., Simo, A., Ibanez, M. V., Domingo, J. and Ayala, G.(",
-         year, ").  Anthropometry: An R Package for Analysis of Anthropometric Data. ",
-	 vers, ".", sep=""))

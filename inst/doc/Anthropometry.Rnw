@@ -692,9 +692,12 @@ Next, archetypes must be calculated. In the \pkg{archetypes} \proglang{R} packag
 <<AA3,eval=FALSE,tidy=FALSE>>=
 set.seed(2010) 
 numArch <- 10 ; numRep <- 20
+oldw <- getOption("warn")
+options(warn = -1)
 lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, 
                               numArch=1:numArch, numRep = numRep, 
                               verbose = FALSE)  
+options(warn = oldw)
 screeplot(lass)
 @
 
@@ -717,10 +720,11 @@ boundaries_alpha <- anthrCases(res_archoids_alpha)
 boundaries_beta <- anthrCases(res_archoids_beta)
 @
 
-In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids match (although the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypes do not), so it is enough to represent a single percentile plot. To that end, the \code{matPercs} computes the percentils of the archetypoids for every column of the data frame.
+In this case, the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypoids match (although the $cand_{ns}$, $cand_{\alpha}$ and $cand_{\beta}$ archetypes do not), so it is enough to represent a single percentile plot. To that end, the \code{percentilsArchetypoid} computes the percentils of the archetypoids for every column of the data frame.
   
 <<AA5,eval=FALSE,tidy=FALSE>>=  
-matPer <- matPercs(boundaries_ns, USAFSurvey_preproc$data)
+df <- USAFSurvey_preproc$data
+matPer <- t(sapply(1:dim(df)[2], percentilsArchetypoid, boundaries_ns, df, 0))
 @
 
 
