@@ -6,7 +6,7 @@ Evaluation of the candidate clustering partition in $HIPAM_{MO}$
 \description{
 In the HIPAM algorithm, each (parent) cluster P is investigated to see if it can be divided further into new (child) clusters, or stop (in this case, P would be a terminal node). 
 
-In this version of HIPAM, called $HIPAM_{MO}$, there are two different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2013) for more details.
+In this version of HIPAM, called $HIPAM_{MO}$, there are two different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -53,7 +53,7 @@ Other arguments that may be supplied.
 The new resulting classification tree.
 }
 \references{
-Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
+Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 

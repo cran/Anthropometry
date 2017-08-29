@@ -10,7 +10,7 @@ This function is a HIPAM algorithm adapted to deal with anthropometric data. To 
 
 Two HIPAM algorithms are proposed. The first one, called $HIPAM_{MO}$, is a HIPAM that uses $d_{MO}$. The second one, $HIPAM_{IMO}$, is a HIPAM algorithm that uses $d_{MO}$ and the INCA (Index Number Clusters Atypical) statistic criterion (Irigoien et al. (2008)) to decide the number of child clusters and as a stopping rule. 
 
-See Vinue et al. (2013) for more details.
+See Vinue et al. (2014) for more details.
 }
 \usage{
 hipamAnthropom(data,asw.tol=0,maxsplit=5,local.const=NULL,
@@ -70,7 +70,7 @@ A list with the following elements:
 \emph{metric}: Dissimilarity used (called 'McCulloch' because the dissimilarity function used is that explained in McCulloch et al. (1998)).
 }
 \references{
-Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
+Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 

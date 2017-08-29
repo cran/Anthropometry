@@ -7,14 +7,14 @@ bibentry(bibtype = "Article",
   year         = "2017",
   volume       = "77",
   number       = "6",
-  pages        = "1--40",
+  pages        = "1--39",
   doi          = "10.18637/jss.v077.i06",
 
   header       = "To cite Anthropometry in publications use:",
   textVersion  =
   paste("Guillermo Vinue (2017).",
         "Anthropometry: An R Package for Analysis of Anthropometric Data.",
-        "Journal of Statistical Software, 77(6), 1-40.",
+        "Journal of Statistical Software, 77(6), 1-39.",
         "doi:10.18637/jss.v077.i06")
 )
 

@@ -23,7 +23,7 @@ The $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms are different in the way to genera
 The \emph{ext.dist} function is adapted to compute the dissimilarity developed in McCulloch et al. (1998). See \code{\link{hipamAnthropom}} for a detailed explanation of the HIPAM algorithm.
 }
 \references{
-Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
+Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 

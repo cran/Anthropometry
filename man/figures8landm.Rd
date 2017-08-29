@@ -4,7 +4,7 @@
 Figures of 8 landmarks with labelled landmarks
 }
 \description{
-This function allows us to represent the two geometric figures (a cube and a parallelepiped) of 8 landmarks, with the landmark labels. Both appear in the paper Vinue et al. (2014), referred below.
+This function allows us to represent the two geometric figures (a cube and a parallelepiped) of 8 landmarks, with the landmark labels. Both appear in the paper Vinue et al. (2016), referred below.
 }
 \usage{
 figures8landm(figure,data)
@@ -21,7 +21,7 @@ The data with the landmarks of the corresponding figure.
 A plot of the cube or the parallelepiped with the landmark labels.
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
+Vinue, G., Simo, A., and Alemany, S., (2016). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification} \bold{10(1)}, 103--132.
 }
 \author{
 Guillermo Vinue

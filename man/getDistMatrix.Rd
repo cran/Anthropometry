@@ -6,7 +6,7 @@ Dissimilarity matrix between individuals and prototypes
 \description{
 In the definition of a sizing system, a distance function allows us to represent mathematically the idea of garment fit and it is a key element to quantify the misfit between an individual and the prototype.
 
-This function computes the dissimilarity defined in McCulloch et al. (1998), which is used in \code{\link{trimowa}} and \code{\link{hipamAnthropom}}. For more details, see also Ibanez et al. (2012) and Vinue et al. (2013).
+This function computes the dissimilarity defined in McCulloch et al. (1998), which is used in \code{\link{trimowa}} and \code{\link{hipamAnthropom}}. For more details, see also Ibanez et al. (2012) and Vinue et al. (2014).
 }
 \usage{
 getDistMatrix(data,np,nv,w,bl,bh,al,ah,verbose)
@@ -42,7 +42,7 @@ McCulloch, C., Paal, B., and Ashdown, S., (1998). An optimization approach to ap
 
 Ibanez, M. V., Vinue, G., Alemany, S., Simo, A., Epifanio, I., Domingo, J., and Ayala, G., (2012). Apparel sizing using trimmed PAM and OWA operators, \emph{Expert Systems with Applications} \bold{39}, 10512--10520.
 
-Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
+Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
 
 Leon, T., Zuccarello, P., Ayala, G., de Ves, E., and Domingo, J., (2007), Applying logistic regression to relevance feedback in image retrieval systems, \emph{Pattern Recognition} \bold{40}, 2621--2632.
 }

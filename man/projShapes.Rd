@@ -27,7 +27,7 @@ Vector of optimal prototypes.
 Numerical vector with the percentile values of an archetypoid. 
 }
 \references{
-Vinue, G., Simo, A., and Alemany, S., (2014). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification}, 1--30.
+Vinue, G., Simo, A., and Alemany, S., (2016). The k-means algorithm for 3D shapes with an application to apparel design, \emph{Advances in Data Analysis and Classification} \bold{10(1)}, 103--132.
 }
 \author{
 Guillermo Vinue

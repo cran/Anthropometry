@@ -1,6 +1,13 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.9 [2017-08-29]
+* Standard LaTeX .sty files have been excluded following the CRAN maintainers' reccommendations.
+* A typo has been corrected in the CITATION file.
+* Submitted to CRAN. 
+
+
+
 Version: 1.8 [2017-04-26]
 * The function matPercs was removed because it did the same as percentilesArchetypoid. The vignette has modified accordingly. Of course, Figure 6 remains the same.
 * A minor update has been added to anthrCases.trimowa inside anthrCases.R and trimmOutl.trimowa inside trimmOutl.R to adapt them to the case when the trimowa algorithm is applied to a single size.

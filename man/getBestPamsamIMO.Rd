@@ -6,7 +6,7 @@ Generation of the candidate clustering partition in $HIPAM_{IMO}$
 \description{
 The HIPAM algorithm starts with one large cluster and, at each level, a given (parent) cluster is partitioned using PAM.
 
-In this version of HIPAM, called $HIPAM_{IMO}$, the number k of (child) clusters is obtained by using the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)) in the following way: at each node P, if there is k such that $INCA_k > 0.2$, then the k prior to the first largest slope decrease is selected. However, this procedure does not apply either to the top node or to the generation of the new partitions from which the Mean Split Silhouette is calculated. In these cases, even when all $INCA_k < 0.2$, k = 3 is fixed as the number of groups to divide and proceed. See Vinue et al. (2013) for more details.
+In this version of HIPAM, called $HIPAM_{IMO}$, the number k of (child) clusters is obtained by using the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)) in the following way: at each node P, if there is k such that $INCA_k > 0.2$, then the k prior to the first largest slope decrease is selected. However, this procedure does not apply either to the top node or to the generation of the new partitions from which the Mean Split Silhouette is calculated. In these cases, even when all $INCA_k < 0.2$, k = 3 is fixed as the number of groups to divide and proceed. See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -55,7 +55,7 @@ stage of the search.
 \emph{metric}: Dissimilarity used (called 'McCulloch' because the dissimilarity function used is that explained in McCulloch et al. (1998)).
 }
 \references{
-Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2013). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
+Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representative fit models for apparel sizing, \emph{Decision Support Systems} \bold{57}, 22--33.
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 
