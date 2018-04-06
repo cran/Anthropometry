@@ -1,6 +1,6 @@
-0db7929626c8c796655cd8b5700819ca *DESCRIPTION
+7a94f31882a1f16f0d05021a19078f86 *DESCRIPTION
 442d0863c63e4d5a454eb131170ea5b0 *NAMESPACE
-4d883ffa256275051d193a416b7d5198 *NEWS
+767ec63bea098b2b24fed55ad91939dd *NEWS
 514836267e9ffd5d95025bb289f6ce0d *R/Anthropometry-internalArchetypoids.R
 51bd3c040cea5f7b12705cf0b9ae2f81 *R/Anthropometry-internalHipamAnthropom.R
 b25b286cf6407b5617c9d7e3f4ee8c45 *R/Anthropometry-internalPlotTree.R
@@ -22,7 +22,7 @@ f31aab84414876e6de7979812ea737e5 *R/computSizesHipamAnthropom.R
 08c055325671ca78263ce97929d74bde *R/figures8landm.R
 ab4742f49cfc84cdf26c54592aa1b698 *R/getBestPamsamIMO.R
 268da0f83d25a64b7afda9039b422bda *R/getBestPamsamMO.R
-4d57f18bcce4eb9264c6a31ba8854dab *R/getDistMatrix.R
+3bb79e57c4558cacbb7ffc61e165992b *R/getDistMatrix.R
 cd3611406c20b3a7f6ddd242b65968e2 *R/hipamAnthropom.R
 52c6f3d98ef2577f65a83c790a759c32 *R/nearestToArchetypes.R
 13484df2f2c0e26dba606612edb61b51 *R/optraShapes.R
@@ -45,7 +45,7 @@ cb0501263adf3adf134350436661f358 *R/trimmedLloydShapes.R
 b71a049ea46b7ba705ae35ca8cf1d835 *R/trimowa.R
 f1efd42aee393b67728f46b16cc24b30 *R/weightsMixtureUB.R
 1692a23487e36e2029c10b1cdeb5af5b *R/xyplotPCArchetypes.R
-066cd52722dc702fad570126856a56d6 *build/vignette.rds
+a87b8ca7b8943c108cd2f4f8505065da *build/vignette.rds
 35cfb767d8b48ab479ee3a554b84729b *data/USAFSurvey.RData
 7efd96aea44ded14f565132c67a5495e *data/cube34landm.RData
 f13505356a0b5c1400d0e333500a199f *data/cube8landm.RData
@@ -57,12 +57,12 @@ f6cc5ac676d825eca0f64169885923c0 *data/sampleSpanishSurvey.RData
 bbaf600f2e31b8092ec4869713f5b152 *inst/CITATION
 6cfaeebb5e705e613997c325ac539c3d *inst/doc/Anthropometry.R
 2a2f592ba119cf42bec12d063474b526 *inst/doc/Anthropometry.Rnw
-dcb043004545b77ee7d465311a91bb14 *inst/doc/Anthropometry.pdf
+98adfb1c933cbf3c7b423f906b7825d3 *inst/doc/Anthropometry.pdf
 ef2a658cd1386d115cfafe15151f6615 *man/Anthropometry-internalArchetypoids.Rd
 4e91d54f3372acc641cb9e977a15f3f0 *man/Anthropometry-internalHipamAnthropom.Rd
 5a35585dc249d3cd1a9cb756880fdded *man/Anthropometry-internalPlotTree.Rd
 aee8ac448c7a49cb05bff88bb42a92f6 *man/Anthropometry-internalTDDclust.Rd
-bfa49087c06dc779509afec29232b898 *man/Anthropometry-package.Rd
+d96ecdd784463294741720fc3b4cf42e *man/Anthropometry-package.Rd
 1eaf6d1f2ba5981ec125348a70962532 *man/CCbiclustAnthropo.Rd
 01055fccf859ebb084d1164a3f3c5627 *man/HartiganShapes.Rd
 e42433ffb930ea3e9791add3e29e7b93 *man/LloydShapes.Rd

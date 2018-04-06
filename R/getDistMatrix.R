@@ -3,42 +3,42 @@ getDistMatrix <- function(data,np,nv,w,bl,bh,al,ah,verbose){
  if( (!is.numeric(np)) || (np!=as.integer(np)) )
  {
   stop("getDistMatrix Error: np is not an integer.\n");
-  break;
+  #break;
  }
  if( (!is.numeric(nv)) || (nv!=as.integer(nv)) )
  {
   stop("getDistMatrix Error: nv is not an integer.\n");
-  break;
+  #break;
  }
  if(length(data)!=(np*nv))
  {
   stop("getDistMatrix Error: data is not a vector of",np*nv,"components.\n");
-  break;
+  #break;
  }
  if((length(bh)!=nv) || (length(bl)!=nv) || (length(ah)!=nv) || (length(al)!=nv))
  {
   stop("getDistMatrix Error: any of the vectors bh,bl,ah or al has not the correct length (it must be ",nv,")\n");
-  break;
+  #break;
  }
  if(sum(bl<0)!=nv)
  {
   stop("getDistMatrix Error: any of the elements of bl is not strictly negative.\n");
-  break;
+  #break;
  }
  if(sum(bh>0)!=nv)
  {
   stop("getDistMatrix Error: any of the elements of bh is not strictly positive.\n");
-  break;
+  #break;
  }
  if(sum(al>0)!=nv)
  {
   stop("getDistMatrix Error: any of the elements of al is not strictly positive (remember: the sign changes inside).\n");
-  break;
+  #break;
  }
  if(sum(ah>0)!=nv)
  {
   stop("getDistMatrix Error: any of the elements of ah is not strictly positive.\n");
-  break;
+  #break;
  }
  if(verbose)
  {
@@ -49,17 +49,17 @@ getDistMatrix <- function(data,np,nv,w,bl,bh,al,ah,verbose){
  if(errorfill==1)
  {
   stop("Error: the dissimilarity symmetric matrix was reserved but not released.\n");
-  break;
+  #break;
  }
  if(errorfill==2)
  {
   stop("Error: it was not possible to reserve memory not even for the pointers to the rows of the dissimilarity matrix.\n");
-  break;
+  #break;
  }
  if(errorfill==3)
  {
   stop("Error: it was not possible to reserve memory for all or part of the dissimilarity matrix.\n");
-  break;
+  #break;
  }
  if(verbose)
  {
@@ -89,7 +89,7 @@ getDistMatrix <- function(data,np,nv,w,bl,bh,al,ah,verbose){
   if(is.null(retval))
   {
    stop("Error calling GetRowAndFree: trying to access a non-existent matrix row.\n");
-   break;
+   #break;
   }
   d[row,row:np]=retval;
   if((verbose) && (row==100*as.integer(row/100)))
