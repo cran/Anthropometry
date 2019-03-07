@@ -69,6 +69,7 @@ weightsTrimowa <- weightsMixtureUB(orness,numVar)
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2014)
 #numSizes <- bustSizes$nsizes - 1
 numSizes <- 2
@@ -96,7 +97,7 @@ dim(medsUNE)
 
 dataAll <- rbind(dataTrimowa, meds, medsUNE)
 dim(dataAll)
-#[1] 672   5
+#[1] 642   5
 
 bh <- (apply(as.matrix(log(dataAll)),2,range)[2,] 
        - apply(as.matrix(log(dataAll)),2,range)[1,]) / ((numClust-1) * 8) 

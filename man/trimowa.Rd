@@ -76,6 +76,7 @@ weightsTrimowa <- weightsMixtureUB(orness, numVar)
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(23, 28, 20, 25, 25)
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2014)
 numSizes <- 2
 res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSizes,
@@ -84,6 +85,7 @@ res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc, numSize
 prototypes <- anthrCases(res_trimowa, numSizes)
 
 #FOR ANY OTHER DEFINED SIZE:
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(1900)
 rand <- sample(1:600,20)
 dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
@@ -94,6 +96,7 @@ weightsTrimowa <- weightsMixtureUB(orness, numVar)
 numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 ah <- c(28, 25, 25) 
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2014)
 res_trimowa <- trimowa(dataComp, weightsTrimowa, numClust, alpha, niter, 
                             algSteps, ah, verbose = FALSE)

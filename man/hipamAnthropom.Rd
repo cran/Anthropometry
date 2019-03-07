@@ -109,6 +109,7 @@ type <- "IMO"
 maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2013)
 numSizes <- 1
 res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc, numSizes,
@@ -118,6 +119,7 @@ fitmodels <- anthrCases(res_hipam, numSizes)
 outliers <- trimmOutl(res_hipam, numSizes)
 
 #FOR ANY OTHER DEFINED SIZE:
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(1900)
 rand <- sample(1:600,20)
 dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
@@ -128,6 +130,7 @@ maxsplit <- 5 ; orness <- 0.7
 ah <- c(28, 25, 25) 
 
 dataMat <- as.matrix(dataComp)
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2013)
 res_hipam_One <- list() ; class(res_hipam_One) <- "hipamAnthropom" 
 res_hipam_One[[1]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, 

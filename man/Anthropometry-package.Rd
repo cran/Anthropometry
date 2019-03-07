@@ -5,15 +5,15 @@
 Statistical Methods for Anthropometric Data
 }
 \description{
-Anthropometry brings together some statistical methodologies especially developed to analyze anthropometric data. These methods are aimed at providing effective solutions to some commons problems related to Ergonomics and Anthropometry. They are based on clustering, the statistical concept of data depth, statistical shape analysis and archetypal analysis.
+Statistical methodologies especially developed to analyze anthropometric data. These methods are aimed at providing effective solutions to some commons problems related to Ergonomics and Anthropometry. They are based on clustering, the statistical concept of data depth, statistical shape analysis and archetypal analysis. Please see Vinue (2017) <doi:10.18637/jss.v077.i06>.
 }
 \details{
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.10\cr
-Date: 2018-04-06\cr
-License: GPL-2\cr
+Version: 1.11\cr
+Date: 2019-03-07\cr
+License: GPL (>=2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
 }

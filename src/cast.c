@@ -97,7 +97,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
   PROTECT(ret = NEW_INTEGER(1));
   r = INTEGER_POINTER(ret);
   *r=1;
-  UNPROTECT(1);
+  UNPROTECT(10);
   return(ret);
  }
 
@@ -109,7 +109,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
   PROTECT(ret = NEW_INTEGER(1));
   r = INTEGER_POINTER(ret);
   *r=2;
-  UNPROTECT(1);
+  UNPROTECT(10);
   return(ret);
  }
 
@@ -123,7 +123,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
    PROTECT(ret = NEW_INTEGER(1));
    r = INTEGER_POINTER(ret);
    *r=3;
-   UNPROTECT(1);
+   UNPROTECT(10);
    return(ret);
   }
  }
@@ -175,7 +175,7 @@ SEXP FillAllDistOwa(SEXP ex,SEXP ew,SEXP envars,SEXP enpers,SEXP eal,SEXP eah,SE
  r = INTEGER_POINTER(ret);
  *r=0;
  
- unprotect(10);
+ UNPROTECT(10);
 
  return(ret);
 }

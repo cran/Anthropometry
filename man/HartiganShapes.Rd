@@ -107,6 +107,7 @@ array3D <- array3D[1:10,,] #to reduce computational times.
 #calibrate::textxy(array3D[,1,1], array3D[,2,1], labs = 1:numLandmarks, cex = 0.7) 
  
 numClust <- 3 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2013)
 resHA <- HartiganShapes(array3D, numClust, algSteps, niter, stopCr, FALSE, FALSE, c(), FALSE)
 

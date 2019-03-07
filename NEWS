@@ -1,8 +1,17 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.11 [2019-03-07]
+* UNPROTECT(1) has been replaced by UNPROTECT(10) at lines 100, 112 and 126 of the src/cast.c file to fix the problem with pointer protection imbalance reported by rchk().
+* suppressWarnings(RNGversion("3.5.0")) has been inserted before calling set.seed() in the examples and the vignette, following CRAN maintainers' recommendations.
+* projShapes() has been updated to avoid some problems warned by the CRAN checking procedure about the dimensions of the object to be represented.
+* The reference to the paper presenting this package has been added to the DESCRIPTION file.
+* Submitted to CRAN. 
+
+
+
 Version: 1.10 [2018-04-06]
-* The break commands in getDistMatrix() have been removed because they were used in wrong context (no loop was visible), following the CRAN maintainers' reccommendations.
+* The break commands in getDistMatrix() have been removed because they were used in wrong context (no loop was visible), following the CRAN maintainers' recommendations.
 * Dependence on R version '3.3.2' has been changed to '3.3.0' to avoid patchlevel warnings.
 * Submitted to CRAN. 
 

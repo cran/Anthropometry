@@ -15,6 +15,7 @@
 #  numClust <- 3 ; alpha <- 0.01 ; niter <- 10 ; algSteps <- 7
 #  ah <- c(23, 28, 20, 25, 25)
 #  
+#  suppressWarnings(RNGversion("3.5.0"))
 #  set.seed(2014)
 #  numSizes <- bustSizes$nsizes - 1
 #  res_trimowa <- computSizesTrimowa(dataTrimowa, bust, bustSizes$bustCirc,
@@ -45,6 +46,7 @@
 #  numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 5
 #  Th <- 0 ; T0 <- 0 ; simAnn <- 0.9
 #  
+#  suppressWarnings(RNGversion("3.5.0"))
 #  set.seed(2014)
 #  res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn,
 #                        alpha, dataTDDcl_aux, verbose = FALSE)
@@ -72,6 +74,7 @@
 #  maxsplit <- 5 ; orness <- 0.7
 #  ah <- c(23, 28, 20, 25, 25)
 #  
+#  suppressWarnings(RNGversion("3.5.0"))
 #  set.seed(2013)
 #  numSizes <- bustSizes$nsizes - 1
 #  res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc,
@@ -110,6 +113,7 @@
 #  niter <- 5 ; stopCr <- 0.0001
 
 ## ----ssa22,eval=FALSE,tidy=FALSE-----------------------------------------
+#  suppressWarnings(RNGversion("3.5.0"))
 #  set.seed(2013)
 #  res_kmProc <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust,
 #                                       algSteps, niter, stopCr,
@@ -147,6 +151,7 @@
 #                                      mahal= TRUE)
 
 ## ----AA3,eval=FALSE,tidy=FALSE-------------------------------------------
+#  suppressWarnings(RNGversion("3.5.0"))
 #  set.seed(2010)
 #  numArch <- 10 ; numRep <- 20
 #  oldw <- getOption("warn")

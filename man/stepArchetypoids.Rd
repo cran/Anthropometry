@@ -67,6 +67,7 @@ USAFSurvey_First25_inch <- USAFSurvey_First25[,variabl_sel] / (10 * 2.54)
 USAFSurvey_preproc <- preprocessing(USAFSurvey_First25_inch, TRUE, 0.95, TRUE)
 
 #For reproducing results, seed for randomness:
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 #This is a toy example. In other situation, choose numArch=10 and numRep=20.
