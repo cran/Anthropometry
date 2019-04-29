@@ -58,8 +58,9 @@ USAFSurvey_inch <- USAFSurvey[1:25, variabl_sel] / (10 * 2.54)
 USAFSurvey_preproc <- preprocessing(USAFSurvey_inch, TRUE, 0.95, TRUE)
 
 #Procedure and results shown in section 2.2.2 and section 3.1:
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2010)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2010)
 res <- archetypesBoundary(USAFSurvey_preproc$data, 15, FALSE, 3)
 #To understand the warning messages, see the vignette of the
 #archetypes package.

@@ -48,6 +48,7 @@ Dryden, I. L., and Mardia, K. V., (1998). \emph{Statistical Shape Analysis}, Wil
 \code{\link{shapes3d}}
 }
 \examples{
+\dontrun{
 landmarksNoNa <- na.exclude(landmarksSampleSpaSurv)
 dim(landmarksNoNa) 
 #[1] 574 198 
@@ -69,5 +70,6 @@ prototypes <- anthrCases(resLL)
 
 shapes3dShapes(prototypes[,,1], loop = 0, type = "p", color = 2, joinline = c(1:1), 
             axes3 = TRUE, rglopen = TRUE, main = "Mean shape cluster 1")
+}            
 }
 \keyword{multivariate}

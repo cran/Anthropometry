@@ -50,8 +50,9 @@ type <- "IMO"
 maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2013)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2013)
 numSizes <- 1
 res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc, numSizes,
                                        maxsplit, orness, type, ah, FALSE)

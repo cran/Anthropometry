@@ -73,8 +73,9 @@ dataTDDcl_aux <- sampleSpanishSurvey[1 : 15, c(2, 3, 5)]
 numClust <- 3 ; alpha <- 0.01 ; lambda <- 0.5 ; niter <- 2
 Th <- 0 ; T0 <- 0 ; simAnn <- 0.9  
 
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2014)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2014)
 res_TDDcl <- TDDclust(dataTDDcl, numClust, lambda, Th, niter, T0, simAnn, 
                       alpha, dataTDDcl_aux,FALSE) 
 

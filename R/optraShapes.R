@@ -69,8 +69,22 @@ optraShapes <- function(array3D,n,c,numClust,ic1,ic2,nc,an1,an2,ncp,d,itran,live
      ic1[i] = l2
      ic2[i] = l1
 
-     c[,,l1] = procGPA(array3D[, , ic1 == l1], distances = TRUE, pcaoutput = TRUE)$mshape
-     c[,,l2] = procGPA(array3D[, , ic1 == l2], distances = TRUE, pcaoutput = TRUE)$mshape
+     x1 <- array3D[, , ic1 == l1]
+     if (length(dim(x1)) != 3) {
+       return(cat("Please ensure that array3D has 3 dimensions."))
+     }else{
+       c[,,l1] = shapes::procGPA(x1, distances = TRUE, pcaoutput = TRUE)$mshape
+     } 
+     
+     x2 <- array3D[, , ic1 == l2]
+     if (length(dim(x2)) != 3) {
+       return(cat("Please ensure that array3D has 3 dimensions."))
+     }else{
+       c[,,l2] = shapes::procGPA(x2, distances = TRUE, pcaoutput = TRUE)$mshape
+     }
+     
+     #c[,,l1] = procGPA(array3D[, , ic1 == l1], distances = TRUE, pcaoutput = TRUE)$mshape
+     #c[,,l2] = procGPA(array3D[, , ic1 == l2], distances = TRUE, pcaoutput = TRUE)$mshape
    }
   }
 

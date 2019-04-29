@@ -109,8 +109,9 @@ type <- "IMO"
 maxsplit <- 5 ; orness <- 0.7
 ah <- c(23, 28, 20, 25, 25)
 
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2013)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2013)
 numSizes <- 1
 res_hipam <- computSizesHipamAnthropom(dataHipam, bust, bustSizes$bustCirc, numSizes,
                                        maxsplit, orness, type, ah, FALSE)
@@ -119,8 +120,9 @@ fitmodels <- anthrCases(res_hipam, numSizes)
 outliers <- trimmOutl(res_hipam, numSizes)
 
 #FOR ANY OTHER DEFINED SIZE:
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(1900)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(1900)
 rand <- sample(1:600,20)
 dataComp <- sampleSpanishSurvey[rand, c(2, 3, 5)]
 numVar <- dim(dataComp)[2]
@@ -130,13 +132,13 @@ maxsplit <- 5 ; orness <- 0.7
 ah <- c(28, 25, 25) 
 
 dataMat <- as.matrix(dataComp)
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2013)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2013)
 res_hipam_One <- list() ; class(res_hipam_One) <- "hipamAnthropom" 
 res_hipam_One[[1]] <- hipamAnthropom(dataMat, maxsplit = maxsplit, orness = orness, 
                                      type = type, ah = ah, verbose = FALSE)
                             
-
 #plotTreeHipamAnthropom(res_hipam_One, main="Proposed Hierarchical PAM Clustering \n")
 
 fitmodels_One <- anthrCases(res_hipam_One,1)

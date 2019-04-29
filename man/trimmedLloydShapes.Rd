@@ -96,8 +96,9 @@ landmarksNoNa_First10 <- landmarksNoNa[1:10, ]
 array3D <- array3Dlandm(numLandmarks, numIndiv, landmarksNoNa_First10)
 
 numClust <- 2 ; alpha <- 0.01 ; algSteps <- 1 ; niter <- 1 ; stopCr <- 0.0001
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2013)
+#For reproducing results, seed for randomness:
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2013)
 res <- trimmedLloydShapes(array3D, numIndiv, alpha, numClust, 
                           algSteps, niter, stopCr, FALSE)
 

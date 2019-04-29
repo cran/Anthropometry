@@ -25,8 +25,8 @@ X <- as.matrix(X)
 
 #Computation of archetypes and archetypoids:
 #For reproducing results, seed for randomness:
-suppressWarnings(RNGversion("3.5.0"))
-set.seed(2010) 
+#suppressWarnings(RNGversion("3.5.0"))
+#set.seed(2010) 
 #Run archetype algorithm repeatedly from 1 to numArch archetypes:
 #This is a toy example. In other situation, choose numArch=10 and numRep=20.
 numArch <- 5 ; nrep <- 2

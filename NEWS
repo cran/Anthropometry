@@ -1,6 +1,13 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.12 [2019-04-29]
+* Following CRAN maintainers' recommendations, suppressWarnings(RNGversion("3.5.0")) has been removed.
+* HartiganShapes(), qtranShapes(), optraShapes() and projShapes() have been updated to avoid some problems warned by the CRAN checking procedure about the dimensions of the object to be used.
+* Submitted to CRAN.
+
+
+
 Version: 1.11 [2019-03-07]
 * UNPROTECT(1) has been replaced by UNPROTECT(10) at lines 100, 112 and 126 of the src/cast.c file to fix the problem with pointer protection imbalance reported by rchk().
 * suppressWarnings(RNGversion("3.5.0")) has been inserted before calling set.seed() in the examples and the vignette, following CRAN maintainers' recommendations.

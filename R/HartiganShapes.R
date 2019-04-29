@@ -50,7 +50,7 @@ HartiganShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,s
   print(initials_hart[[iter]]) 
  }
  meanshapes <- array3D[,,initials_hart[[iter]]] 
- meanshapes_aux <- array3D[, , initials[[iter]]] 
+ #meanshapes_aux <- array3D[, , initials[[iter]]] 
  
  #if(computCost){
    #time_ini_dist <- Sys.time() 
@@ -108,15 +108,38 @@ HartiganShapes <- function(array3D,numClust,algSteps=10,niter=10,stopCr=0.0001,s
   #Check to see if there is any empty cluster at this stage:
   for(l in 1 : numClust){
    nc[l] <- table(ic1)[l]
-
-   if(nc[l] == 0){
-   stop("At least one cluster is empty after the initial assignment. A better set of initial cluster centers is needed.")
+   #print("Loop numClust")
+   #print(nc[l])
+   if(nc[l] <= 3){ # nc[l] == 0
+   #stop("At least one cluster is empty or has a very few elements after the initial assignment. 
+   #     A better set of initial cluster centers is needed.")
+   #break
+    return(cat("At least one cluster is empty or has a very few elements after the initial assignment. 
+               A better set of initial cluster centers is needed. No solution provided.")) 
    } 
   }
-
+  #print("Loop checked successfully")
+ 
   for(l in 1 : numClust){
    aa = nc[l] 
-   meanshapes[,,l] = procGPA(array3D[, , ic1 == l], distances = TRUE, pcaoutput = TRUE)$mshape
+   #print("This is array3D")
+   #print(array3D)
+   #print("This is ic1")
+   #print(ic1)
+   #print("This is l")
+   #print(l)
+   x <- array3D[, , ic1 == l]
+   #print("This is x")
+   #print(dim(x))
+   if (length(dim(x)) != 3) {
+     #stop("Please ensure that array3D has 3 dimensions.")
+     #break
+     return(cat("Please ensure that array3D has 3 dimensions.")) # This is not actually needed
+     # anymore because the previous return already stops the execution since there are some
+     # very small clusters.
+   }else{
+      meanshapes[,,l] = shapes::procGPA(x, distances = TRUE, pcaoutput = TRUE)$mshape
+   }  
    
    
    #Initialize AN1, AN2, ITRAN and NCP.
