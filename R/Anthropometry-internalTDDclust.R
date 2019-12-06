@@ -150,7 +150,12 @@ DDapply <- function(Xv,Xmat) { #Computes the depths of a vector of observations 
 DDfcnadj <- function(Xmatr,Nvec,y){ #Computes the data depth of point y in cloud Xmatr. 
  
   aux <- apply(Xmatr,1,unitvec,b=y)
-  if(class(aux) == "list"){
+  #if(class(aux) == "list"){
+  #  unitvecs <- t(matrix(unlist(aux),dim(Xmatr)[1],dim(Xmatr)[2])) 
+  #}else{
+  #  unitvecs <- t(aux) 
+  #}
+  if(inherits(aux, "list")){
     unitvecs <- t(matrix(unlist(aux),dim(Xmatr)[1],dim(Xmatr)[2])) 
   }else{
     unitvecs <- t(aux) 

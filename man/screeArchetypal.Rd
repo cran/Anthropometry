@@ -72,6 +72,7 @@ Guillermo Vinue
 \code{\link{archetypoids}}, \code{\link{stepArchetypoids}}
 }
 \examples{
+\dontrun{
 #COCKPIT DESIGN PROBLEM:
 #The following R code allows us to obtain a similar plot regarding Figure 5 
 #of the paper Vinue et al. (2015).
@@ -172,5 +173,12 @@ ylab <- "RSS"
 screeArchetypal(numArch, rss_lass_def, rss_step_ns, rss_step_alpha, rss_step_beta, 
                 c(0,0.5), main = "", xlab, ylab, col = c("red","blue","green3"), 
                 TRUE, seq(0,0.5,0.1), FALSE)
+#rm(res_ns1.RData)
+#rm(res_ns2.RData)
+#rm(res_alpha1.RData)
+#rm(res_alpha2.RData)
+#rm(res_beta1.RData)
+#rm(res_beta2.RData)
+}
 }
 \keyword{math}

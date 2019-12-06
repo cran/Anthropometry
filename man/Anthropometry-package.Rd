@@ -11,8 +11,8 @@ Statistical methodologies especially developed to analyze anthropometric data. T
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.12\cr
-Date: 2019-04-29\cr
+Version: 1.13\cr
+Date: 2019-12-06\cr
 License: GPL (>=2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr

@@ -1,6 +1,10 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.13 [2019-12-06]
+* Following CRAN maintainers' recommendations, an error related to the class "array" has been removed.
+* Submitted to CRAN.
+
 Version: 1.12 [2019-04-29]
 * Following CRAN maintainers' recommendations, suppressWarnings(RNGversion("3.5.0")) has been removed.
 * HartiganShapes(), qtranShapes(), optraShapes() and projShapes() have been updated to avoid some problems warned by the CRAN checking procedure about the dimensions of the object to be used.

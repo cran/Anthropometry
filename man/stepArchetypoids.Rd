@@ -78,11 +78,12 @@ lass <- stepArchetypesRawData(data = USAFSurvey_preproc$data, numArch = 1:numArc
 #archetypes package.                                
 
 #Run archetypoids algorithm repeatedly from 1 to numArch archetypes:
-for(numArchoid in 1:numArch){
- temp <-  stepArchetypoids(numArchoid,nearest="cand_ns",USAFSurvey_preproc$data,lass)
- filename <- paste("res", numArchoid, sep="")
- assign(filename,temp)
- save(list=c(filename),file=paste(filename, ".RData", sep="")) 
-}
+#for(numArchoid in 1:numArch){
+# temp <-  stepArchetypoids(numArchoid,nearest="cand_ns",USAFSurvey_preproc$data,lass)
+# filename <- paste("res", numArchoid, sep="")
+# assign(filename,temp)
+# save(list=c(filename),file=paste(filename, ".RData", sep="")) 
+#}
+temp <-  stepArchetypoids(2,nearest="cand_ns",USAFSurvey_preproc$data,lass)
 }
 \keyword{array}
