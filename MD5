@@ -1,6 +1,6 @@
-56b447d49f6fa8cde61f9406c712c761 *DESCRIPTION
+f25b946157ccdfb672b9d73f6424c17c *DESCRIPTION
 442d0863c63e4d5a454eb131170ea5b0 *NAMESPACE
-32286ceee7dc4b55258f46f3b6d87a6c *NEWS
+77e6850c950de6ab75e396f7a6b5d57d *NEWS
 514836267e9ffd5d95025bb289f6ce0d *R/Anthropometry-internalArchetypoids.R
 51bd3c040cea5f7b12705cf0b9ae2f81 *R/Anthropometry-internalHipamAnthropom.R
 b25b286cf6407b5617c9d7e3f4ee8c45 *R/Anthropometry-internalPlotTree.R
@@ -9,7 +9,7 @@ c6b1b69e30b3cc1463b4715657eae2cb *R/CCbiclustAnthropo.R
 2c7fb1a9d0e4981887734220d1e5431d *R/HartiganShapes.R
 eccc2057e5c13aa9bf514a2b91311764 *R/LloydShapes.R
 5ae5ae7b549c1b9b7898d2810d497f48 *R/TDDclust.R
-51390f04d44c165a336040e1f4895fc9 *R/anthrCases.R
+c07205d8042baad10a699384f9cccb1f *R/anthrCases.R
 bf960425b02cb4f462809e68d7fbeb86 *R/archetypesBoundary.R
 a3fbba8534ad4a4f0f7153e1b9f9f9e6 *R/archetypoids.R
 1eecc2a075e520edb83a1a0171521006 *R/array3Dlandm.R
@@ -57,12 +57,12 @@ f6cc5ac676d825eca0f64169885923c0 *data/sampleSpanishSurvey.RData
 bbaf600f2e31b8092ec4869713f5b152 *inst/CITATION
 590459ce617b357973d57ceaee3cd630 *inst/doc/Anthropometry.R
 691ec4552d2d8a53bafe87a7465dc2c6 *inst/doc/Anthropometry.Rnw
-dba5c5fcd53edb2dc20109a99d27722d *inst/doc/Anthropometry.pdf
+02236ff821780144b93fd86d590f9462 *inst/doc/Anthropometry.pdf
 ef2a658cd1386d115cfafe15151f6615 *man/Anthropometry-internalArchetypoids.Rd
 4e91d54f3372acc641cb9e977a15f3f0 *man/Anthropometry-internalHipamAnthropom.Rd
 5a35585dc249d3cd1a9cb756880fdded *man/Anthropometry-internalPlotTree.Rd
 aee8ac448c7a49cb05bff88bb42a92f6 *man/Anthropometry-internalTDDclust.Rd
-c2068c570eeef50e3b2c718eb105071d *man/Anthropometry-package.Rd
+43bcfd07398ffb7f04f3d97d32c554ea *man/Anthropometry-package.Rd
 1eaf6d1f2ba5981ec125348a70962532 *man/CCbiclustAnthropo.Rd
 50e8cd3d53ae15783aab0f992e808db0 *man/HartiganShapes.Rd
 e42433ffb930ea3e9791add3e29e7b93 *man/LloydShapes.Rd

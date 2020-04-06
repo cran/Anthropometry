@@ -4,7 +4,8 @@ anthrCases <- function(resMethod, nsizes){
 
 anthrCases.default <- function(resMethod, nsizes){
  cases <- resMethod$cases
- class(cases) <- "anthrCases"
+ #class(cases) <- "anthrCases"
+ structure(cases, class = c("anthrCases", "list"))
  return(cases)
 } 
 
@@ -20,7 +21,8 @@ anthrCases.trimowa <- function(resMethod, nsizes){
    }
  }  
 
- class(cases) <- "anthrCases"
+ #class(cases) <- "anthrCases"
+ structure(cases, class = c("anthrCases", "list"))
  return(cases)
 } 
 
@@ -34,6 +36,7 @@ anthrCases.hipamAnthropom <- function(resMethod, nsizes){
   cases[[i]] <- rownames(unique(resMethod[[i]]$cases))[auxBig]
  }   
   
- class(cases) <- "anthrCases"
+ #class(cases) <- "anthrCases"
+ structure(cases, class = c("anthrCases", "list"))
  return(cases)
 }
