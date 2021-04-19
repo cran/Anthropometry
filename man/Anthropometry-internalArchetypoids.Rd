@@ -17,7 +17,7 @@ Vinue, G., Epifanio, I., and Alemany, S., (2015). Archetypoids: a new approach t
 
 Epifanio, I., Vinue,, G., and Alemany, S., (2013). Archetypal analysis: contributions for estimating boundary cases in multivariate accommodation problem, \emph{Computers & Industrial Engineering} \bold{64}, 757--765.
 
-Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Analysis in R, \emph{Journal of Statistical Software} \bold{30}, 1--23, \url{http://www.jstatsoft.org/}.
+Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Analysis in R, \emph{Journal of Statistical Software} \bold{30}, 1--23, \url{https://www.jstatsoft.org/}.
 }
 \seealso{
 \code{\link{stepArchetypesRawData}}, \code{\link{archetypoids}}

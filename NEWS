@@ -1,6 +1,11 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.15 [2021-04-18]
+* Following CRAN maintainers' recommendations, assign("last.warning", NULL, envir = baseenv()) at top level in Anthropometry-internalTDDclust.R has been removed.
+* Following CRAN maintainers' recommendations, http has been changed to https and trailing slashes have been added.
+* Submitted to CRAN.
+
 Version: 1.14 [2020-04-06]
 * The structure of the S3 class for anthrCases was corrected, as required by the upgrade of package 'tibble' to version 3.0.0.
 * Submitted to CRAN.

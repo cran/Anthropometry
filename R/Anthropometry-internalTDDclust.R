@@ -1,4 +1,4 @@
-assign("last.warning", NULL, envir = baseenv())
+#assign("last.warning", NULL, envir = baseenv())
 
 is.empty <- function(x, mode=NULL){
   if (is.null(mode)) mode <- class(x)
