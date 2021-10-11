@@ -71,7 +71,7 @@ weightsMixtureUB: Calculation of the weights for the OWA operators.\cr
 xyplotPCArchetypes: PC scores for archetypes.\cr
 }
 \references{
-Vinue, G., (2017). Anthropometry: An R Package for Analysis of Anthropometric Data, \emph{Journal of Statistical Software} \bold{77(6)}, 1--39, doi:10.18637/jss.v077.i06
+Vinue, G., (2017). Anthropometry: An R Package for Analysis of Anthropometric Data, \emph{Journal of Statistical Software} \bold{77(6)}, 1--39, \doi{10.18637/jss.v077.i06}.
 }
 \author{
 Guillermo Vinue <Guillermo.Vinue@uv.es>, Irene Epifanio, Amelia Simo, M. Victoria Ibanez, Juan Domingo, Guillermo Ayala

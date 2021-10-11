@@ -1,6 +1,10 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.16 [2021-10-11]
+* The Journal of Statistical Software (JSS) has migrated to a new server, so JSS references have been updated accordingly.
+* Submitted to CRAN.
+
 Version: 1.15 [2021-04-18]
 * Following CRAN maintainers' recommendations, assign("last.warning", NULL, envir = baseenv()) at top level in Anthropometry-internalTDDclust.R has been removed.
 * Following CRAN maintainers' recommendations, http has been changed to https and trailing slashes have been added.
