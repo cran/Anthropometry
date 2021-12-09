@@ -13,7 +13,7 @@ CCbiclustAnthropo <- function(data,waistVariable,waistCirc,lowerVar,nsizes,nBic,
   da_size2 <- da_size[,lowerVar] 
   da_size3 <- da_size2 / 10 
     
-  diff_ranges <- as.vector(apply(da_size3, 2, range)[2,] - apply(da_size3, 2, range)[1,])
+  diff_ranges <- apply(da_size3, 2, range)[2,] - apply(da_size3, 2, range)[1,]
   selectedCols <- which(diff_ranges >= diffRanges[[i]][1] & diff_ranges <= diffRanges[[i]][2])
       
   da_size4 <- as.matrix(da_size3[,selectedCols])
