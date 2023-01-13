@@ -1,7 +1,6 @@
-#include <R.h>
-#include <Rdefines.h>
 #include <stdlib.h>
 #include <math.h>
+#include "cast.h"
 
 int compareDouble(const void* a, const void* b)
 {

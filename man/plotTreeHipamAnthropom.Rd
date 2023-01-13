@@ -4,7 +4,7 @@
 HIPAM dendogram
 }
 \description{
-This function represents a dendrogram for the clustering results provided by a HIPAM algorithm. It is a small modification of the original \code{plot.tree} function of the \pkg{smida} R package, available from \url{http://www.math.rug.nl/~ernst/book/smida.html}.
+This function represents a dendrogram for the clustering results provided by a HIPAM algorithm. It is a small modification of the original \code{plot.tree} function of the \pkg{smida} R package, available from \url{https://www.math.rug.nl/~ernst/book/smida.html}.
 }
 \usage{
 plotTreeHipamAnthropom(x,main,...)
@@ -28,14 +28,14 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representat
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 
-Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{http://www.math.rug.nl/~ernst/book/smida.html}.
+Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{https://www.math.rug.nl/~ernst/book/smida.html}.
 }
 \note{
 This function only represents the 'tree' option of the original \code{plot.tree} function of \pkg{smida}, because we believe that this option displays better the clustering results provided by HIPAM than the option '2d'.
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on
-\url{http://www.math.rug.nl/~ernst/book/smida.html}. We have slightly modified. 
+\url{https://www.math.rug.nl/~ernst/book/smida.html}. We have slightly modified. 
 }
 \seealso{
 \code{\link{hipamAnthropom}}

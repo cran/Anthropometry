@@ -12,11 +12,11 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representat
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 
-Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{http://www.math.rug.nl/~ernst/book/smida.html}.
+Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{https://www.math.rug.nl/~ernst/book/smida.html}.
 }
 \author{
 All these functions were originally created by E. Wit et al., and they are available freely on
-\url{http://www.math.rug.nl/~ernst/book/smida.html}.
+\url{https://www.math.rug.nl/~ernst/book/smida.html}.
 }
 \seealso{
 \code{\link{plotTreeHipamAnthropom}}, \code{\link{hipamAnthropom}}

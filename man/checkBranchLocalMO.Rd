@@ -58,7 +58,7 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representat
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 
 Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1.
-\url{http://www.math.rug.nl/~ernst/book/smida.html}
+\url{https://www.math.rug.nl/~ernst/book/smida.html}
 
 Pollard, K. S., and van der Laan, M. J., (2002). A method to identify significant clusters in gene expression data. \emph{Vol. II of SCI2002 Proceedings}, 318--325.
 }
@@ -67,7 +67,7 @@ This function belongs to the $HIPAM_{MO}$ algorithm and it is not solely used. T
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on
-\url{http://www.math.rug.nl/~ernst/book/smida.html}.
+\url{https://www.math.rug.nl/~ernst/book/smida.html}.
 }
 \seealso{
 \code{\link{hipamAnthropom}}

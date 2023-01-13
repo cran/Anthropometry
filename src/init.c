@@ -3,14 +3,7 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME: 
-   Check these declarations against the C/Fortran source code.
-*/
-
-/* .Call calls */
-extern SEXP DeleteDistOwa();
-extern SEXP FillAllDistOwa(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP GetRowAndFree(SEXP);
+#include "cast.h"
 
 static const R_CallMethodDef CallEntries[] = {
     {"DeleteDistOwa",  (DL_FUNC) &DeleteDistOwa,  0},

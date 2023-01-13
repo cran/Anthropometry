@@ -9,8 +9,8 @@ shapes3dShapes <- function (x,loop=0,type="p",color=2,joinline=c(1:1),axes3=FALS
     }
     if (is.array(x) == TRUE) {
         if (rglopen) {
-            rgl.open()
-            rgl.bg(color = "white")
+          open3d()
+          bg3d(color = "white")
         }
         if (dim(x)[2] == 2) {
             x <- as.3d(x)

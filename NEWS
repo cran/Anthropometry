@@ -1,6 +1,11 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.18 [2023-01-13]
+* The rgl package has deprecated a number of rgl.* functions, so some updates were needed.
+* Also some needed updates have been done in the C ancillary files, following the CRAN maintainers' recommendations.
+* Submitted to CRAN.
+
 Version: 1.17 [2021-12-09]
 * Following CRAN maintainers' recommendations, as.vector() has been removed in the functions where it was used.
 * Submitted to CRAN.

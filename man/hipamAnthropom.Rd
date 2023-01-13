@@ -74,7 +74,7 @@ Vinue, G., Leon, T., Alemany, S., and Ayala, G., (2014). Looking for representat
 
 Wit, E., and McClure, J., (2004). \emph{Statistics for Microarrays: Design, Analysis and Inference}. John Wiley & Sons, Ltd.
 
-Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{http://www.math.rug.nl/~ernst/book/smida.html}.
+Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design and Analysis. R package version 0.1. \url{https://www.math.rug.nl/~ernst/book/smida.html}.
 
 van der Laan, M. J., and Pollard, K. S., (2003). A new algorithm for hybrid hierarchical clustering with visualization and the bootstrap, \emph{Journal of Statistical Planning and Inference} \bold{117}, 275--303.
 
@@ -91,7 +91,7 @@ European Committee for Standardization. Size designation of clothes. Part 3: Mea
 Alemany, S., Gonzalez, J. C., Nacher, B., Soriano, C., Arnaiz, C., and Heras, H., (2010). Anthropometric survey of the Spanish female population aimed at the apparel industry. \emph{Proceedings of the 2010 Intl. Conference on 3D Body scanning Technologies}, 307--315.
 }
 \note{
-All the functions related to the HIPAM algorithm were originally created by E. Wit et al., and they are available freely on \url{http://www.math.rug.nl/~ernst/book/smida.html}. In order to develop the $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms, we have used and adapted them.
+All the functions related to the HIPAM algorithm were originally created by E. Wit et al., and they are available freely on \url{https://www.math.rug.nl/~ernst/book/smida.html}. In order to develop the $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms, we have used and adapted them.
 }
 \author{
 Guillermo Vinue
