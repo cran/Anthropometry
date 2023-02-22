@@ -1,6 +1,6 @@
-219e1b73eb2e309f509cc8c0c259a093 *DESCRIPTION
-24800de75100c4c7870e720592e13a9d *NAMESPACE
-6e05a2c754da690cd6960d946ebec927 *NEWS
+b294c52a0629aa8e54e5f32acb666ca9 *DESCRIPTION
+a4f2ec059bb78c941cdff082f60d83ac *NAMESPACE
+27c05169e2372177bad31330d09fac5f *NEWS
 514836267e9ffd5d95025bb289f6ce0d *R/Anthropometry-internalArchetypoids.R
 51bd3c040cea5f7b12705cf0b9ae2f81 *R/Anthropometry-internalHipamAnthropom.R
 b25b286cf6407b5617c9d7e3f4ee8c45 *R/Anthropometry-internalPlotTree.R
@@ -31,7 +31,7 @@ af8c563caf7a7bbfdd84a4a3c9512c6f *R/percentilsArchetypoid.R
 2dd3eca39abad2bc4169f57d58264b42 *R/plotPrototypes.R
 168f77a39d8ae06a8da3fff3396723bf *R/plotTreeHipamAnthropom.R
 afc8bd7f5eabdf2dcec5af511183e3f2 *R/plotTrimmOutl.R
-1bad19f89f4d1d3fd4e526678ed83f4b *R/preprocessing.R
+d50d6e0c37df673b6711567e7f6876b4 *R/preprocessing.R
 0007b5da36ccded17a1771764f74e135 *R/projShapes.R
 49dcdb9fd07898b071fbe74daf67802a *R/qtranShapes.R
 1a31142b7672b4ea0a876a452abc9d7b *R/screeArchetypal.R
@@ -45,7 +45,7 @@ cb0501263adf3adf134350436661f358 *R/trimmedLloydShapes.R
 b71a049ea46b7ba705ae35ca8cf1d835 *R/trimowa.R
 f1efd42aee393b67728f46b16cc24b30 *R/weightsMixtureUB.R
 1692a23487e36e2029c10b1cdeb5af5b *R/xyplotPCArchetypes.R
-c0b07268abd31229a6b9bd03fb094d3f *build/partial.rdb
+c39fa137779ec483aa8e299af03f455d *build/partial.rdb
 120d6979b096de56e957f0f8c667f3d2 *build/vignette.rds
 35cfb767d8b48ab479ee3a554b84729b *data/USAFSurvey.RData
 7efd96aea44ded14f565132c67a5495e *data/cube34landm.RData
@@ -58,12 +58,12 @@ f6cc5ac676d825eca0f64169885923c0 *data/sampleSpanishSurvey.RData
 bbaf600f2e31b8092ec4869713f5b152 *inst/CITATION
 1d16ce8c30d0c013ee52ece0d4fea811 *inst/doc/Anthropometry.R
 691ec4552d2d8a53bafe87a7465dc2c6 *inst/doc/Anthropometry.Rnw
-bf92ab003dc9adfd4497133649162eb6 *inst/doc/Anthropometry.pdf
+79ec2237914c8b16845746809970069e *inst/doc/Anthropometry.pdf
 13c8b9c6ba010aa9796263bd68f7bd15 *man/Anthropometry-internalArchetypoids.Rd
 28acabc9bc34f660b2fd613735658542 *man/Anthropometry-internalHipamAnthropom.Rd
 3774d9cb430000ff936f21b9d23305dd *man/Anthropometry-internalPlotTree.Rd
 aee8ac448c7a49cb05bff88bb42a92f6 *man/Anthropometry-internalTDDclust.Rd
-78de06f02a23358708529336154a742c *man/Anthropometry-package.Rd
+9998a5d52fbc5d4c7c65706b239f790e *man/Anthropometry-package.Rd
 1eaf6d1f2ba5981ec125348a70962532 *man/CCbiclustAnthropo.Rd
 50e8cd3d53ae15783aab0f992e808db0 *man/HartiganShapes.Rd
 e42433ffb930ea3e9791add3e29e7b93 *man/LloydShapes.Rd

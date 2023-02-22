@@ -21,8 +21,8 @@ preprocessing <- function(data,stand,percAccomm,mahal=TRUE){
        appr <- TRUE
      }   
       dt = c()
-      for(i in 1 : nrow (data1)){
-       dt[i] <- depth(data1[i,], data1, approx=appr) 
+      for(i in 1:nrow(data1)){
+       dt[i] <- depth.halfspace(data1[i,], data1, exact = appr) 
       }
      num <- sum(dt == min(dt))
      indivYes <- which(dt != min(dt)) 

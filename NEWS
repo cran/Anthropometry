@@ -1,6 +1,11 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.19 [2023-02-22]
+* Following a notification from CRAN maintainers, the depth package might not be available at CRAN anymore. Then, I have replaced the use of depth::depth() by ddalpha::depth.halfspace() in preprocessing() to
+calculate the depth of data observations. As a consequence, the depth package has been accordingly replaced by the ddalpha package in NAMESPACE.
+* Submitted to CRAN.
+
 Version: 1.18 [2023-01-13]
 * The rgl package has deprecated a number of rgl.* functions, so some updates were needed.
 * Also some needed updates have been done in the C ancillary files, following the CRAN maintainers' recommendations.
