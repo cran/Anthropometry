@@ -1,12 +1,12 @@
 \name{getBestPamsamIMO}
 \alias{getBestPamsamIMO}
 \title{
-Generation of the candidate clustering partition in $HIPAM_{IMO}$
+Generation of the candidate clustering partition in HIPAM-IMO
 }
 \description{
 The HIPAM algorithm starts with one large cluster and, at each level, a given (parent) cluster is partitioned using PAM.
 
-In this version of HIPAM, called $HIPAM_{IMO}$, the number k of (child) clusters is obtained by using the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)) in the following way: at each node P, if there is k such that $INCA_k > 0.2$, then the k prior to the first largest slope decrease is selected. However, this procedure does not apply either to the top node or to the generation of the new partitions from which the Mean Split Silhouette is calculated. In these cases, even when all $INCA_k < 0.2$, k = 3 is fixed as the number of groups to divide and proceed. See Vinue et al. (2014) for more details.
+In this version of HIPAM, called HIPAM-IMO, the number k of (child) clusters is obtained by using the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)) in the following way: at each node P, if there is k such that $INCA_k > 0.2$, then the k prior to the first largest slope decrease is selected. However, this procedure does not apply either to the top node or to the generation of the new partitions from which the Mean Split Silhouette is calculated. In these cases, even when all $INCA_k < 0.2$, k = 3 is fixed as the number of groups to divide and proceed. See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -24,7 +24,7 @@ The maximum number of clusters that any cluster can be divided when searching fo
 Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
-Option 'IMO' for using $HIPAM_{IMO}$.
+Option 'IMO' for using HIPAM-IMO.
 }
 \item{ah}{
 Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
@@ -71,7 +71,7 @@ Irigoien, I., Sierra, B., and Arenas, C., (2012). ICGE: an R package for detecti
 McCulloch, C., Paal, B., and Ashdown, S., (1998). An optimization approach to apparel sizing, \emph{Journal of the Operational Research Society} \bold{49}, 492--499.
 }
 \note{
-This function belongs to the $HIPAM_{IMO}$ algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
+This function belongs to the HIPAM-IMO algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on

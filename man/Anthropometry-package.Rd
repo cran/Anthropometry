@@ -11,15 +11,15 @@ Statistical methodologies especially developed to analyze anthropometric data. T
 \tabular{ll}{
 Package: Anthropometry\cr
 Type: Package\cr
-Version: 1.19\cr
-Date: 2023-02-22\cr
+Version: 1.20\cr
+Date: 2025-07-23\cr
 License: GPL (>=2)\cr
 LazyLoad: yes\cr
 LazyData: yes\cr
 }
 anthrCases: Helper generic function for obtaining the anthropometric cases.\cr
 Anthropometry-internalArchetypoids: Several internal functions to compute and represent archetypes and archetypoids.\cr
-Anthropometry-internalHipamAnthropom: Several internal functions used by both $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms.\cr
+Anthropometry-internalHipamAnthropom: Several internal functions used by both HIPAM-MO and HIPAM-IMO algorithms.\cr
 Anthropometry-internalPlotTree: Several internal functions used to build the HIPAM plot tree.\cr
 Anthropometry-internalTDDclust: Several internal functions to clustering based on the L1 data depth. \cr
 archetypesBoundary: Archetypal analysis in multivariate accommodation problem.\cr
@@ -28,16 +28,16 @@ array3Dlandm: Helper function for the 3D landmarks.\cr
 bustSizesStandard: Helper function for defining the bust sizes.\cr 
 CCbiclustAnthropo: Cheng and Church biclustering algorithm applied to anthropometric data.\cr
 cdfDissWomenPrototypes: CDF for the dissimilarities between women and computed medoids and standard prototypes.\cr
-checkBranchLocalIMO: Evaluation of the candidate clustering partition in $HIPAM_{IMO}$.\cr
-checkBranchLocalMO: Evaluation of the candidate clustering partition in $HIPAM_{MO}$.\cr
+checkBranchLocalIMO: Evaluation of the candidate clustering partition in HIPAM-IMO.\cr
+checkBranchLocalMO: Evaluation of the candidate clustering partition in HIPAM-MO.\cr
 computSizesTrimowa: Computation of the trimowa elements for a given number of sizes defined by the EN.\cr
 computSizesHipamAnthropom: Computation of the hipamAnthropom elements for a given number of sizes defined by the EN.\cr
 cube8landm: Cube of 8 landmarks.\cr 
 cube34landm: Cube of 34 landmarks.\cr
 descrDissTrunks: Description of the dissimilarities between women's trunks.\cr
 figures8landm: Figures of 8 landmarks with labelled landmarks.\cr
-getBestPamsamIMO: Generation of the candidate clustering partition in $HIPAM_{IMO}$. \cr
-getBestPamsamMO: Generation of the candidate clustering partition in $HIPAM_{MO}$.\cr
+getBestPamsamIMO: Generation of the candidate clustering partition in HIPAM-IMO. \cr
+getBestPamsamMO: Generation of the candidate clustering partition in HIPAM-MO.\cr
 getDistMatrix: Dissimilarity matrix between individuals and prototypes.\cr
 HartiganShapes: Hartigan-Wong k-means for 3D shapes.\cr
 hipamAnthropom: HIPAM algorithm for anthropometric data.\cr

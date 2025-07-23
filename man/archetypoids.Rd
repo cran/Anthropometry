@@ -4,7 +4,7 @@
 Finding archetypoids
 }
 \description{
-Archetypoid algorithm. It is based on the PAM clustering algorithm. It is made up of two phases (a BUILD phase and a SWAP phase). In the BUILD phase, an initial set of archetypoids is determined. Unlike PAM, this collection is not derived in a stepwise format. Instead, it is suggested you choose the set made up of the nearest individuals returned by the \code{\link{archetypes}} function of the \pkg{archetypes} R package (Eugster et al. (2009)). This set can be defined in three different ways, see next section \emph{arguments}. The goal of the SWAP step is the same as that of the SWAP step of PAM, but changing the objective function. The initial vector of archetypoids is attempted to be improved. This is done by exchanging selected individuals for unselected individuals and by checking whether these replacements reduce the objective function of the archetypoid analysis problem. 
+Archetypoid algorithm. It is based on the PAM clustering algorithm. It is made up of two phases (a BUILD phase and a SWAP phase). In the BUILD phase, an initial set of archetypoids is determined. Unlike PAM, this collection is not derived in a stepwise format. Instead, it is suggested you choose the set made up of the nearest individuals returned by the \link[archetypes]{archetypes} function (Eugster et al. (2009)). This set can be defined in three different ways, see next section \emph{arguments}. The goal of the SWAP step is the same as that of the SWAP step of PAM, but changing the objective function. The initial vector of archetypoids is attempted to be improved. This is done by exchanging selected individuals for unselected individuals and by checking whether these replacements reduce the objective function of the archetypoid analysis problem. 
 
 All details are given in Vinue et al. (2015).
 }
@@ -28,10 +28,10 @@ Logical value. If TRUE, the archetypoid algorithm is executed repeatedly within 
 Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. It is computed within \code{\link{stepArchetypoids}}. See \code{nearest} argument below for an explanation of how this vector is calculated.
 }
 \item{ArchObj}{
-The list object returned by the \code{\link{stepArchetypesRawData}} function. This function is a slight modification of the original \code{\link{stepArchetypes}} function of \pkg{archetypes} to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. Required when \code{step=FALSE}.
+The list object returned by the \code{\link{stepArchetypesRawData}} function. This function is a slight modification of the original \link[archetypes]{stepArchetypes} to apply the archetype algorithm to raw data. The \link[archetypes]{stepArchetypes} function standardizes the data by default and this option is not always desired. This list is needed to compute the nearest individuals to archetypes. Required when \code{step=FALSE}.
 }
 \item{nearest}{
-Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. Required when \code{step=FALSE}. This initial vector contain the nearest individuals to the archetypes returned by the \code{\link{archetypes}} function of \pkg{archetypes} (In Vinue et al. (2015), archetypes are computed after running the archetype algorithm twenty times). This argument is a string vector with three different possibilities. The first and default option is "cand_ns" and allows us to calculate the nearest individuals by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The second option is "cand_alpha" and allows us to calculate the nearest individuals by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). The third and final option is "cand_beta" and allows us to calculate the nearest individuals by identifying the individuals with the maximum beta value for each archetype, i.e. the major contributors in the generation of the archetypes.
+Initial vector of archetypoids for the BUILD phase of the archetypoid algorithm. Required when \code{step=FALSE}. This initial vector contain the nearest individuals to the archetypes returned by the \link[archetypes]{archetypes} (In Vinue et al. (2015), archetypes are computed after running the archetype algorithm twenty times). This argument is a string vector with three different possibilities. The first and default option is "cand_ns" and allows us to calculate the nearest individuals by computing the Euclidean distance between the archetypes and the individuals and choosing the nearest. It is used in Epifanio et al. (2013). The second option is "cand_alpha" and allows us to calculate the nearest individuals by consecutively identifying the individual with the maximum value of alpha for each archetype, until the defined number of archetypes is reached. It is used in Eugster (2012). The third and final option is "cand_beta" and allows us to calculate the nearest individuals by identifying the individuals with the maximum beta value for each archetype, i.e. the major contributors in the generation of the archetypes.
 }
 \item{sequ}{
 Logical value. It indicates whether a sequence of archetypoids (TRUE) or only a single number of them (FALSE) is computed. It is determined by the number of archetypes computed by means of \code{\link{stepArchetypesRawData}}.
@@ -66,13 +66,13 @@ Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Ana
 Eugster, M. J. A., (2012). Performance profiles based on archetypal athletes, \emph{International Journal of Performance Analysis in Sport} \bold{12}, 166--187.
 }
 \note{
-It may be happen that \code{\link{archetypes}} does not find results for \code{numArchoid} archetypes. In this case, it is not possible to calculate the vector of nearest individuals and consequently, the vector of archetypoids. Therefore, this function will return an error message. 
+It may be happen that \link[archetypes]{archetypes} does not find results for \code{numArchoid} archetypes. In this case, it is not possible to calculate the vector of nearest individuals and consequently, the vector of archetypoids. Therefore, this function will return an error message. 
 }
 \author{
 Irene Epifanio and Guillermo Vinue
 }
 \seealso{
-\code{\link{stepArchetypesRawData}}, \code{\link{archetypes}}, \code{\link{stepArchetypoids}}
+\code{\link{stepArchetypesRawData}}, \link[archetypes]{archetypes}, \code{\link{stepArchetypoids}}
 }
 \examples{
 #Note: For a sportive example, see www.uv.es/vivigui/softw/more_examples.R 

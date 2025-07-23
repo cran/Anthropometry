@@ -75,7 +75,7 @@ Dryden, I. L., and Mardia, K. V., (1998). \emph{Statistical Shape Analysis}, Wil
 Amelia Simo
 }
 \seealso{
-\code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{procGPA}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
+\code{\link{HartiganShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
 }
 \examples{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:

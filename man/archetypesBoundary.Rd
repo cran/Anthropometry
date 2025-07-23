@@ -17,17 +17,17 @@ USAF 1967 database (see \code{\link{USAFSurvey}}). Each row corresponds to an ob
 Number of archetypes (archetypal observations).
 }
 \item{verbose}{
-Logical value. If TRUE, some details of the execution progress are shown (this is the same argument as that of the \code{\link{stepArchetypes}} function of the \pkg{archetypes} R package (Eugster (2009))).
+Logical value. If TRUE, some details of the execution progress are shown (this is the same argument as that of the \link[archetypes]{stepArchetypes} function (Eugster (2009))).
 }
 \item{numRep}{
-For each archetype run \code{\link{archetypes}} \code{numRep} times (this is the same argument as the \code{nrep} argument of the \code{\link{stepArchetypes}} function of \pkg{archetypes}).
+For each archetype run \link[archetypes]{archetypes} \code{numRep} times (this is the same argument as the \code{nrep} argument of \link[archetypes]{stepArchetypes}.
 }
 }
 \details{
 Before using this function, the more extreme (100 - \code{percAcomm}*100)\% observations must be removed by means of the \code{\link{preprocessing}} function. To that end, it is recommended that you use the Mahalanobis distance. In this case, the depth procedure has the disadvantage that the desired percentage of accommodation is not under control of the analyst and it may not exactly coincide with that one indicated.
 }
 \value{
-A list with \code{numArch} elements. Each element is a list of class attribute \code{\link{stepArchetypes}} with \code{numRep} elements.
+A list with \code{numArch} elements. Each element is a list of class attribute \link[archetypes]{stepArchetypes} with \code{numRep} elements.
 }
 \references{
 Epifanio, I., Vinue, G., and Alemany, S., (2013). Archetypal analysis: contributions for estimating boundary cases in multivariate accommodation problem, \emph{Computers & Industrial Engineering} \bold{64}, 757--765.
@@ -37,13 +37,13 @@ Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Ana
 Zehner, G. F., Meindl, R. S., and Hudson, J. A., (1993). A multivariate anthropometric method for crew station design: abridged. Tech. rep. Ohio: Human Engineering Division, Armstrong Laboratory, Wright-Patterson Air Force Base.
 }
 \note{
-We would like to note that, some time after publishing the paper Epifanio et al. (2013), we found out that the \code{\link{stepArchetypes}} function standardizes the data by default (even when the data are already standardized) and this option is not always desired. In order to avoid this way of proceeding, we have created the \code{\link{stepArchetypesRawData}} function, which is used within \code{\link{archetypesBoundary}} instead of using \code{\link{stepArchetypes}}. Therefore, the results provided by \code{\link{archetypesBoundary}} allows us to reproduce the results of Epifanio et al. (2013) but they are now slightly different.
+We would like to note that, some time after publishing the paper Epifanio et al. (2013), we found out that the \link[archetypes]{stepArchetypes} function standardizes the data by default (even when the data are already standardized) and this option is not always desired. In order to avoid this way of proceeding, we have created the \code{\link{stepArchetypesRawData}} function, which is used within \code{\link{archetypesBoundary}} instead of using \link[archetypes]{stepArchetypes}. Therefore, the results provided by \code{\link{archetypesBoundary}} allows us to reproduce the results of Epifanio et al. (2013) but they are now slightly different.
 }
 \author{
 Irene Epifanio and Guillermo Vinue
 }
 \seealso{
-\code{\link{archetypes}}, \code{\link{stepArchetypes}}, \code{\link{stepArchetypesRawData}}, \code{\link{USAFSurvey}}, \code{\link{nearestToArchetypes}}, \code{\link{preprocessing}}
+\link[archetypes]{archetypes}, \link[archetypes]{stepArchetypes}, \code{\link{stepArchetypesRawData}}, \code{\link{USAFSurvey}}, \code{\link{nearestToArchetypes}}, \code{\link{preprocessing}}
 }
 \examples{
 #The following R code allows us to reproduce the results of the paper Epifanio et al. (2013).

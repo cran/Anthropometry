@@ -13,12 +13,12 @@
 \alias{update.tree.local}
 \alias{full2dist}
 \title{
-Several internal functions used by both $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms
+Several internal functions used by both HIPAM-MO and HIPAM-IMO algorithms
 }
 \description{
-This file contains several functions called for both $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms. Therefore, they are not used directly. 
+This file contains several functions called for both HIPAM-MO and HIPAM-IMO algorithms. Therefore, they are not used directly. 
 
-The $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms are different in the way to generate and validate a clustering partition. However, the functions related to the further clustering steps are common to both of them. These functions are those collected in this file. 
+The HIPAM-MO and HIPAM-IMO algorithms are different in the way to generate and validate a clustering partition. However, the functions related to the further clustering steps are common to both of them. These functions are those collected in this file. 
 
 The \emph{ext.dist} function is adapted to compute the dissimilarity developed in McCulloch et al. (1998). See \code{\link{hipamAnthropom}} for a detailed explanation of the HIPAM algorithm.
 }

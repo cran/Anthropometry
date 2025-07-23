@@ -87,7 +87,7 @@ This function is based on the kmns.m file available from \url{https://github.com
 Guillermo Vinue
 }
 \seealso{
-\code{\link{LloydShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{procGPA}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
+\code{\link{LloydShapes}}, \code{\link{trimmedLloydShapes}}, \code{\link{landmarksSampleSpaSurv}}, \code{\link{cube8landm}}, \code{\link{parallelep8landm}}, \code{\link{cube34landm}}, \code{\link{parallelep34landm}}, \code{\link{optraShapes}}, \code{\link{qtranShapes}}
 }
 \examples{
 #CLUSTERING INDIVIDUALS ACCORDING TO THEIR SHAPE:

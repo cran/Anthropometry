@@ -4,7 +4,7 @@
 Archetype algorithm to raw data
 }
 \description{
-This is a slight modification of the original \code{\link{stepArchetypes}} function of the \pkg{archetypes} R package to apply the archetype algorithm to raw data. The \code{\link{stepArchetypes}} function standardizes the data by default and this option is not always desired.
+This is a slight modification of the original \link[archetypes]{stepArchetypes} to apply the archetype algorithm to raw data. The \link[archetypes]{stepArchetypes} function standardizes the data by default and this option is not always desired.
 }
 \usage{
 stepArchetypesRawData(data,numArch,numRep=3,verbose=TRUE)
@@ -17,14 +17,14 @@ Data to obtain archetypes.
 Number of archetypes to compute, from 1 to \code{numArch}.
 }
 \item{numRep}{
-For each \code{numArch}, run \code{\link{archetypes}} \code{numRep} times.
+For each \code{numArch}, run \link[archetypes]{archetypes} \code{numRep} times.
 }
 \item{verbose}{
 If TRUE, the progress during execution is shown.
 }
 }
 \value{
-A list with \code{numArch} elements. Each element is a list of class attribute \code{\link{stepArchetypes}} with \code{numRep} elements.
+A list with \code{numArch} elements. Each element is a list of class attribute \link[archetypes]{stepArchetypes} with \code{numRep} elements.
 }
 \references{
 Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Analysis in R, \emph{Journal of Statistical Software} \bold{30}, 1--23, \doi{10.18637/jss.v030.i08}.
@@ -32,10 +32,10 @@ Eugster, M. J., and Leisch, F., (2009). From Spider-Man to Hero - Archetypal Ana
 Vinue, G., Epifanio, I., and Alemany, S., (2015). Archetypoids: a new approach to define representative archetypal data, \emph{Computational Statistics and Data Analysis} \bold{87}, 102--115.
 }
 \author{
-Guillermo Vinue based on the the original \code{\link{stepArchetypes}} function of \pkg{archetypes}.
+Guillermo Vinue based on the the original \link[archetypes]{stepArchetypes}.
 }
 \seealso{
-\code{\link{stepArchetypes}}
+\link[archetypes]{stepArchetypes}
 }
 \examples{
 #COCKPIT DESIGN PROBLEM:

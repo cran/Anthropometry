@@ -1,6 +1,10 @@
 Package: Anthropometry
 ----------------------
 
+Version: 1.20 [2025-07-23]
+* Following CRAN maintainers' recommendations, several issues have been corrected.
+* Submitted to CRAN.
+
 Version: 1.19 [2023-02-22]
 * Following a notification from CRAN maintainers, the depth package might not be available at CRAN anymore. Then, I have replaced the use of depth::depth() by ddalpha::depth.halfspace() in preprocessing() to
 calculate the depth of data observations. As a consequence, the depth package has been accordingly replaced by the ddalpha package in NAMESPACE.

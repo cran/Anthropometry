@@ -1,12 +1,12 @@
 \name{checkBranchLocalMO}
 \alias{checkBranchLocalMO}
 \title{
-Evaluation of the candidate clustering partition in $HIPAM_{MO}$
+Evaluation of the candidate clustering partition in HIPAM-MO
 }
 \description{
 In the HIPAM algorithm, each (parent) cluster P is investigated to see if it can be divided further into new (child) clusters, or stop (in this case, P would be a terminal node). 
 
-In this version of HIPAM, called $HIPAM_{MO}$, there are two different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2014) for more details.
+In this version of HIPAM, called HIPAM-MO, there are two different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -37,7 +37,7 @@ If this value is given (meaningful values are those between -1 and 1), a propose
 Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
-Option 'MO' for using $HIPAM_{MO}$.
+Option 'MO' for using HIPAM-MO.
 }
 \item{ah}{
 Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
@@ -63,7 +63,7 @@ Wit, E., and McClure, J., (2006). Statistics for Microarrays: Inference, Design 
 Pollard, K. S., and van der Laan, M. J., (2002). A method to identify significant clusters in gene expression data. \emph{Vol. II of SCI2002 Proceedings}, 318--325.
 }
 \note{
-This function belongs to the $HIPAM_{MO}$ algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
+This function belongs to the HIPAM-MO algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on

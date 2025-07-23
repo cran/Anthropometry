@@ -1,12 +1,12 @@
 \name{getBestPamsamMO}
 \alias{getBestPamsamMO}
 \title{
-Generation of the candidate clustering partition in $HIPAM_{MO}$
+Generation of the candidate clustering partition in HIPAM-MO
 }
 \description{
 The HIPAM algorithm starts with one large cluster and, at each level, a given (parent) cluster is partitioned using PAM.
 
-In this version of HIPAM, called $HIPAM_{MO}$, the number k of (child) clusters is obtained by maximizing the silhouette width (asw). See Vinue et al. (2014) for more details.
+In this version of HIPAM, called HIPAM-MO, the number k of (child) clusters is obtained by maximizing the silhouette width (asw). See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -24,7 +24,7 @@ The maximum number of clusters that any cluster can be divided when searching fo
 Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
-Option 'MO' for using $HIPAM_{MO}$.
+Option 'MO' for using HIPAM-MO.
 }
 \item{ah}{
 Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
@@ -67,7 +67,7 @@ Pollard, K. S., and van der Laan, M. J., (2002). A method to identify significan
 McCulloch, C., Paal, B., and Ashdown, S., (1998). An optimization approach to apparel sizing, \emph{Journal of the Operational Research Society} \bold{49}, 492--499.
 }
 \note{
-This function belongs to the $HIPAM_{MO}$ algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
+This function belongs to the HIPAM-MO algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on

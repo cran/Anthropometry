@@ -6,9 +6,9 @@ HIPAM algorithm for anthropometric data
 \description{
 The HIerarchical Partitioning Around Medoids clustering method (HIPAM) was originally created to gene clustering (Wit et al. (2004)). The HIPAM algorithm is a divisive hierarchical clustering method based on the PAM algorithm. 
 
-This function is a HIPAM algorithm adapted to deal with anthropometric data. To that end, a different dissimilarity function is incorporated. This function is that explained in McCulloch et al. (1998) and it is implemented in \code{\link{getDistMatrix}}. We call it $d_{MO}$. In addition, a different method to obtain a classification tree is also incorporated.
+This function is a HIPAM algorithm adapted to deal with anthropometric data. To that end, a different dissimilarity function is incorporated. This function is that explained in McCulloch et al. (1998) and it is implemented in \code{\link{getDistMatrix}}. We call it d-MO. In addition, a different method to obtain a classification tree is also incorporated.
 
-Two HIPAM algorithms are proposed. The first one, called $HIPAM_{MO}$, is a HIPAM that uses $d_{MO}$. The second one, $HIPAM_{IMO}$, is a HIPAM algorithm that uses $d_{MO}$ and the INCA (Index Number Clusters Atypical) statistic criterion (Irigoien et al. (2008)) to decide the number of child clusters and as a stopping rule. 
+Two HIPAM algorithms are proposed. The first one, called HIPAM-MO, is a HIPAM that uses d-MO. The second one, HIPAM-IMO, is a HIPAM algorithm that uses d-MO and the INCA (Index Number Clusters Atypical) statistic criterion (Irigoien et al. (2008)) to decide the number of child clusters and as a stopping rule. 
 
 See Vinue et al. (2014) for more details.
 }
@@ -33,7 +33,7 @@ If this value is given (meaningful values are those between -1 and 1), a propose
 Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
-Type of HIPAM algorithm to be used. The possible options are 'MO' (for $HIPAM_{MO}$) and 'IMO' (for $HIPAM_{IMO}$).
+Type of HIPAM algorithm to be used. The possible options are 'MO' (for HIPAM-MO) and 'IMO' (for HIPAM-IMO).
 }
 \item{ah}{
 Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
@@ -46,7 +46,7 @@ Other arguments that may be supplied to the internal functions of the HIPAM algo
 }
 }
 \details{
-The $HIPAM_{MO}$ algorithm uses the \code{\link{getBestPamsamMO}} and \code{\link{checkBranchLocalMO}} functions, while the $HIPAM_{IMO}$ algorithm uses the \code{\link{getBestPamsamIMO}} and \code{\link{checkBranchLocalIMO}} functions. 
+The HIPAM-MO algorithm uses the \code{\link{getBestPamsamMO}} and \code{\link{checkBranchLocalMO}} functions, while the HIPAM-IMO algorithm uses the \code{\link{getBestPamsamIMO}} and \code{\link{checkBranchLocalIMO}} functions. 
 
 For more details of HIPAM, see van der Laan et al. (2003), Wit et al. (2004) and the manual of the \pkg{smida} R package.
 }
@@ -91,7 +91,7 @@ European Committee for Standardization. Size designation of clothes. Part 3: Mea
 Alemany, S., Gonzalez, J. C., Nacher, B., Soriano, C., Arnaiz, C., and Heras, H., (2010). Anthropometric survey of the Spanish female population aimed at the apparel industry. \emph{Proceedings of the 2010 Intl. Conference on 3D Body scanning Technologies}, 307--315.
 }
 \note{
-All the functions related to the HIPAM algorithm were originally created by E. Wit et al., and they are available freely on \url{https://www.math.rug.nl/~ernst/book/smida.html}. In order to develop the $HIPAM_{MO}$ and $HIPAM_{IMO}$ algorithms, we have used and adapted them.
+All the functions related to the HIPAM algorithm were originally created by E. Wit et al., and they are available freely on \url{https://www.math.rug.nl/~ernst/book/smida.html}. In order to develop the HIPAM-MO and HIPAM-IMO algorithms, we have used and adapted them.
 }
 \author{
 Guillermo Vinue

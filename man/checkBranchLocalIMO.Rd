@@ -1,12 +1,12 @@
 \name{checkBranchLocalIMO}
 \alias{checkBranchLocalIMO}
 \title{
-Evaluation of the candidate clustering partition in $HIPAM_{IMO}$
+Evaluation of the candidate clustering partition in HIPAM-IMO
 }
 \description{
 In the HIPAM algorithm, each (parent) cluster P is investigated to see if it can be divided further into new (child) clusters, or stop (in this case, P would be a terminal node). 
 
-In this version of HIPAM, called $HIPAM_{IMO}$, there are three different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping refers to the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)): if $INCA_k leq 0.2$ for all k, then P is a terminal node. Finally, the third stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2014) for more details.
+In this version of HIPAM, called HIPAM-IMO, there are three different stopping criteria: First, if $|P| leq 2$, then P is a terminal node. If not, the second stopping refers to the INCA (Index Number Clusters Atypical) criterion (Irigoien et al. (2008)): if $INCA_k leq 0.2$ for all k, then P is a terminal node. Finally, the third stopping criteria uses the Mean Split Silhouette. See Vinue et al. (2014) for more details.
 
 The foundation and performance of the HIPAM algorithm is explained in \code{\link{hipamAnthropom}}.
 }
@@ -37,7 +37,7 @@ If this value is given (meaningful values are those between -1 and 1), a propose
 Quantity to measure the degree to which the aggregation is like a min or max operation. See \code{\link{weightsMixtureUB}} and \code{\link{getDistMatrix}}.
 }
 \item{type}{
-Option 'IMO' for using $HIPAM_{IMO}$.
+Option 'IMO' for using HIPAM-IMO.
 }
 \item{ah}{
 Constants that define the \code{ah} slopes of the distance function in \code{\link{getDistMatrix}}. Given the five variables considered, this vector is c(23,28,20,25,25). This vector would be different according to the variables considered.
@@ -67,7 +67,7 @@ Irigoien, I., and Arenas, C., (2008). INCA: New statistic for estimating the num
 Irigoien, I., Sierra, B., and Arenas, C., (2012). ICGE: an R package for detecting relevant clusters and atypical units in gene expression, \emph{BMC Bioinformatics} \bold{13} 1--29.
 }
 \note{
-This function belongs to the $HIPAM_{IMO}$ algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
+This function belongs to the HIPAM-IMO algorithm and it is not solely used. That is why there is no section of \emph{examples} in this help page. See \code{\link{hipamAnthropom}}.
 }
 \author{
 This function was originally created by E. Wit et al., and it is available freely on
